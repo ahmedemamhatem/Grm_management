@@ -117,7 +117,7 @@
  "index_web_pages_for_search": 1,
  "modified": "2026-01-16 00:00:00.000000",
  "modified_by": "Administrator",
- "module": "grm_management",
+ "module": "Grm Management",
  "name": "GRM Contract",
  "owner": "Administrator",
  "permissions": [
