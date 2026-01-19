@@ -1,0 +1,84 @@
+{
+ "actions": [],
+ "autoname": "hash",
+ "creation": "2026-01-11 00:00:00",
+ "doctype": "DocType",
+ "document_type": "Setup",
+ "engine": "InnoDB",
+ "field_order": [
+  "allow_hourly",
+  "allow_daily",
+  "allow_monthly",
+  "allow_long_term",
+  "min_booking_hours",
+  "max_booking_hours",
+  "advance_booking_days"
+ ],
+ "fields": [
+  {
+   "description": "Allow hourly booking",
+   "fieldname": "allow_hourly",
+   "fieldtype": "Check",
+   "label": "Allow Hourly"
+  },
+  {
+   "description": "Allow daily booking",
+   "fieldname": "allow_daily",
+   "fieldtype": "Check",
+   "label": "Allow Daily"
+  },
+  {
+   "description": "Allow monthly rental",
+   "fieldname": "allow_monthly",
+   "fieldtype": "Check",
+   "label": "Allow Monthly"
+  },
+  {
+   "description": "Allow long-term contracts",
+   "fieldname": "allow_long_term",
+   "fieldtype": "Check",
+   "label": "Allow Long Term"
+  },
+  {
+   "description": "Minimum booking duration (hours)",
+   "fieldname": "min_booking_hours",
+   "fieldtype": "Float",
+   "label": "Min Booking Hours"
+  },
+  {
+   "description": "Maximum booking duration (hours)",
+   "fieldname": "max_booking_hours",
+   "fieldtype": "Float",
+   "label": "Max Booking Hours"
+  },
+  {
+   "description": "How many days in advance can book",
+   "fieldname": "advance_booking_days",
+   "fieldtype": "Int",
+   "label": "Advance Booking Days"
+  }
+ ],
+ "icon": "fa fa-rules",
+ "idx": 1,
+ "links": [],
+ "modified": "2026-01-11 00:00:00",
+ "modified_by": "Administrator",
+ "module": "Grm Management",
+ "name": "Booking Rules",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

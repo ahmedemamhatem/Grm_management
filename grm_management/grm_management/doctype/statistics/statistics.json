@@ -1,0 +1,80 @@
+{
+ "actions": [],
+ "autoname": "hash",
+ "creation": "2026-01-11 00:00:00",
+ "doctype": "DocType",
+ "document_type": "Setup",
+ "engine": "InnoDB",
+ "field_order": [
+  "total_spaces",
+  "occupied_spaces",
+  "available_spaces",
+  "occupancy_rate",
+  "monthly_revenue"
+ ],
+ "fields": [
+  {
+   "description": "Total number of spaces",
+   "fieldname": "total_spaces",
+   "fieldtype": "Int",
+   "label": "Total Spaces",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "description": "Currently occupied spaces",
+   "fieldname": "occupied_spaces",
+   "fieldtype": "Int",
+   "label": "Occupied Spaces",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "description": " Available spaces",
+   "fieldname": "available_spaces",
+   "fieldtype": "Int",
+   "label": "Available Spaces",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "description": " Current occupancy percentage",
+   "fieldname": "occupancy_rate",
+   "fieldtype": "Percent",
+   "label": "Occupancy Rate",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "description": "Current month revenue\n",
+   "fieldname": "monthly_revenue",
+   "fieldtype": "Currency",
+   "label": "Monthly Revenue",
+   "no_copy": 1,
+   "read_only": 1
+  }
+ ],
+ "icon": "fa fa-bar-chart",
+ "idx": 1,
+ "links": [],
+ "modified": "2026-01-11 04:36:28.753651",
+ "modified_by": "Administrator",
+ "module": "Grm Management",
+ "name": "Statistics",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

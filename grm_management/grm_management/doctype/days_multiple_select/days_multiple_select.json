@@ -1,0 +1,36 @@
+{
+ "actions": [],
+ "autoname": "hash",
+ "creation": "2026-01-16 00:06:06.296751",
+ "doctype": "DocType",
+ "document_type": "Setup",
+ "engine": "InnoDB",
+ "field_order": [
+  "day_of_week"
+ ],
+ "fields": [
+  {
+   "fieldname": "day_of_week",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Day of Week",
+   "options": "Days",
+   "reqd": 1
+  }
+ ],
+ "icon": "fa fa-calendar",
+ "istable": 1,
+ "links": [],
+ "modified": "2026-01-16 00:06:58.686032",
+ "modified_by": "Administrator",
+ "module": "Grm Management",
+ "name": "Days Multiple Select",
+ "naming_rule": "Random",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

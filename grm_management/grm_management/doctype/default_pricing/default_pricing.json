@@ -1,0 +1,63 @@
+{
+ "actions": [],
+ "autoname": "hash",
+ "creation": "2026-01-11 00:00:00",
+ "doctype": "DocType",
+ "document_type": "Setup",
+ "engine": "InnoDB",
+ "field_order": [
+  "hourly_rate",
+  "daily_rate",
+  "weekly_rate",
+  "monthly_rate"
+ ],
+ "fields": [
+  {
+   "description": "Default hourly rate",
+   "fieldname": "hourly_rate",
+   "fieldtype": "Currency",
+   "label": "Hourly Rate"
+  },
+  {
+   "description": "Default daily rate",
+   "fieldname": "daily_rate",
+   "fieldtype": "Currency",
+   "label": "Daily Rate"
+  },
+  {
+   "description": "Default weekly rate",
+   "fieldname": "weekly_rate",
+   "fieldtype": "Currency",
+   "label": "Weekly Rate"
+  },
+  {
+   "description": "Default monthly rate",
+   "fieldname": "monthly_rate",
+   "fieldtype": "Currency",
+   "label": "Monthly Rate"
+  }
+ ],
+ "icon": "fa fa-money",
+ "idx": 1,
+ "links": [],
+ "modified": "2026-01-11 00:00:00",
+ "modified_by": "Administrator",
+ "module": "Grm Management",
+ "name": "Default Pricing",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

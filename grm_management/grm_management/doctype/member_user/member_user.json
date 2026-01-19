@@ -1,0 +1,136 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-01-14 00:54:11.853046",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "user_name",
+  "mobile",
+  "is_primary",
+  "can_access",
+  "zk_user_id",
+  "valid_from",
+  "status",
+  "column_break_gimj",
+  "email",
+  "designation",
+  "can_book",
+  "fingerprint_enrolled",
+  "access_card_number",
+  "valid_until"
+ ],
+ "fields": [
+  {
+   "description": "Full name",
+   "fieldname": "user_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "User Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_gimj",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": " Email address",
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Email",
+   "reqd": 1
+  },
+  {
+   "description": "Mobile number",
+   "fieldname": "mobile",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Mobile",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "description": "Primary contact",
+   "fieldname": "is_primary",
+   "fieldtype": "Check",
+   "label": "Is Primary"
+  },
+  {
+   "default": "0",
+   "description": "Has physical access",
+   "fieldname": "can_access",
+   "fieldtype": "Check",
+   "label": "Can Access"
+  },
+  {
+   "description": "ZK device user ID",
+   "fieldname": "zk_user_id",
+   "fieldtype": "Data",
+   "label": "Zk User Id"
+  },
+  {
+   "description": " Access valid from",
+   "fieldname": "valid_from",
+   "fieldtype": "Date",
+   "label": "Valid From"
+  },
+  {
+   "description": "Active, Inactive",
+   "fieldname": "status",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Active\nInactive",
+   "reqd": 1
+  },
+  {
+   "description": "Job Title",
+   "fieldname": "designation",
+   "fieldtype": "Data",
+   "label": "Designation"
+  },
+  {
+   "default": "0",
+   "description": "Can make bookings",
+   "fieldname": "can_book",
+   "fieldtype": "Check",
+   "label": "Can Book"
+  },
+  {
+   "default": "0",
+   "description": "Fingerprint registered",
+   "fieldname": "fingerprint_enrolled",
+   "fieldtype": "Check",
+   "label": "Fingerprint Enrolled"
+  },
+  {
+   "description": " Card number",
+   "fieldname": "access_card_number",
+   "fieldtype": "Data",
+   "label": "Access Card Number"
+  },
+  {
+   "description": "Access valid until\n",
+   "fieldname": "valid_until",
+   "fieldtype": "Date",
+   "label": "Valid Until"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-01-14 01:02:06.955875",
+ "modified_by": "Administrator",
+ "module": "Grm Management",
+ "name": "Member User",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

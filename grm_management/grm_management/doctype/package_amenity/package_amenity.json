@@ -1,0 +1,35 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-01-16 00:31:45.053854",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "amenity"
+ ],
+ "fields": [
+  {
+   "fieldname": "amenity",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Amenity",
+   "options": "Amenity"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-01-16 00:32:05.852771",
+ "modified_by": "Administrator",
+ "module": "Grm Management",
+ "name": "Package Amenity",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

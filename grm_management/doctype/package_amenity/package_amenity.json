@@ -1,0 +1,11 @@
+{
+ "doctype": "DocType",
+ "module": "grm_management",
+ "custom": true,
+ "istable": 1,
+ "fields": [
+  {"fieldname":"amenity","label":"Amenity","fieldtype":"Link","options":"Amenity","reqd":1}
+ ],
+ "permissions": [{"role":"System Manager","read":1,"write":1}],
+ "autoname": "name"
+}

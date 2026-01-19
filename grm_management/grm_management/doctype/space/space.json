@@ -1,0 +1,261 @@
+{
+ "actions": [],
+ "autoname": "field:space_code",
+ "creation": "2026-01-13 00:00:00",
+ "description": "Individual space / office / room within a location.",
+ "doctype": "DocType",
+ "document_type": "Setup",
+ "engine": "InnoDB",
+ "field_order": [
+  "basic_information_section",
+  "space_name",
+  "location",
+  "space_type",
+  "floor",
+  "capacity",
+  "column_break_sdqe",
+  "space_code",
+  "description",
+  "area_sqm",
+  "status",
+  "custom_pricing_section",
+  "daily_rate",
+  "use_custom_pricing",
+  "column_break_fdxn",
+  "hourly_rate",
+  "monthly_rate",
+  "access_control_section",
+  "access_device",
+  "requires_access_card",
+  "column_break_aumr",
+  "door_number",
+  "requires_fingerprint",
+  "current_occupancy_section",
+  "current_member",
+  "column_break_ttvo",
+  "current_contract",
+  "contract_end_date",
+  "media_section",
+  "images",
+  "virtual_tour_url"
+ ],
+ "fields": [
+  {
+   "fieldname": "basic_information_section",
+   "fieldtype": "Section Break",
+   "label": "Basic Information"
+  },
+  {
+   "description": "Example: Office A-101",
+   "fieldname": "space_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Space Name",
+   "reqd": 1
+  },
+  {
+   "description": "Must be unique",
+   "fieldname": "space_code",
+   "fieldtype": "Data",
+   "label": "Space Code",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "description": "Space description",
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "description": "Link to Location",
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Location",
+   "options": "Location",
+   "reqd": 1
+  },
+  {
+   "description": "Link to Space Type",
+   "fieldname": "space_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Space Type",
+   "options": "Space Type",
+   "reqd": 1
+  },
+  {
+   "description": "Floor number",
+   "fieldname": "floor",
+   "fieldtype": "Data",
+   "label": "Floor"
+  },
+  {
+   "description": "Area in square meters",
+   "fieldname": "area_sqm",
+   "fieldtype": "Float",
+   "label": "Area (sqm)"
+  },
+  {
+   "description": "Maximum persons",
+   "fieldname": "capacity",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Capacity",
+   "reqd": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Available\nOccupied\nReserved\nMaintenance",
+   "reqd": 1
+  },
+  {
+   "description": "Override space type pricing",
+   "fieldname": "custom_pricing_section",
+   "fieldtype": "Section Break",
+   "label": "Custom Pricing"
+  },
+  {
+   "default": "0",
+   "fieldname": "use_custom_pricing",
+   "fieldtype": "Check",
+   "label": "Use Custom Pricing"
+  },
+  {
+   "description": "Depends on company currency",
+   "fieldname": "hourly_rate",
+   "fieldtype": "Currency",
+   "label": "Hourly Rate"
+  },
+  {
+   "fieldname": "daily_rate",
+   "fieldtype": "Currency",
+   "label": "Daily Rate"
+  },
+  {
+   "fieldname": "monthly_rate",
+   "fieldtype": "Currency",
+   "label": "Monthly Rate"
+  },
+  {
+   "fieldname": "access_control_section",
+   "fieldtype": "Section Break",
+   "label": "Access Control"
+  },
+  {
+   "description": "Link to Access Device (ZK device)",
+   "fieldname": "access_device",
+   "fieldtype": "Link",
+   "label": "Access Device",
+   "options": "Access Device"
+  },
+  {
+   "description": "Door number on device",
+   "fieldname": "door_number",
+   "fieldtype": "Int",
+   "label": "Door Number"
+  },
+  {
+   "default": "0",
+   "fieldname": "requires_access_card",
+   "fieldtype": "Check",
+   "label": "Requires Access Card"
+  },
+  {
+   "default": "0",
+   "fieldname": "requires_fingerprint",
+   "fieldtype": "Check",
+   "label": "Requires Fingerprint"
+  },
+  {
+   "fieldname": "current_occupancy_section",
+   "fieldtype": "Section Break",
+   "label": "Current Occupancy"
+  },
+  {
+   "description": "Link to Member",
+   "fieldname": "current_member",
+   "fieldtype": "Link",
+   "label": "Current Member",
+   "options": "Member",
+   "read_only": 1
+  },
+  {
+   "description": "Active contract",
+   "fieldname": "current_contract",
+   "fieldtype": "Link",
+   "label": "Current Contract",
+   "options": "Contract",
+   "read_only": 1
+  },
+  {
+   "description": "From active contract",
+   "fieldname": "contract_end_date",
+   "fieldtype": "Date",
+   "label": "Contract End Date",
+   "read_only": 1
+  },
+  {
+   "fieldname": "media_section",
+   "fieldtype": "Section Break",
+   "label": "Media"
+  },
+  {
+   "description": "Child table: Space Image",
+   "fieldname": "images",
+   "fieldtype": "Table",
+   "label": "Images",
+   "options": "Space Image"
+  },
+  {
+   "description": "360 degree tour link",
+   "fieldname": "virtual_tour_url",
+   "fieldtype": "Data",
+   "label": "Virtual Tour URL"
+  },
+  {
+   "fieldname": "column_break_sdqe",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_fdxn",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_aumr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_ttvo",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "icon": "fa fa-building",
+ "idx": 1,
+ "links": [],
+ "modified": "2026-01-14 01:30:32.721568",
+ "modified_by": "Administrator",
+ "module": "Grm Management",
+ "name": "Space",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "space_name",
+ "track_changes": 1
+}

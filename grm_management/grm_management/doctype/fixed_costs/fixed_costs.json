@@ -1,0 +1,93 @@
+{
+ "actions": [],
+ "autoname": "hash",
+ "creation": "2026-01-10 00:00:00",
+ "doctype": "DocType",
+ "document_type": "Setup",
+ "engine": "InnoDB",
+ "field_order": [
+  "electricity_budget",
+  "water_budget",
+  "internet_cost",
+  "cleaning_cost",
+  "security_cost",
+  "maintenance_budget",
+  "other_fixed_costs",
+  "total_monthly_costs"
+ ],
+ "fields": [
+  {
+   "description": "Monthly electricity budget",
+   "fieldname": "electricity_budget",
+   "fieldtype": "Currency",
+   "label": "Electricity Budget"
+  },
+  {
+   "description": "Monthly water budget",
+   "fieldname": "water_budget",
+   "fieldtype": "Currency",
+   "label": "Water Budget"
+  },
+  {
+   "description": "Monthly internet cost",
+   "fieldname": "internet_cost",
+   "fieldtype": "Currency",
+   "label": "Internet Cost"
+  },
+  {
+   "description": "Monthly cleaning cost",
+   "fieldname": "cleaning_cost",
+   "fieldtype": "Currency",
+   "label": "Cleaning Cost"
+  },
+  {
+   "description": "Monthly security cost",
+   "fieldname": "security_cost",
+   "fieldtype": "Currency",
+   "label": "Security Cost"
+  },
+  {
+   "description": "Monthly maintenance budget",
+   "fieldname": "maintenance_budget",
+   "fieldtype": "Currency",
+   "label": "Maintenance Budget"
+  },
+  {
+   "description": "Other monthly fixed costs",
+   "fieldname": "other_fixed_costs",
+   "fieldtype": "Currency",
+   "label": "Other Fixed Costs"
+  },
+  {
+   "description": "Auto-calculated total",
+   "fieldname": "total_monthly_costs",
+   "fieldtype": "Currency",
+   "label": "Total Monthly Costs",
+   "read_only": 1
+  }
+ ],
+ "icon": "fa fa-calculator",
+ "idx": 1,
+ "links": [],
+ "modified": "2026-01-11 03:55:46.729247",
+ "modified_by": "Administrator",
+ "module": "Grm Management",
+ "name": "Fixed Costs",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "electricity_budget",
+ "track_changes": 1
+}

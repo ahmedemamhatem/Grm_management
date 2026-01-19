@@ -1,0 +1,64 @@
+{
+ "actions": [],
+ "autoname": "hash",
+ "creation": "2026-01-11 00:00:00",
+ "doctype": "DocType",
+ "document_type": "Setup",
+ "engine": "InnoDB",
+ "field_order": [
+  "opening_time",
+  "closing_time",
+  "working_days",
+  "is_24_hours"
+ ],
+ "fields": [
+  {
+   "description": "Daily opening time",
+   "fieldname": "opening_time",
+   "fieldtype": "Time",
+   "label": "Opening Time"
+  },
+  {
+   "description": "Daily closing time",
+   "fieldname": "closing_time",
+   "fieldtype": "Time",
+   "label": "Closing Time"
+  },
+  {
+   "description": "Child table - Days of the week",
+   "fieldname": "working_days",
+   "fieldtype": "Table",
+   "label": "Working Days",
+   "options": "Working Day"
+  },
+  {
+   "description": "24/7 access available",
+   "fieldname": "is_24_hours",
+   "fieldtype": "Check",
+   "label": "24 Hours"
+  }
+ ],
+ "icon": "fa fa-clock-o",
+ "idx": 1,
+ "links": [],
+ "modified": "2026-01-11 00:00:00",
+ "modified_by": "Administrator",
+ "module": "Grm Management",
+ "name": "Operating Hours",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

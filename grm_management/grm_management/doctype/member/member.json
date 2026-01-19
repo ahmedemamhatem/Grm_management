@@ -1,0 +1,352 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-01-13 01:22:40.851179",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "basic_information_section",
+  "member_name",
+  "member_type",
+  "company_name",
+  "column_break_uern",
+  "member_code",
+  "industry",
+  "join_date",
+  "status",
+  "contact_information_section",
+  "primary_email",
+  "website",
+  "column_break_zjhg",
+  "primary_mobile",
+  "secondary_phone",
+  "identification_section",
+  "id_type",
+  "id_expiry",
+  "id_document",
+  "column_break_ilfk",
+  "idcr_number",
+  "tax_id",
+  "access_control_section",
+  "zk_user_id",
+  "fingerprint_enrolled",
+  "pin_code",
+  "column_break_twxm",
+  "access_card_number",
+  "face_enrolled",
+  "financial_link_section",
+  "column_break_mmtj",
+  "customer",
+  "payment_terms",
+  "column_break_tppt",
+  "default_currency",
+  "credit_limit",
+  "statistics_read_only_section",
+  "active_contracts",
+  "total_bookings",
+  "outstanding_balance",
+  "column_break_pbej",
+  "active_memberships",
+  "total_revenue",
+  "last_visit_date"
+ ],
+ "fields": [
+  {
+   "fieldname": "basic_information_section",
+   "fieldtype": "Section Break",
+   "label": "Basic Information"
+  },
+  {
+   "description": " Full name or company name",
+   "fieldname": "member_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Member Name",
+   "reqd": 1
+  },
+  {
+   "description": " Individual, Company",
+   "fieldname": "member_type",
+   "fieldtype": "Select",
+   "label": "Member Type",
+   "options": "\nIndividual\nCompany",
+   "reqd": 1
+  },
+  {
+   "description": "Required if Individual works for company",
+   "fieldname": "company_name",
+   "fieldtype": "Select",
+   "label": "Company Name"
+  },
+  {
+   "fieldname": "column_break_uern",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Unique member code (auto-generated)",
+   "fieldname": "member_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Member Code",
+   "reqd": 1
+  },
+  {
+   "description": "Industry Type",
+   "fieldname": "industry",
+   "fieldtype": "Link",
+   "label": "Industry",
+   "options": "Industry Type"
+  },
+  {
+   "description": " Member since date",
+   "fieldname": "join_date",
+   "fieldtype": "Date",
+   "label": "Join Date",
+   "reqd": 1
+  },
+  {
+   "description": "Active, Inactive, Suspended, Blacklisted",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "\nActive\nInactive\nSuspended\nBlacklisted",
+   "reqd": 1
+  },
+  {
+   "fieldname": "contact_information_section",
+   "fieldtype": "Section Break",
+   "label": "Contact Information"
+  },
+  {
+   "description": " Primary email",
+   "fieldname": "primary_email",
+   "fieldtype": "Data",
+   "label": "Primary Email",
+   "reqd": 1
+  },
+  {
+   "description": " Company website",
+   "fieldname": "website",
+   "fieldtype": "Data",
+   "label": "Website"
+  },
+  {
+   "fieldname": "column_break_zjhg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": " Primary mobile number",
+   "fieldname": "primary_mobile",
+   "fieldtype": "Data",
+   "label": "Primary Mobile",
+   "reqd": 1
+  },
+  {
+   "description": "Alternative phone",
+   "fieldname": "secondary_phone",
+   "fieldtype": "Data",
+   "label": "Secondary Phone"
+  },
+  {
+   "fieldname": "identification_section",
+   "fieldtype": "Section Break",
+   "label": "Identification"
+  },
+  {
+   "description": " National ID, Passport, Iqama, CR",
+   "fieldname": "id_type",
+   "fieldtype": "Select",
+   "label": "Id Type",
+   "options": "\nNational ID\nPassport\nIqama\nCR"
+  },
+  {
+   "description": "ID expiry date",
+   "fieldname": "id_expiry",
+   "fieldtype": "Date",
+   "label": "Id Expiry",
+   "options": "\nNational ID\nPassport\nIqama\nCR"
+  },
+  {
+   "description": "Scanned ID copy\n",
+   "fieldname": "id_document",
+   "fieldtype": "Attach",
+   "label": "Id Document"
+  },
+  {
+   "fieldname": "column_break_ilfk",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "ID/CR number",
+   "fieldname": "idcr_number",
+   "fieldtype": "Data",
+   "label": "ID/CR number"
+  },
+  {
+   "description": "VAT/Tax number",
+   "fieldname": "tax_id",
+   "fieldtype": "Data",
+   "label": "Tax Id"
+  },
+  {
+   "fieldname": "access_control_section",
+   "fieldtype": "Section Break",
+   "label": "Access Control"
+  },
+  {
+   "description": "Auto-assigned ZK user ID",
+   "fieldname": "zk_user_id",
+   "fieldtype": "Data",
+   "label": "Zk User Id"
+  },
+  {
+   "default": "0",
+   "description": "Fingerprint registered",
+   "fieldname": "fingerprint_enrolled",
+   "fieldtype": "Check",
+   "label": "Fingerprint Enrolled"
+  },
+  {
+   "default": "0",
+   "description": " PIN for access (encrypted",
+   "fieldname": "pin_code",
+   "fieldtype": "Check",
+   "label": "Pin Code"
+  },
+  {
+   "fieldname": "column_break_twxm",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Physical card number",
+   "fieldname": "access_card_number",
+   "fieldtype": "Data",
+   "label": "Access Card Number"
+  },
+  {
+   "default": "0",
+   "description": " Face recognition registered",
+   "fieldname": "face_enrolled",
+   "fieldtype": "Check",
+   "label": "Face Enrolled"
+  },
+  {
+   "fieldname": "financial_link_section",
+   "fieldtype": "Section Break",
+   "label": "Financial Link"
+  },
+  {
+   "fieldname": "column_break_mmtj",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Linked ERPNext Customer",
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer"
+  },
+  {
+   "description": "Default payment terms",
+   "fieldname": "payment_terms",
+   "fieldtype": "Link",
+   "label": "Payment Terms",
+   "options": "Payment Terms Template"
+  },
+  {
+   "fieldname": "column_break_tppt",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Preferred currency",
+   "fieldname": "default_currency",
+   "fieldtype": "Link",
+   "label": "Default Currency",
+   "options": "Currency"
+  },
+  {
+   "description": "Credit limit",
+   "fieldname": "credit_limit",
+   "fieldtype": "Currency",
+   "label": "Credit Limit"
+  },
+  {
+   "fieldname": "statistics_read_only_section",
+   "fieldtype": "Section Break",
+   "label": "Statistics (Read Only)"
+  },
+  {
+   "description": "Number of active contracts",
+   "fieldname": "active_contracts",
+   "fieldtype": "Int",
+   "label": "Active Contracts",
+   "read_only": 1
+  },
+  {
+   "description": "Total bookings made",
+   "fieldname": "total_bookings",
+   "fieldtype": "Int",
+   "label": "Total Bookings",
+   "read_only": 1
+  },
+  {
+   "description": "Total bookings made",
+   "fieldname": "outstanding_balance",
+   "fieldtype": "Int",
+   "label": "Outstanding Balance",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_pbej",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Number of active memberships",
+   "fieldname": "active_memberships",
+   "fieldtype": "Int",
+   "label": "Active Memberships",
+   "read_only": 1
+  },
+  {
+   "description": "Total revenue from member",
+   "fieldname": "total_revenue",
+   "fieldtype": "Currency",
+   "label": "Total Revenue",
+   "read_only": 1
+  },
+  {
+   "description": "Last check-in date\n",
+   "fieldname": "last_visit_date",
+   "fieldtype": "Date",
+   "label": "Last Visit Date",
+   "read_only": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-01-14 00:49:06.147951",
+ "modified_by": "Administrator",
+ "module": "Grm Management",
+ "name": "Member",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

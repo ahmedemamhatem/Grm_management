@@ -1,0 +1,36 @@
+{
+ "actions": [],
+ "autoname": "hash",
+ "creation": "2026-01-11 00:00:00",
+ "doctype": "DocType",
+ "document_type": "Setup",
+ "engine": "InnoDB",
+ "field_order": [
+  "day_of_week"
+ ],
+ "fields": [
+  {
+   "fieldname": "day_of_week",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Day of Week",
+   "options": "Saturday\nSunday\nMonday\nTuesday\nWednesday\nThursday\nFriday",
+   "reqd": 1
+  }
+ ],
+ "icon": "fa fa-calendar",
+ "idx": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-01-11 05:21:56.904532",
+ "modified_by": "Administrator",
+ "module": "Grm Management",
+ "name": "Working Day",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

@@ -1,0 +1,265 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-01-13 00:32:10.653439",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "basic_information_section",
+  "device_name",
+  "location",
+  "model",
+  "column_break_zcvz",
+  "device_code",
+  "device_type",
+  "serial_number",
+  "status",
+  "connection_settings_section",
+  "ip_address",
+  "connectiontype",
+  "use_ssl",
+  "column_break_dqjr",
+  "port",
+  "communication_key",
+  "device_capabilities_section",
+  "supports_fingerprint",
+  "supports_pin",
+  "column_break_itze",
+  "supports_card",
+  "door_count",
+  "column_break_kgnp",
+  "supports_face",
+  "sync_settings_section",
+  "auto_sync",
+  "sync_interval_minutes",
+  "last_sync_time",
+  "column_break_ltbr",
+  "last_sync_status",
+  "last_error"
+ ],
+ "fields": [
+  {
+   "fieldname": "basic_information_section",
+   "fieldtype": "Section Break",
+   "label": "Basic Information"
+  },
+  {
+   "description": " Device name",
+   "fieldname": "device_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Device Name",
+   "reqd": 1
+  },
+  {
+   "description": " Link to Location",
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Location",
+   "options": "Location",
+   "reqd": 1
+  },
+  {
+   "description": "Device mode",
+   "fieldname": "model",
+   "fieldtype": "Data",
+   "label": "Model"
+  },
+  {
+   "fieldname": "column_break_zcvz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": " Unique code",
+   "fieldname": "device_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Device Code",
+   "reqd": 1
+  },
+  {
+   "description": "Door Controller, Fingerprint, Face Recognition, Card Reader",
+   "fieldname": "device_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Device Type",
+   "options": "\nDoor Controller\nFingerprint\nFace Recognition\nCard Reade\u0642",
+   "reqd": 1
+  },
+  {
+   "description": " Serial number",
+   "fieldname": "serial_number",
+   "fieldtype": "Data",
+   "label": "Serial number"
+  },
+  {
+   "description": " Online, Offline, Maintenance",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "\nOnline\nOffline\nMaintenance",
+   "reqd": 1
+  },
+  {
+   "fieldname": "connection_settings_section",
+   "fieldtype": "Section Break",
+   "label": "Connection Settings"
+  },
+  {
+   "description": " Device IP address",
+   "fieldname": "ip_address",
+   "fieldtype": "Data",
+   "label": "Ip Address",
+   "reqd": 1
+  },
+  {
+   "description": " Device IP address",
+   "fieldname": "connectiontype",
+   "fieldtype": "Select",
+   "label": "connectionType",
+   "options": "TCP/IP\nUDP",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_dqjr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Connection port (default 4370)",
+   "fieldname": "port",
+   "fieldtype": "Int",
+   "label": "Port",
+   "reqd": 1
+  },
+  {
+   "description": " Device password/key",
+   "fieldname": "communication_key",
+   "fieldtype": "Password",
+   "label": "Communication Key"
+  },
+  {
+   "fieldname": "device_capabilities_section",
+   "fieldtype": "Section Break",
+   "label": "Device Capabilities"
+  },
+  {
+   "default": "0",
+   "description": " Has fingerprint scanner",
+   "fieldname": "supports_fingerprint",
+   "fieldtype": "Check",
+   "label": "Supports Fingerprint"
+  },
+  {
+   "default": "0",
+   "description": "Supports PIN entry",
+   "fieldname": "supports_pin",
+   "fieldtype": "Check",
+   "label": "Supports Pin"
+  },
+  {
+   "fieldname": "column_break_itze",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "description": "Has card reader",
+   "fieldname": "supports_card",
+   "fieldtype": "Check",
+   "label": "Supports Card"
+  },
+  {
+   "default": "0",
+   "description": "Number of doors controlled",
+   "fieldname": "door_count",
+   "fieldtype": "Int",
+   "label": "Door Count"
+  },
+  {
+   "fieldname": "column_break_kgnp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "description": " Has face recognition",
+   "fieldname": "supports_face",
+   "fieldtype": "Check",
+   "label": "Supports Face"
+  },
+  {
+   "fieldname": "sync_settings_section",
+   "fieldtype": "Section Break",
+   "label": "Sync Settings"
+  },
+  {
+   "default": "0",
+   "description": "Enable auto sync",
+   "fieldname": "auto_sync",
+   "fieldtype": "Check",
+   "label": "Auto Sync"
+  },
+  {
+   "description": "Sync every X minutes",
+   "fieldname": "sync_interval_minutes",
+   "fieldtype": "Int",
+   "label": "Sync Interval Minutes"
+  },
+  {
+   "description": "Last successful sync",
+   "fieldname": "last_sync_time",
+   "fieldtype": "Datetime",
+   "label": "Last Sync Time"
+  },
+  {
+   "fieldname": "column_break_ltbr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Success, Failed, Partial",
+   "fieldname": "last_sync_status",
+   "fieldtype": "Select",
+   "label": "Last Sync Status",
+   "options": "Success\nFailed\nPartia"
+  },
+  {
+   "description": "Last error message\n",
+   "fieldname": "last_error",
+   "fieldtype": "Text",
+   "label": "Last Error"
+  },
+  {
+   "default": "0",
+   "description": " Use secure connection",
+   "fieldname": "use_ssl",
+   "fieldtype": "Check",
+   "label": "Use SSL"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-01-13 01:02:31.889146",
+ "modified_by": "Administrator",
+ "module": "Grm Management",
+ "name": "Access Device",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

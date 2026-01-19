@@ -1,0 +1,88 @@
+{
+ "actions": [],
+ "autoname": "hash",
+ "creation": "2026-01-10 00:00:00",
+ "doctype": "DocType",
+ "document_type": "Setup",
+ "engine": "InnoDB",
+ "field_order": [
+  "landlord_name",
+  "section_break_xjic",
+  "lease_start_date",
+  "monthly_rent",
+  "column_break_bjqs",
+  "lease_end_date",
+  "payment_day",
+  "security_deposit"
+ ],
+ "fields": [
+  {
+   "description": "Property owner name",
+   "fieldname": "landlord_name",
+   "fieldtype": "Data",
+   "label": "Landlord Name"
+  },
+  {
+   "description": " Lease start date",
+   "fieldname": "lease_start_date",
+   "fieldtype": "Date",
+   "label": "Lease Start Date"
+  },
+  {
+   "description": " Lease end date",
+   "fieldname": "lease_end_date",
+   "fieldtype": "Date",
+   "label": "Lease End Date"
+  },
+  {
+   "description": "Monthly rent amount",
+   "fieldname": "monthly_rent",
+   "fieldtype": "Currency",
+   "label": "Monthly Rent"
+  },
+  {
+   "description": " Security deposit paid",
+   "fieldname": "security_deposit",
+   "fieldtype": "Currency",
+   "label": "Security Deposit"
+  },
+  {
+   "description": "Day of month rent is due\n",
+   "fieldname": "payment_day",
+   "fieldtype": "Int",
+   "label": "Payment Day"
+  },
+  {
+   "fieldname": "section_break_xjic",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_bjqs",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "icon": "fa fa-file-text",
+ "idx": 1,
+ "links": [],
+ "modified": "2026-01-11 03:55:46.729247",
+ "modified_by": "Administrator",
+ "module": "Grm Management",
+ "name": "Lease Information",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "landlord_name",
+ "track_changes": 1
+}
