@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"ZDxvfUTrWd\",\"type\":\"card\",\"data\":{\"card_name\":\"Location Management\",\"col\":4}},{\"id\":\"H4M5ALYmG_\",\"type\":\"card\",\"data\":{\"card_name\":\"Space Management\",\"col\":4}}]",
+ "content": "[{\"id\":\"ZDxvfUTrWd\",\"type\":\"card\",\"data\":{\"card_name\":\"Location Management\",\"col\":4}},{\"id\":\"H4M5ALYmG_\",\"type\":\"card\",\"data\":{\"card_name\":\"Space Management\",\"col\":4}},{\"id\":\"2iBWrNKWvQ\",\"type\":\"card\",\"data\":{\"card_name\":\"Member Management\",\"col\":4}},{\"id\":\"xLQRwZiepL\",\"type\":\"card\",\"data\":{\"card_name\":\"Package Managment\",\"col\":4}},{\"id\":\"Pxy7ENCBEX\",\"type\":\"card\",\"data\":{\"card_name\":\"Fincancial Management\",\"col\":4}},{\"id\":\"qtCrXsCNst\",\"type\":\"card\",\"data\":{\"card_name\":\"Contract & Booking\",\"col\":4}},{\"id\":\"ADi8L-g18H\",\"type\":\"card\",\"data\":{\"card_name\":\"Access Control\",\"col\":4}}]",
  "creation": "2026-01-11 03:37:34.180487",
  "custom_blocks": [],
  "docstatus": 0,
@@ -28,7 +28,7 @@
    "hidden": 0,
    "is_query_report": 0,
    "label": "Location Management",
-   "link_count": 1,
+   "link_count": 2,
    "link_type": "DocType",
    "onboard": 0,
    "type": "Card Break"
@@ -44,11 +44,98 @@
    "type": "Link"
   },
   {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Location Expense",
+   "link_count": 0,
+   "link_to": "Location Expense",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Member Management",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Member",
+   "link_count": 0,
+   "link_to": "Member",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Package Managment",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Package",
+   "link_count": 0,
+   "link_to": "Package",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Access Control",
+   "link_count": 3,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Access Device",
+   "link_count": 0,
+   "link_to": "Access Device",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Access Rule",
+   "link_count": 0,
+   "link_to": "Access Rule",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Access Log",
+   "link_count": 0,
+   "link_to": "Access Log",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
    "description": "Space Types, Spaces (Offices/Rooms), Amenities, Space Availability",
    "hidden": 0,
    "is_query_report": 0,
    "label": "Space Management",
-   "link_count": 12,
+   "link_count": 3,
    "link_type": "DocType",
    "onboard": 0,
    "type": "Card Break"
@@ -86,9 +173,18 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Member",
+   "label": "Fincancial Management",
+   "link_count": 2,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Sales Invoice",
    "link_count": 0,
-   "link_to": "Member",
+   "link_to": "Sales Invoice",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
@@ -96,9 +192,9 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Package",
+   "label": "Payment Entry",
    "link_count": 0,
-   "link_to": "Package",
+   "link_to": "Payment Entry",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
@@ -106,7 +202,16 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "GRM Contract",
+   "label": "Contract & Booking",
+   "link_count": 4,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Contract",
    "link_count": 0,
    "link_to": "GRM Contract",
    "link_type": "DocType",
@@ -136,45 +241,15 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "Access Device",
+   "label": "Booking Rules",
    "link_count": 0,
-   "link_to": "Access Device",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Access Rule",
-   "link_count": 0,
-   "link_to": "Access Rule",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Access Log",
-   "link_count": 0,
-   "link_to": "Access Log",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Location Expense",
-   "link_count": 0,
-   "link_to": "Location Expense",
+   "link_to": "Booking Rules",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
   }
  ],
- "modified": "2026-01-19 12:28:00.819398",
+ "modified": "2026-01-19 23:21:21.634781",
  "modified_by": "Administrator",
  "module": "Grm Management",
  "name": "Location Management",
