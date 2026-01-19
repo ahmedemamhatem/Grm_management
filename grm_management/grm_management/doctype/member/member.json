@@ -48,7 +48,9 @@
   "column_break_pbej",
   "active_memberships",
   "total_revenue",
-  "last_visit_date"
+  "last_visit_date",
+  "section_break_swzn",
+  "member_user"
  ],
  "fields": [
   {
@@ -320,12 +322,22 @@
    "fieldtype": "Date",
    "label": "Last Visit Date",
    "read_only": 1
+  },
+  {
+   "fieldname": "section_break_swzn",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "member_user",
+   "fieldtype": "Table",
+   "label": "Member User",
+   "options": "Member User"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-01-14 00:49:06.147951",
+ "modified": "2026-01-19 12:08:02.026286",
  "modified_by": "Administrator",
  "module": "Grm Management",
  "name": "Member",
