@@ -72,8 +72,9 @@
    "fieldname": "location",
    "fieldtype": "Link",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Location",
-   "options": "Location",
+   "options": "GRM Location",
    "reqd": 1
   },
   {
@@ -81,6 +82,7 @@
    "fieldname": "space_type",
    "fieldtype": "Link",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Space Type",
    "options": "Space Type",
    "reqd": 1
@@ -102,12 +104,15 @@
    "fieldname": "capacity",
    "fieldtype": "Int",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Capacity",
    "reqd": 1
   },
   {
    "fieldname": "status",
    "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Status",
    "options": "Available\nOccupied\nReserved\nMaintenance",
    "reqd": 1
@@ -138,6 +143,7 @@
   {
    "fieldname": "monthly_rate",
    "fieldtype": "Currency",
+   "in_list_view": 1,
    "label": "Monthly Rate"
   },
   {
@@ -236,7 +242,8 @@
  "icon": "fa fa-building",
  "idx": 1,
  "links": [],
- "modified": "2026-01-14 01:30:32.721568",
+ "modified": "2026-01-21 00:00:00",
+ "search_fields": "space_name,space_code,location,space_type",
  "modified_by": "Administrator",
  "module": "Grm Management",
  "name": "Space",

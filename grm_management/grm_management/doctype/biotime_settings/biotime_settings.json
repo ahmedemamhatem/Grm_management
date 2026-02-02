@@ -1,0 +1,169 @@
+{
+ "actions": [],
+ "creation": "2026-01-21 00:00:00",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "enabled",
+  "server_url",
+  "port",
+  "column_break_1",
+  "username",
+  "password",
+  "authentication_section",
+  "access_token",
+  "token_expiry",
+  "column_break_2",
+  "last_sync_time",
+  "last_sync_status",
+  "sync_settings_section",
+  "auto_sync",
+  "sync_interval_minutes",
+  "batch_size",
+  "column_break_3",
+  "sync_from_date",
+  "sync_to_date"
+ ],
+ "fields": [
+  {
+   "default": "0",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled"
+  },
+  {
+   "description": "BioTime server IP or hostname",
+   "fieldname": "server_url",
+   "fieldtype": "Data",
+   "label": "Server URL",
+   "reqd": 1
+  },
+  {
+   "default": "8000",
+   "description": "BioTime server port",
+   "fieldname": "port",
+   "fieldtype": "Int",
+   "label": "Port",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "BioTime API username",
+   "fieldname": "username",
+   "fieldtype": "Data",
+   "label": "Username",
+   "reqd": 1
+  },
+  {
+   "description": "BioTime API password",
+   "fieldname": "password",
+   "fieldtype": "Password",
+   "label": "Password",
+   "reqd": 1
+  },
+  {
+   "fieldname": "authentication_section",
+   "fieldtype": "Section Break",
+   "label": "Authentication"
+  },
+  {
+   "description": "Auto-retrieved from BioTime server",
+   "fieldname": "access_token",
+   "fieldtype": "Data",
+   "label": "Access Token",
+   "read_only": 1
+  },
+  {
+   "fieldname": "token_expiry",
+   "fieldtype": "Datetime",
+   "label": "Token Expiry",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "last_sync_time",
+   "fieldtype": "Datetime",
+   "label": "Last Sync Time",
+   "read_only": 1
+  },
+  {
+   "fieldname": "last_sync_status",
+   "fieldtype": "Select",
+   "label": "Last Sync Status",
+   "options": "Success\nFailed\nPartial",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sync_settings_section",
+   "fieldtype": "Section Break",
+   "label": "Sync Settings"
+  },
+  {
+   "default": "1",
+   "fieldname": "auto_sync",
+   "fieldtype": "Check",
+   "label": "Auto Sync"
+  },
+  {
+   "default": "60",
+   "description": "Sync interval in minutes",
+   "fieldname": "sync_interval_minutes",
+   "fieldtype": "Int",
+   "label": "Sync Interval (Minutes)"
+  },
+  {
+   "default": "100",
+   "description": "Number of records to fetch per batch",
+   "fieldname": "batch_size",
+   "fieldtype": "Int",
+   "label": "Batch Size"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Sync attendance from this date",
+   "fieldname": "sync_from_date",
+   "fieldtype": "Date",
+   "label": "Sync From Date"
+  },
+  {
+   "description": "Sync attendance up to this date",
+   "fieldname": "sync_to_date",
+   "fieldtype": "Date",
+   "label": "Sync To Date"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-01-21 00:00:00",
+ "modified_by": "Administrator",
+ "module": "Grm Management",
+ "name": "BioTime Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

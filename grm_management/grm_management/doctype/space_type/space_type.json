@@ -87,6 +87,7 @@
    "description": "Allow hourly booking",
    "fieldname": "allow_hourly",
    "fieldtype": "Check",
+   "in_list_view": 1,
    "label": "Allow Hourly"
   },
   {
@@ -94,6 +95,7 @@
    "description": "Allow daily booking",
    "fieldname": "allow_daily",
    "fieldtype": "Check",
+   "in_list_view": 1,
    "label": "Allow Daily"
   },
   {
@@ -101,6 +103,7 @@
    "description": "Allow monthly rental",
    "fieldname": "allow_monthly",
    "fieldtype": "Check",
+   "in_list_view": 1,
    "label": "Allow Monthly"
   },
   {
@@ -173,7 +176,8 @@
  "icon": "fa fa-th-large",
  "idx": 1,
  "links": [],
- "modified": "2026-01-11 05:06:33.513160",
+ "modified": "2026-01-21 00:00:00",
+ "search_fields": "type_name,type_code,description",
  "modified_by": "Administrator",
  "module": "Grm Management",
  "name": "Space Type",

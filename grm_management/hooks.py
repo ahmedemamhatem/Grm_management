@@ -148,23 +148,17 @@ doctype_js = {"doctype" : "public/js/location.js"}
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
-# 	"all": [
-# 		"grm_management.tasks.all"
-# 	],
-# 	"daily": [
-# 		"grm_management.tasks.daily"
-# 	],
-# 	"hourly": [
-# 		"grm_management.tasks.hourly"
-# 	],
-# 	"weekly": [
-# 		"grm_management.tasks.weekly"
-# 	],
-# 	"monthly": [
-# 		"grm_management.tasks.monthly"
-# 	],
-# }
+scheduler_events = {
+	"hourly": [
+		"grm_management.grm_management.scheduled_tasks.hourly"
+	],
+	"daily": [
+		"grm_management.grm_management.scheduled_tasks.daily"
+	],
+	"monthly": [
+		"grm_management.grm_management.scheduled_tasks.monthly"
+	],
+}
 
 # Testing
 # -------
@@ -247,3 +241,5 @@ doctype_js = {"doctype" : "public/js/location.js"}
 # List of apps whose translatable strings should be excluded from this app's translations.
 # ignore_translatable_strings_from = []
 
+
+website_route_rules = [{'from_route': '/home/<path:app_path>', 'to_route': 'home'},]

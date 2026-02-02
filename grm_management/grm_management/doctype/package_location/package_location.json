@@ -14,7 +14,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Location",
-   "options": "Location"
+   "options": "GRM Location"
   }
  ],
  "grid_page_length": 50,

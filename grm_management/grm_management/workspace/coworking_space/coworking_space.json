@@ -1,0 +1,138 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"members_section\",\"type\":\"header\",\"data\":{\"text\":\"Members\",\"col\":12}},{\"id\":\"member_shortcut\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Member\",\"col\":3}},{\"id\":\"grm_contract_shortcut\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"GRM Contract\",\"col\":3}},{\"id\":\"membership_shortcut\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Membership\",\"col\":3}},{\"id\":\"booking_shortcut\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Booking\",\"col\":3}},{\"id\":\"spaces_section\",\"type\":\"header\",\"data\":{\"text\":\"Spaces & Locations\",\"col\":12}},{\"id\":\"grm_location_shortcut\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"GRM Location\",\"col\":3}},{\"id\":\"space_shortcut\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Space\",\"col\":3}},{\"id\":\"space_type_shortcut\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Space Type\",\"col\":3}},{\"id\":\"package_shortcut\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Package\",\"col\":3}},{\"id\":\"access_section\",\"type\":\"header\",\"data\":{\"text\":\"Access Control\",\"col\":12}},{\"id\":\"access_device_shortcut\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Access Device\",\"col\":3}},{\"id\":\"access_rule_shortcut\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Access Rule\",\"col\":3}},{\"id\":\"access_log_shortcut\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Access Log\",\"col\":3}},{\"id\":\"biotime_settings_shortcut\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"BioTime Settings\",\"col\":3}},{\"id\":\"reports_section\",\"type\":\"header\",\"data\":{\"text\":\"Reports & Analytics\",\"col\":12}},{\"id\":\"location_expense_shortcut\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Location Expense\",\"col\":3}}]",
+ "creation": "2026-01-21 00:00:00.000000",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "fa fa-building",
+ "idx": 0,
+ "is_hidden": 0,
+ "label": "Coworking Space",
+ "links": [],
+ "modified": "2026-01-21 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Grm Management",
+ "name": "Coworking Space",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 1,
+ "shortcuts": [
+  {
+   "color": "Blue",
+   "doc_view": "List",
+   "format": "{} Active",
+   "label": "Member",
+   "link_to": "Member",
+   "stats_filter": "{\"status\": \"Active\"}",
+   "type": "DocType"
+  },
+  {
+   "color": "Green",
+   "doc_view": "List",
+   "format": "{} Active",
+   "label": "GRM Contract",
+   "link_to": "GRM Contract",
+   "stats_filter": "{\"status\": \"Active\"}",
+   "type": "DocType"
+  },
+  {
+   "color": "Orange",
+   "doc_view": "List",
+   "format": "{} Active",
+   "label": "Membership",
+   "link_to": "Membership",
+   "stats_filter": "{\"status\": \"Active\"}",
+   "type": "DocType"
+  },
+  {
+   "color": "Purple",
+   "doc_view": "List",
+   "format": "{} Today",
+   "label": "Booking",
+   "link_to": "Booking",
+   "stats_filter": "{\"booking_date\": [\"Today\"]}",
+   "type": "DocType"
+  },
+  {
+   "color": "Red",
+   "doc_view": "List",
+   "label": "GRM Location",
+   "link_to": "GRM Location",
+   "type": "DocType"
+  },
+  {
+   "color": "Blue",
+   "doc_view": "List",
+   "format": "{} Available",
+   "label": "Space",
+   "link_to": "Space",
+   "stats_filter": "{\"status\": \"Available\"}",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Space Type",
+   "link_to": "Space Type",
+   "type": "DocType"
+  },
+  {
+   "color": "Green",
+   "doc_view": "List",
+   "label": "Package",
+   "link_to": "Package",
+   "type": "DocType"
+  },
+  {
+   "color": "Cyan",
+   "doc_view": "List",
+   "format": "{} Online",
+   "label": "Access Device",
+   "link_to": "Access Device",
+   "stats_filter": "{\"status\": \"Online\"}",
+   "type": "DocType"
+  },
+  {
+   "color": "Green",
+   "doc_view": "List",
+   "format": "{} Active",
+   "label": "Access Rule",
+   "link_to": "Access Rule",
+   "stats_filter": "{\"status\": \"Active\"}",
+   "type": "DocType"
+  },
+  {
+   "color": "Yellow",
+   "doc_view": "List",
+   "format": "{} Today",
+   "label": "Access Log",
+   "link_to": "Access Log",
+   "stats_filter": "{\"event_time\": [\"Today\"]}",
+   "type": "DocType"
+  },
+  {
+   "color": "Blue",
+   "doc_view": "New",
+   "label": "BioTime Settings",
+   "link_to": "BioTime Settings",
+   "type": "DocType"
+  },
+  {
+   "color": "Red",
+   "doc_view": "List",
+   "format": "{} This Month",
+   "label": "Location Expense",
+   "link_to": "Location Expense",
+   "stats_filter": "{\"expense_date\": [\"This Month\"]}",
+   "type": "DocType"
+  }
+ ],
+ "title": "Coworking Space"
+}

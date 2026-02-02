@@ -34,7 +34,7 @@
   {"fieldname": "event_details_section", "fieldtype": "Section Break", "label": "Event Details"},
   {"description": "Unique log ID", "fieldname": "log_id", "fieldtype": "Data", "label": "Log ID", "reqd": 1, "unique": 1},
   {"description": "Link to Access Device", "fieldname": "device", "fieldtype": "Link", "label": "Device", "options": "Access Device", "reqd": 1},
-  {"description": "From device", "fieldname": "location", "fieldtype": "Link", "label": "Location", "options": "Location", "read_only": 1},
+  {"description": "From device", "fieldname": "location", "fieldtype": "Link", "label": "Location", "options": "GRM Location", "read_only": 1},
   {"fieldname": "column_break_e1", "fieldtype": "Column Break"},
   {"description": "Event timestamp", "fieldname": "event_time", "fieldtype": "Datetime", "label": "Event Time", "reqd": 1},
   {"description": "Entry, Exit, Denied, Invalid", "fieldname": "event_type", "fieldtype": "Select", "label": "Event Type", "options": "Entry\nExit\nDenied\nInvalid", "reqd": 1},
@@ -58,11 +58,13 @@
   {"description": "Expired, No Access, Time Restricted, Limit Reached, Invalid", "fieldname": "denial_reason", "fieldtype": "Select", "label": "Denial Reason", "options": "Expired\nNo Access\nTime Restricted\nLimit Reached\nInvalid"},
   {"description": "Additional details", "fieldname": "denial_details", "fieldtype": "Small Text", "label": "Denial Details"}
  ],
+ "icon": "fa fa-history",
  "index_web_pages_for_search": 1,
- "modified": "2026-01-19 12:15:00.000000",
+ "modified": "2026-01-21 00:00:00",
  "modified_by": "Administrator",
  "module": "Grm Management",
  "name": "Access Log",
+ "search_fields": "member,device,location,event_type",
  "owner": "Administrator",
  "permissions": [
   {"create": 0, "delete": 0, "email": 1, "export": 1, "print": 1, "read": 1, "report": 1, "role": "System Manager", "share": 1, "write": 0},

@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "field:member_code",
  "creation": "2026-01-13 01:22:40.851179",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -70,6 +71,8 @@
    "description": " Individual, Company",
    "fieldname": "member_type",
    "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Member Type",
    "options": "\nIndividual\nCompany",
    "reqd": 1
@@ -90,7 +93,8 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Member Code",
-   "reqd": 1
+   "reqd": 1,
+   "unique": 1
   },
   {
    "description": "Industry Type",
@@ -110,6 +114,8 @@
    "description": "Active, Inactive, Suspended, Blacklisted",
    "fieldname": "status",
    "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Status",
    "options": "\nActive\nInactive\nSuspended\nBlacklisted",
    "reqd": 1
@@ -335,12 +341,14 @@
   }
  ],
  "grid_page_length": 50,
+ "icon": "fa fa-user",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-01-19 12:08:02.026286",
+ "modified": "2026-01-21 23:38:42.260894",
  "modified_by": "Administrator",
  "module": "Grm Management",
  "name": "Member",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
@@ -358,7 +366,12 @@
  ],
  "row_format": "Dynamic",
  "rows_threshold_for_grid_search": 20,
+ "search_fields": "member_name,primary_email,primary_mobile,company_name,zk_user_id",
+ "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "member_name",
+ "track_changes": 1,
+ "translated_doctype": 1
 }
