@@ -90,6 +90,12 @@ class GRMSubscription(Document):
 
 	def create_space_service_items(self):
 		"""Create ERPNext Service Items for each space for invoicing"""
+		# Find the Services item group (may be translated, e.g. الخدمات)
+		item_group = frappe.db.get_value('Item Group', 'Services', 'name') or \
+			frappe.db.get_value('Item Group', 'الخدمات', 'name')
+		if not item_group:
+			item_group = frappe.db.get_all('Item Group', filters={'is_group': 0}, limit=1, pluck='name')[0]
+
 		for space_row in self.spaces:
 			space = frappe.get_doc("GRM Space", space_row.space)
 
@@ -101,11 +107,10 @@ class GRMSubscription(Document):
 				item = frappe.new_doc("Item")
 				item.item_code = item_code
 				item.item_name = space.space_name
-				item.item_group = "Services"
-				item.stock_uom = "Unit"
+				item.item_group = item_group
+				item.stock_uom = "Nos"
 				item.is_stock_item = 0
 				item.is_sales_item = 1
-				item.is_service_item = 1
 				item.description = f"Coworking Space: {space.space_name} ({space.space_type})"
 
 				# Set default rate based on subscription type

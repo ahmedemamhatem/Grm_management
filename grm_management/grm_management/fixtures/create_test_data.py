@@ -39,21 +39,17 @@ def create_test_data():
 	print("7. Creating Members...")
 	members = create_members(tenants)
 
-	# 8. Create Subscription Packages
-	print("8. Creating Subscription Packages...")
-	packages = create_packages()
-
-	# 9. Create Sales Tax Template
-	print("9. Creating Sales Tax Template...")
+	# 8. Create Sales Tax Template
+	print("8. Creating Sales Tax Template...")
 	tax_template = create_tax_template()
 
-	# 10. Create Bookings (various statuses)
-	print("10. Creating Bookings...")
+	# 9. Create Bookings (various statuses)
+	print("9. Creating Bookings...")
 	bookings = create_bookings(spaces, tenants, tax_template)
 
-	# 11. Create Subscriptions
-	print("11. Creating Subscriptions...")
-	subscriptions = create_subscriptions(tenants, packages, spaces, members)
+	# 10. Create Subscriptions
+	print("10. Creating Subscriptions...")
+	subscriptions = create_subscriptions(tenants, spaces, members)
 
 	frappe.db.commit()
 
@@ -66,7 +62,6 @@ def create_test_data():
 	print(f"  - {len(landlords)} Landlords")
 	print(f"  - {len(tenants)} Tenants")
 	print(f"  - {len(members)} Members")
-	print(f"  - {len(packages)} Packages")
 	print(f"  - {len(bookings)} Bookings")
 	print(f"  - {len(subscriptions)} Subscriptions")
 	print("\nYou can now test the Space Calendar and booking workflows!\n")
@@ -385,35 +380,6 @@ def create_members(tenants):
 
 	return members
 
-def create_packages():
-	"""Create subscription packages"""
-	packages_data = [
-		{"package_name": "Basic Flex", "package_type": "Hot Desk", "duration_months": 1,
-		 "monthly_price": 1500, "description": "Flexible hot desk access"},
-		{"package_name": "Professional Desk", "package_type": "Dedicated Desk", "duration_months": 3,
-		 "monthly_price": 2500, "description": "Dedicated desk for 3 months"},
-		{"package_name": "Private Office Standard", "package_type": "Private Office", "duration_months": 6,
-		 "monthly_price": 8000, "description": "Private office for small team"},
-		{"package_name": "Enterprise Office", "package_type": "Private Office", "duration_months": 12,
-		 "monthly_price": 15000, "description": "Large private office annual plan"}
-	]
-
-	packages = []
-	for data in packages_data:
-		if not frappe.db.exists("GRM Subscription Package", data["package_name"]):
-			package = frappe.get_doc({
-				"doctype": "GRM Subscription Package",
-				**data
-			})
-			package.insert(ignore_permissions=True)
-			packages.append(package.name)
-			print(f"   Created Package: {package.name}")
-		else:
-			packages.append(data["package_name"])
-			print(f"   Package exists: {data['package_name']}")
-
-	return packages
-
 def create_tax_template():
 	"""Create sales tax template (VAT 15% for KSA)"""
 	template_name = "KSA VAT 15%"
@@ -520,23 +486,24 @@ def create_bookings(spaces, tenants, tax_template):
 
 	return bookings
 
-def create_subscriptions(tenants, packages, spaces, members):
+def create_subscriptions(tenants, spaces, members):
 	"""Create test subscriptions"""
+	from frappe.utils import add_months
 	today = nowdate()
 
 	subscriptions_data = [
-		# Active subscription
-		{"tenant": tenants[0], "package": packages[2], "subscription_type": "Fixed Term",
+		# Active monthly subscription
+		{"tenant": tenants[0], "subscription_type": "Monthly",
 		 "start_date": add_days(today, -30), "end_date": add_months(today, 5),
 		 "status": "Active", "spaces": [
-			 {"space": spaces[3], "member": members[0], "start_date": add_days(today, -30), "end_date": add_months(today, 5), "monthly_rate": 8000}
+			 {"space": spaces[3], "start_date": add_days(today, -30), "end_date": add_months(today, 5)}
 		 ]},
 
-		# Recently started subscription
-		{"tenant": tenants[1], "package": packages[1], "subscription_type": "Fixed Term",
-		 "start_date": today, "end_date": add_months(today, 3),
+		# Recently started annual subscription
+		{"tenant": tenants[1], "subscription_type": "Annual",
+		 "start_date": today, "end_date": add_months(today, 12),
 		 "status": "Active", "spaces": [
-			 {"space": spaces[4], "member": members[2], "start_date": today, "end_date": add_months(today, 3), "monthly_rate": 2500}
+			 {"space": spaces[4], "start_date": today, "end_date": add_months(today, 12)}
 		 ]},
 	]
 
@@ -545,7 +512,6 @@ def create_subscriptions(tenants, packages, spaces, members):
 		subscription = frappe.get_doc({
 			"doctype": "GRM Subscription",
 			"tenant": data["tenant"],
-			"package": data["package"],
 			"subscription_type": data["subscription_type"],
 			"start_date": data["start_date"],
 			"end_date": data["end_date"],

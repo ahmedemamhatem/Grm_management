@@ -100,29 +100,9 @@
   {
    "hidden": 0,
    "is_query_report": 0,
-   "label": "GRM Tenant",
-   "link_count": 0,
-   "link_to": "GRM Tenant",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
    "label": "GRM Member",
    "link_count": 0,
    "link_to": "GRM Member",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "GRM Subscription Package",
-   "link_count": 0,
-   "link_to": "GRM Subscription Package",
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
@@ -199,30 +179,10 @@
    "hidden": 0,
    "is_query_report": 0,
    "label": "Operations",
-   "link_count": 5,
+   "link_count": 4,
    "link_type": "DocType",
    "onboard": 0,
    "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "GRM Booking Roster",
-   "link_count": 0,
-   "link_to": "GRM Booking Roster",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Space Calendar",
-   "link_count": 0,
-   "link_to": "space_calendar",
-   "link_type": "Page",
-   "onboard": 0,
-   "type": "Link"
   },
   {
    "hidden": 0,
@@ -265,7 +225,7 @@
    "type": "Link"
   }
  ],
- "modified": "2026-02-03 09:20:19.063060",
+ "modified": "2026-02-03 17:59:31.207788",
  "modified_by": "Administrator",
  "module": "Grm Management",
  "name": "GRM Coworking Space",

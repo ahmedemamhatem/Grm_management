@@ -19,31 +19,6 @@ class SpaceBookingCalendar {
 	}
 
 	setup_page() {
-		// Add filters
-		this.filters.location = this.page.add_field({
-			fieldname: 'location',
-			label: __('Location'),
-			fieldtype: 'Link',
-			options: 'GRM Location',
-			change: () => this.load_calendar()
-		});
-
-		this.filters.space_type = this.page.add_field({
-			fieldname: 'space_type',
-			label: __('Space Type'),
-			fieldtype: 'Link',
-			options: 'GRM Space Type',
-			change: () => this.load_calendar()
-		});
-
-		this.filters.space = this.page.add_field({
-			fieldname: 'space',
-			label: __('Specific Space'),
-			fieldtype: 'Link',
-			options: 'GRM Space',
-			change: () => this.load_calendar()
-		});
-
 		// Add view switcher in menu
 		this.page.add_menu_item(__('Week View'), () => {
 			this.current_view = 'week';
@@ -127,9 +102,9 @@ class SpaceBookingCalendar {
 			args: {
 				start_date: start_date,
 				end_date: end_date,
-				location: this.filters.location.get_value(),
-				space_type: this.filters.space_type.get_value(),
-				space: this.filters.space.get_value()
+				location: null,
+				space_type: null,
+				space: null
 			},
 			callback: (r) => {
 				if (r.message) {
@@ -142,19 +117,6 @@ class SpaceBookingCalendar {
 	render_calendar(data, start_date, end_date) {
 		let html = `
 			<style>
-				.page-form {
-					position: relative !important;
-					z-index: 200 !important;
-				}
-				.page-head-content {
-					z-index: 201 !important;
-				}
-				.page-title {
-					z-index: 201 !important;
-				}
-				.standard-actions {
-					z-index: 201 !important;
-				}
 				.booking-calendar-container {
 					overflow: auto;
 					background: #f5f7fa;
@@ -407,22 +369,32 @@ class SpaceBookingCalendar {
 
 		let html = '<div style="overflow-x: auto;"><table class="booking-calendar"><thead>';
 
-		// Single header row with date and space combined
-		html += '<tr><th class="time-column" style="position: sticky; left: 0; z-index: 15;">Time</th>';
+		// Two-row header: Row 1 = Day names (merged), Row 2 = Space names
 		let dates = [];
 		let current = start_date;
 		while (current <= end_date) {
 			dates.push(current);
-			let is_today = current === frappe.datetime.get_today();
-			let day_name = is_today ? 'TODAY' : this.get_day_name(current);
-
-			data.spaces.forEach(space => {
-				let space_display = space.space_name.length > 25 ? space.space_name.substring(0, 22) + '...' : space.space_name;
-				html += `<th class="space-header">${day_name}<br><small>${space_display}</small></th>`;
-			});
-
 			current = frappe.datetime.add_days(current, 1);
 		}
+
+		// Row 1: Day names (merged columns)
+		html += '<tr><th class="time-column" rowspan="2" style="position: sticky; left: 0; z-index: 15;">Time</th>';
+		dates.forEach(date => {
+			let is_today = date === frappe.datetime.get_today();
+			let day_name = is_today ? 'TODAY' : this.get_day_name(date);
+			let spaces_count = data.spaces.length;
+			html += `<th class="space-header" colspan="${spaces_count}">${day_name}</th>`;
+		});
+		html += '</tr>';
+
+		// Row 2: Space names
+		html += '<tr>';
+		dates.forEach(date => {
+			data.spaces.forEach(space => {
+				let space_display = space.space_name.length > 30 ? space.space_name.substring(0, 27) + '...' : space.space_name;
+				html += `<th class="space-header"><small>${space_display}</small></th>`;
+			});
+		});
 		html += '</tr></thead><tbody>';
 
 		// Generate 30-minute time slots (8 AM - 10 PM)
@@ -750,36 +722,48 @@ class SpaceBookingCalendar {
 
 	convert_to_subscription(booking) {
 		let d = new frappe.ui.Dialog({
-			title: __('Convert Booking to Subscription'),
+			title: __('Convert Booking to Subscription + Invoice + Payment'),
 			fields: [
 				{fieldtype: 'Link', fieldname: 'tenant', label: __('Tenant'), options: 'GRM Tenant', reqd: 1,
+					default: booking.tenant,
 					get_query: () => {
 						return {filters: {'status': 'Active'}}
 					}
 				},
-				{fieldtype: 'Link', fieldname: 'package', label: __('Package'), options: 'GRM Subscription Package'},
-				{fieldtype: 'Select', fieldname: 'subscription_type', label: __('Type'),
-					options: 'Monthly\nAnnual', default: 'Monthly', reqd: 1},
+				{fieldtype: 'Select', fieldname: 'subscription_type', label: __('Subscription Type'),
+					options: 'Hourly\nDaily\nMonthly\nAnnual', default: 'Monthly', reqd: 1},
 				{fieldtype: 'Date', fieldname: 'start_date', label: __('Start Date'), default: frappe.datetime.get_today(), reqd: 1},
-				{fieldtype: 'Date', fieldname: 'end_date', label: __('End Date'), reqd: 1}
+				{fieldtype: 'Date', fieldname: 'end_date', label: __('End Date'), reqd: 1},
+				{fieldtype: 'Section Break'},
+				{fieldtype: 'HTML', options: '<p class="text-muted">This will create a subscription, generate an invoice, and record payment automatically.</p>'}
 			],
-			primary_action_label: __('Create Subscription'),
+			primary_action_label: __('Create Subscription + Invoice + Payment'),
 			primary_action: (values) => {
 				frappe.call({
 					method: 'grm_management.grm_management.page.space_calendar.space_calendar.convert_booking_to_subscription',
 					args: {
 						booking_id: booking.name,
 						tenant: values.tenant,
-						package: values.package,
 						subscription_type: values.subscription_type,
 						start_date: values.start_date,
 						end_date: values.end_date
 					},
 					callback: (r) => {
 						if (r.message) {
-							frappe.show_alert({message: __('Subscription created successfully'), indicator: 'green'});
+							let msg = `<div>
+								<p><b>Subscription:</b> ${r.message.subscription}</p>
+								<p><b>Invoice:</b> ${r.message.invoice}</p>
+								<p><b>Payment:</b> ${r.message.payment}</p>
+							</div>`;
+							frappe.msgprint({
+								title: __('Conversion Successful'),
+								message: msg,
+								indicator: 'green'
+							});
 							d.hide();
-							frappe.set_route('Form', 'GRM Subscription', r.message);
+							this.load_calendar();
+							// Navigate to subscription
+							frappe.set_route('Form', 'GRM Subscription', r.message.subscription);
 						}
 					}
 				});
