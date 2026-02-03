@@ -1,0 +1,93 @@
+{
+ "actions": [],
+ "creation": "2026-02-02 21:48:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "user_type",
+  "member",
+  "member_companion",
+  "member_employee",
+  "user_name",
+  "access_granted",
+  "column_break_1",
+  "zk_user_id",
+  "access_start_time",
+  "access_end_time"
+ ],
+ "fields": [
+  {
+   "fieldname": "user_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "User Type | \u0646\u0648\u0639 \u0627\u0644\u0645\u0633\u062a\u062e\u062f\u0645",
+   "options": "Member\nCompanion\nEmployee",
+   "reqd": 1
+  },
+  {
+   "fieldname": "member",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Member | المشترك",
+   "options": "GRM Member",
+   "depends_on": "eval:doc.user_type=='Member'"
+  },
+  {
+   "fieldname": "member_companion",
+   "fieldtype": "Link",
+   "label": "Member Companion | \u0627\u0644\u0645\u0631\u0627\u0641\u0642",
+   "options": "Member Companion",
+   "depends_on": "eval:doc.user_type=='Companion'"
+  },
+  {
+   "fieldname": "member_employee",
+   "fieldtype": "Link",
+   "label": "Member Employee | \u0627\u0644\u0645\u0648\u0638\u0641",
+   "options": "Member Employee",
+   "depends_on": "eval:doc.user_type=='Employee'"
+  },
+  {
+   "fieldname": "user_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "User Name | \u0627\u0633\u0645 \u0627\u0644\u0645\u0633\u062a\u062e\u062f\u0645",
+   "reqd": 1
+  },
+  {
+   "fieldname": "access_granted",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Access Granted | \u0627\u0644\u0633\u0645\u0627\u062d \u0628\u0627\u0644\u062f\u062e\u0648\u0644",
+   "default": "1"
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "zk_user_id",
+   "fieldtype": "Data",
+   "label": "ZK User ID | \u0645\u0639\u0631\u0641 \u0627\u0644\u0628\u0635\u0645\u0629"
+  },
+  {
+   "fieldname": "access_start_time",
+   "fieldtype": "Time",
+   "label": "Access Start | \u0648\u0642\u062a \u0627\u0644\u0628\u062f\u0627\u064a\u0629"
+  },
+  {
+   "fieldname": "access_end_time",
+   "fieldtype": "Time",
+   "label": "Access End | \u0648\u0642\u062a \u0627\u0644\u0646\u0647\u0627\u064a\u0629"
+  }
+ ],
+ "istable": 1,
+ "modified": "2026-02-03 01:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Grm Management",
+ "name": "Authorized User",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

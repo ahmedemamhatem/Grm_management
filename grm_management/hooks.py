@@ -137,13 +137,29 @@ doctype_js = {"doctype" : "public/js/location.js"}
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+	"GRM Location": {
+		"after_insert": "grm_management.grm_management.doc_events.populate_code_from_name"
+	},
+	"GRM Property": {
+		"after_insert": "grm_management.grm_management.doc_events.populate_code_from_name"
+	},
+	"GRM Space": {
+		"after_insert": "grm_management.grm_management.doc_events.populate_code_from_name"
+	},
+	"GRM Space Type": {
+		"after_insert": "grm_management.grm_management.doc_events.populate_code_from_name"
+	},
+	"GRM Landlord": {
+		"after_insert": "grm_management.grm_management.doc_events.populate_code_from_name"
+	},
+	"GRM Property Contract": {
+		"after_insert": "grm_management.grm_management.doc_events.populate_code_from_name"
+	},
+	"GRM Tenant": {
+		"after_insert": "grm_management.grm_management.doc_events.populate_code_from_name"
+	}
+}
 
 # Scheduled Tasks
 # ---------------
@@ -231,6 +247,10 @@ scheduler_events = {
 
 # Automatically update python controller files with type annotations for this app.
 # export_python_type_annotations = True
+
+# Boot session
+# ------------
+boot_session = "grm_management.boot.boot_session"
 
 # default_log_clearing_doctypes = {
 # 	"Logging DocType Name": 30  # days to retain logs

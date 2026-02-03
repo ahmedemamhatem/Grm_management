@@ -1,0 +1,278 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "calendar_options": {
+  "field_map": {
+   "start": "booking_date",
+   "end": "booking_date",
+   "id": "name",
+   "title": "space",
+   "allDay": 0
+  }
+ },
+ "creation": "2026-02-02 21:50:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "show_preview_popup": 1,
+ "field_order": [
+  "naming_series",
+  "member",
+  "space",
+  "column_break_1",
+  "status",
+  "booking_type",
+  "booking_details_section",
+  "booking_date",
+  "start_time",
+  "end_time",
+  "column_break_details",
+  "duration_hours",
+  "attendees",
+  "purpose",
+  "pricing_section",
+  "rate_type",
+  "hourly_rate",
+  "total_hours",
+  "column_break_pricing",
+  "subtotal",
+  "discount",
+  "tax",
+  "total_amount",
+  "checkin_section",
+  "actual_check_in",
+  "actual_check_out",
+  "column_break_checkin",
+  "overtime_hours",
+  "overtime_charges",
+  "payment_section",
+  "payment_status",
+  "invoice",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "BKG-.YYYY.-.#####",
+   "default": "BKG-.YYYY.-.#####"
+  },
+  {
+   "fieldname": "member",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Member | المشترك",
+   "options": "GRM Member",
+   "reqd": 1
+  },
+  {
+   "fieldname": "space",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Space | المساحة",
+   "options": "GRM Space",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status | الحالة",
+   "options": "Draft\nConfirmed\nChecked-in\nChecked-out\nNo-show\nCancelled",
+   "reqd": 1,
+   "default": "Draft"
+  },
+  {
+   "fieldname": "booking_type",
+   "fieldtype": "Select",
+   "label": "Booking Type | نوع الحجز",
+   "options": "Hourly\nDaily\nMulti-day",
+   "reqd": 1
+  },
+  {
+   "fieldname": "booking_details_section",
+   "fieldtype": "Section Break",
+   "label": "Booking Details | تفاصيل الحجز"
+  },
+  {
+   "fieldname": "booking_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Booking Date | تاريخ الحجز",
+   "reqd": 1
+  },
+  {
+   "fieldname": "start_time",
+   "fieldtype": "Time",
+   "label": "Start Time | وقت البداية",
+   "reqd": 1
+  },
+  {
+   "fieldname": "end_time",
+   "fieldtype": "Time",
+   "label": "End Time | وقت النهاية",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_details",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "duration_hours",
+   "fieldtype": "Float",
+   "label": "Duration (Hours) | المدة بالساعات",
+   "read_only": 1
+  },
+  {
+   "fieldname": "attendees",
+   "fieldtype": "Int",
+   "label": "Number of Attendees | عدد الحاضرين",
+   "default": "1"
+  },
+  {
+   "fieldname": "purpose",
+   "fieldtype": "Data",
+   "label": "Purpose | الغرض"
+  },
+  {
+   "fieldname": "pricing_section",
+   "fieldtype": "Section Break",
+   "label": "Pricing | التسعير"
+  },
+  {
+   "fieldname": "rate_type",
+   "fieldtype": "Select",
+   "label": "Rate Type | نوع التسعير",
+   "options": "Hourly\nDaily\nFixed",
+   "default": "Hourly"
+  },
+  {
+   "fieldname": "hourly_rate",
+   "fieldtype": "Currency",
+   "label": "Hourly Rate | سعر الساعة"
+  },
+  {
+   "fieldname": "total_hours",
+   "fieldtype": "Float",
+   "label": "Total Hours | إجمالي الساعات",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_pricing",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "subtotal",
+   "fieldtype": "Currency",
+   "label": "Subtotal | المبلغ",
+   "read_only": 1
+  },
+  {
+   "fieldname": "discount",
+   "fieldtype": "Currency",
+   "label": "Discount | الخصم",
+   "default": "0"
+  },
+  {
+   "fieldname": "tax",
+   "fieldtype": "Currency",
+   "label": "Tax | الضريبة",
+   "default": "0"
+  },
+  {
+   "fieldname": "total_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Total Amount | المبلغ الإجمالي",
+   "read_only": 1
+  },
+  {
+   "fieldname": "checkin_section",
+   "fieldtype": "Section Break",
+   "label": "Check-in/out | تسجيل الدخول/الخروج"
+  },
+  {
+   "fieldname": "actual_check_in",
+   "fieldtype": "Datetime",
+   "label": "Actual Check-in | وقت الدخول الفعلي",
+   "read_only": 1
+  },
+  {
+   "fieldname": "actual_check_out",
+   "fieldtype": "Datetime",
+   "label": "Actual Check-out | وقت الخروج الفعلي",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_checkin",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "overtime_hours",
+   "fieldtype": "Float",
+   "label": "Overtime Hours | ساعات إضافية",
+   "read_only": 1,
+   "default": "0"
+  },
+  {
+   "fieldname": "overtime_charges",
+   "fieldtype": "Currency",
+   "label": "Overtime Charges | رسوم الساعات الإضافية",
+   "read_only": 1,
+   "default": "0"
+  },
+  {
+   "fieldname": "payment_section",
+   "fieldtype": "Section Break",
+   "label": "Payment | الدفع"
+  },
+  {
+   "fieldname": "payment_status",
+   "fieldtype": "Select",
+   "label": "Payment Status | حالة الدفع",
+   "options": "Unpaid\nPaid\nPartial",
+   "default": "Unpaid"
+  },
+  {
+   "fieldname": "invoice",
+   "fieldtype": "Link",
+   "label": "Invoice | الفاتورة",
+   "options": "Sales Invoice",
+   "read_only": 1
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Text",
+   "label": "Notes | ملاحظات"
+  }
+ ],
+ "modified": "2026-02-03 07:30:00.000000",
+ "modified_by": "Administrator",
+ "module": "Grm Management",
+ "name": "GRM Booking",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

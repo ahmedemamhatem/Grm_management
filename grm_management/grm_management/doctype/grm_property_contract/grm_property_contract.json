@@ -1,0 +1,364 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-02-03 00:00:00.000000",
+ "doctype": "DocType",
+ "document_type": "Document",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "basic_info_section",
+  "contract_number",
+  "contract_title",
+  "contract_title_ar",
+  "column_break_basic",
+  "status",
+  "contract_type",
+  "parties_section",
+  "landlord",
+  "landlord_name",
+  "property",
+  "property_name",
+  "column_break_parties",
+  "location",
+  "location_name",
+  "dates_section",
+  "contract_date",
+  "start_date",
+  "end_date",
+  "column_break_dates",
+  "duration_years",
+  "duration_months",
+  "notice_period_days",
+  "auto_renewal",
+  "financial_section",
+  "monthly_rent",
+  "annual_rent",
+  "security_deposit",
+  "column_break_financial",
+  "payment_frequency",
+  "payment_day",
+  "escalation_percentage",
+  "escalation_frequency",
+  "terms_section",
+  "terms_and_conditions",
+  "column_break_terms",
+  "special_clauses",
+  "attachments_section",
+  "contract_document",
+  "additional_documents",
+  "stats_section",
+  "total_paid",
+  "total_pending",
+  "column_break_stats",
+  "last_payment_date",
+  "next_payment_date"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "CONT-.YYYY.-.####",
+   "default": "CONT-.YYYY.-.####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "basic_info_section",
+   "fieldtype": "Section Break",
+   "label": "Basic Information | \u0627\u0644\u0645\u0639\u0644\u0648\u0645\u0627\u062a \u0627\u0644\u0623\u0633\u0627\u0633\u064a\u0629"
+  },
+  {
+   "fieldname": "contract_number",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Contract Number | \u0631\u0642\u0645 \u0627\u0644\u0639\u0642\u062f",
+   "reqd": 0,
+   "read_only": 1
+  },
+  {
+   "fieldname": "contract_title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Contract Title | \u0639\u0646\u0648\u0627\u0646 \u0627\u0644\u0639\u0642\u062f",
+   "reqd": 1
+  },
+  {
+   "fieldname": "contract_title_ar",
+   "fieldtype": "Data",
+   "label": "Contract Title (Arabic) | \u0627\u0644\u0639\u0646\u0648\u0627\u0646 \u0628\u0627\u0644\u0639\u0631\u0628\u064a\u0629"
+  },
+  {
+   "fieldname": "column_break_basic",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status | \u0627\u0644\u062d\u0627\u0644\u0629",
+   "options": "\nDraft\nActive\nExpired\nTerminated\nRenewed",
+   "default": "Draft",
+   "reqd": 1
+  },
+  {
+   "fieldname": "contract_type",
+   "fieldtype": "Select",
+   "label": "Contract Type | \u0646\u0648\u0639 \u0627\u0644\u0639\u0642\u062f",
+   "options": "\nNew\nRenewal\nAmendment",
+   "default": "New"
+  },
+  {
+   "fieldname": "parties_section",
+   "fieldtype": "Section Break",
+   "label": "Parties | \u0627\u0644\u0623\u0637\u0631\u0627\u0641"
+  },
+  {
+   "fieldname": "landlord",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Landlord | \u0627\u0644\u0645\u0627\u0644\u0643",
+   "options": "GRM Landlord",
+   "reqd": 1
+  },
+  {
+   "fieldname": "landlord_name",
+   "fieldtype": "Data",
+   "fetch_from": "landlord.landlord_name",
+   "label": "Landlord Name | \u0627\u0633\u0645 \u0627\u0644\u0645\u0627\u0644\u0643",
+   "read_only": 1
+  },
+  {
+   "fieldname": "property",
+   "fieldtype": "Link",
+   "label": "Property | \u0627\u0644\u0639\u0642\u0627\u0631",
+   "options": "GRM Property"
+  },
+  {
+   "fieldname": "property_name",
+   "fieldtype": "Data",
+   "fetch_from": "property.property_name",
+   "label": "Property Name | \u0627\u0633\u0645 \u0627\u0644\u0639\u0642\u0627\u0631",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_parties",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "label": "Location | \u0627\u0644\u0645\u0648\u0642\u0639",
+   "options": "GRM Location"
+  },
+  {
+   "fieldname": "location_name",
+   "fieldtype": "Data",
+   "fetch_from": "location.location_name",
+   "label": "Location Name | \u0627\u0633\u0645 \u0627\u0644\u0645\u0648\u0642\u0639",
+   "read_only": 1
+  },
+  {
+   "fieldname": "dates_section",
+   "fieldtype": "Section Break",
+   "label": "Contract Dates | \u062a\u0648\u0627\u0631\u064a\u062e \u0627\u0644\u0639\u0642\u062f"
+  },
+  {
+   "fieldname": "contract_date",
+   "fieldtype": "Date",
+   "label": "Contract Date | \u062a\u0627\u0631\u064a\u062e \u0627\u0644\u0639\u0642\u062f",
+   "reqd": 1
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Start Date | \u062a\u0627\u0631\u064a\u062e \u0627\u0644\u0628\u062f\u0627\u064a\u0629",
+   "reqd": 1
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "End Date | \u062a\u0627\u0631\u064a\u062e \u0627\u0644\u0627\u0646\u062a\u0647\u0627\u0621",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_dates",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "duration_years",
+   "fieldtype": "Float",
+   "label": "Duration (Years) | \u0627\u0644\u0645\u062f\u0629 \u0628\u0627\u0644\u0633\u0646\u0648\u0627\u062a",
+   "read_only": 1,
+   "precision": "2"
+  },
+  {
+   "fieldname": "duration_months",
+   "fieldtype": "Int",
+   "label": "Duration (Months) | \u0627\u0644\u0645\u062f\u0629 \u0628\u0627\u0644\u0634\u0647\u0648\u0631",
+   "read_only": 1
+  },
+  {
+   "fieldname": "notice_period_days",
+   "fieldtype": "Int",
+   "label": "Notice Period (Days) | \u0641\u062a\u0631\u0629 \u0627\u0644\u0625\u062e\u0637\u0627\u0631 \u0628\u0627\u0644\u0623\u064a\u0627\u0645",
+   "default": "90"
+  },
+  {
+   "fieldname": "auto_renewal",
+   "fieldtype": "Check",
+   "label": "Auto Renewal | \u062a\u062c\u062f\u064a\u062f \u062a\u0644\u0642\u0627\u0626\u064a"
+  },
+  {
+   "fieldname": "financial_section",
+   "fieldtype": "Section Break",
+   "label": "Financial Terms | \u0627\u0644\u0634\u0631\u0648\u0637 \u0627\u0644\u0645\u0627\u0644\u064a\u0629"
+  },
+  {
+   "fieldname": "monthly_rent",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Monthly Rent | \u0627\u0644\u0625\u064a\u062c\u0627\u0631 \u0627\u0644\u0634\u0647\u0631\u064a",
+   "reqd": 1
+  },
+  {
+   "fieldname": "annual_rent",
+   "fieldtype": "Currency",
+   "label": "Annual Rent | \u0627\u0644\u0625\u064a\u062c\u0627\u0631 \u0627\u0644\u0633\u0646\u0648\u064a",
+   "read_only": 1
+  },
+  {
+   "fieldname": "security_deposit",
+   "fieldtype": "Currency",
+   "label": "Security Deposit | \u0645\u0628\u0644\u063a \u0627\u0644\u062a\u0623\u0645\u064a\u0646"
+  },
+  {
+   "fieldname": "column_break_financial",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "payment_frequency",
+   "fieldtype": "Select",
+   "label": "Payment Frequency | \u062a\u0643\u0631\u0627\u0631 \u0627\u0644\u062f\u0641\u0639",
+   "options": "\nMonthly\nQuarterly\nSemi-Annually\nAnnually",
+   "default": "Monthly"
+  },
+  {
+   "fieldname": "payment_day",
+   "fieldtype": "Int",
+   "label": "Payment Day of Month | \u064a\u0648\u0645 \u0627\u0644\u062f\u0641\u0639 \u0645\u0646 \u0627\u0644\u0634\u0647\u0631",
+   "default": "1"
+  },
+  {
+   "fieldname": "escalation_percentage",
+   "fieldtype": "Percent",
+   "label": "Escalation % | \u0646\u0633\u0628\u0629 \u0627\u0644\u0632\u064a\u0627\u062f\u0629 \u0627\u0644\u0633\u0646\u0648\u064a\u0629"
+  },
+  {
+   "fieldname": "escalation_frequency",
+   "fieldtype": "Select",
+   "label": "Escalation Frequency | \u062a\u0643\u0631\u0627\u0631 \u0627\u0644\u0632\u064a\u0627\u062f\u0629",
+   "options": "\nNone\nAnnually\nBiennially\nEvery 3 Years",
+   "default": "None"
+  },
+  {
+   "fieldname": "terms_section",
+   "fieldtype": "Section Break",
+   "label": "Terms & Conditions | \u0627\u0644\u0634\u0631\u0648\u0637 \u0648\u0627\u0644\u0623\u062d\u0643\u0627\u0645"
+  },
+  {
+   "fieldname": "terms_and_conditions",
+   "fieldtype": "Text Editor",
+   "label": "Terms and Conditions | \u0627\u0644\u0634\u0631\u0648\u0637 \u0648\u0627\u0644\u0623\u062d\u0643\u0627\u0645"
+  },
+  {
+   "fieldname": "column_break_terms",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "special_clauses",
+   "fieldtype": "Text Editor",
+   "label": "Special Clauses | \u0627\u0644\u0628\u0646\u0648\u062f \u0627\u0644\u062e\u0627\u0635\u0629"
+  },
+  {
+   "fieldname": "attachments_section",
+   "fieldtype": "Section Break",
+   "label": "Attachments | \u0627\u0644\u0645\u0631\u0641\u0642\u0627\u062a"
+  },
+  {
+   "fieldname": "contract_document",
+   "fieldtype": "Attach",
+   "label": "Contract Document | \u0645\u0633\u062a\u0646\u062f \u0627\u0644\u0639\u0642\u062f"
+  },
+  {
+   "fieldname": "additional_documents",
+   "fieldtype": "Attach",
+   "label": "Additional Documents | \u0645\u0633\u062a\u0646\u062f\u0627\u062a \u0625\u0636\u0627\u0641\u064a\u0629"
+  },
+  {
+   "fieldname": "stats_section",
+   "fieldtype": "Section Break",
+   "label": "Payment Statistics | \u0625\u062d\u0635\u0627\u0626\u064a\u0627\u062a \u0627\u0644\u062f\u0641\u0639"
+  },
+  {
+   "fieldname": "total_paid",
+   "fieldtype": "Currency",
+   "label": "Total Paid | \u0625\u062c\u0645\u0627\u0644\u064a \u0627\u0644\u0645\u062f\u0641\u0648\u0639",
+   "read_only": 1,
+   "default": "0"
+  },
+  {
+   "fieldname": "total_pending",
+   "fieldtype": "Currency",
+   "label": "Total Pending | \u0625\u062c\u0645\u0627\u0644\u064a \u0627\u0644\u0645\u0633\u062a\u062d\u0642",
+   "read_only": 1,
+   "default": "0"
+  },
+  {
+   "fieldname": "column_break_stats",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "last_payment_date",
+   "fieldtype": "Date",
+   "label": "Last Payment Date | \u062a\u0627\u0631\u064a\u062e \u0622\u062e\u0631 \u062f\u0641\u0639\u0629",
+   "read_only": 1
+  },
+  {
+   "fieldname": "next_payment_date",
+   "fieldtype": "Date",
+   "label": "Next Payment Date | \u062a\u0627\u0631\u064a\u062e \u0627\u0644\u062f\u0641\u0639\u0629 \u0627\u0644\u0642\u0627\u062f\u0645\u0629",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-02-03 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Grm Management",
+ "name": "GRM Property Contract",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "contract_title",
+ "track_changes": 1
+}

@@ -1,0 +1,11 @@
+{"actions": [], "creation": "2026-02-02 21:47:00.000000", "doctype": "DocType", "editable_grid": 1, "engine": "InnoDB",
+ "field_order": ["space","member","start_date","end_date","monthly_rate"],
+ "fields": [
+  {"fieldname": "space", "fieldtype": "Link", "in_list_view": 1, "label": "Space | المساحة", "options": "GRM Space", "reqd": 1},
+  {"fieldname": "member", "fieldtype": "Link", "in_list_view": 1, "label": "Assigned Member | المشترك", "options": "GRM Member", "description": "Optional: Specific member assigned to this space"},
+  {"fieldname": "start_date", "fieldtype": "Date", "label": "Start Date | تاريخ البداية"},
+  {"fieldname": "end_date", "fieldtype": "Date", "label": "End Date | تاريخ النهاية"},
+  {"fieldname": "monthly_rate", "fieldtype": "Currency", "in_list_view": 1, "label": "Monthly Rate | السعر الشهري"}
+ ],
+ "istable": 1, "modified": "2026-02-02 21:47:00.000000", "modified_by": "Administrator", "module": "Grm Management", "name": "Subscription Space", "owner": "Administrator", "permissions": [], "sort_field": "modified", "sort_order": "DESC"
+}

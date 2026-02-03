@@ -1,0 +1,425 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-02-02 21:10:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "basic_info_section",
+  "space_name",
+  "space_name_ar",
+  "space_code",
+  "column_break_basic",
+  "location",
+  "property",
+  "space_type",
+  "column_break_basic2",
+  "status",
+  "is_featured",
+  "allow_booking",
+  "details_section",
+  "floor_number",
+  "room_number",
+  "area_sqm",
+  "column_break_details",
+  "capacity",
+  "min_booking_hours",
+  "setup_time_minutes",
+  "pricing_section",
+  "use_custom_pricing",
+  "hourly_rate",
+  "daily_rate",
+  "column_break_pricing",
+  "monthly_rate",
+  "annual_rate",
+  "minimum_charge",
+  "amenities_section",
+  "wifi",
+  "air_conditioning",
+  "projector",
+  "column_break_amenities",
+  "whiteboard",
+  "coffee_tea",
+  "parking",
+  "column_break_amenities2",
+  "printer_access",
+  "phone_line",
+  "custom_amenities",
+  "occupancy_section",
+  "current_tenant",
+  "current_subscription",
+  "column_break_occupancy",
+  "occupancy_start",
+  "occupancy_end",
+  "additional_section",
+  "description",
+  "column_break_additional",
+  "space_image",
+  "notes",
+  "statistics_section",
+  "total_bookings",
+  "total_revenue",
+  "column_break_stats",
+  "last_booking_date",
+  "last_updated"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "SPACE-.YYYY.-.####",
+   "default": "SPACE-.YYYY.-.####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "basic_info_section",
+   "fieldtype": "Section Break",
+   "label": "Basic Information | \u0627\u0644\u0645\u0639\u0644\u0648\u0645\u0627\u062a \u0627\u0644\u0623\u0633\u0627\u0633\u064a\u0629"
+  },
+  {
+   "fieldname": "space_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Space Name | \u0627\u0633\u0645 \u0627\u0644\u0645\u0633\u0627\u062d\u0629",
+   "reqd": 1
+  },
+  {
+   "fieldname": "space_name_ar",
+   "fieldtype": "Data",
+   "label": "Name (Arabic) | \u0627\u0644\u0627\u0633\u0645 \u0628\u0627\u0644\u0639\u0631\u0628\u064a\u0629"
+  },
+  {
+   "fieldname": "space_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Space Code | \u0643\u0648\u062f \u0627\u0644\u0645\u0633\u0627\u062d\u0629",
+   "reqd": 0,
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_basic",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Location | \u0627\u0644\u0645\u0648\u0642\u0639",
+   "options": "GRM Location",
+   "reqd": 1
+  },
+  {
+   "fieldname": "property",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Property | \u0627\u0644\u0639\u0642\u0627\u0631",
+   "options": "GRM Property"
+  },
+  {
+   "fieldname": "space_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Space Type | \u0646\u0648\u0639 \u0627\u0644\u0645\u0633\u0627\u062d\u0629",
+   "options": "GRM Space Type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_basic2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status | \u0627\u0644\u062d\u0627\u0644\u0629",
+   "options": "Available\nRented\nNot Ready\nUnder Maintenance\nReserved",
+   "reqd": 1,
+   "default": "Not Ready"
+  },
+  {
+   "fieldname": "is_featured",
+   "fieldtype": "Check",
+   "label": "Featured Space | \u0645\u0633\u0627\u062d\u0629 \u0645\u0645\u064a\u0632\u0629"
+  },
+  {
+   "fieldname": "allow_booking",
+   "fieldtype": "Check",
+   "label": "Allow Booking | \u0627\u0644\u0633\u0645\u0627\u062d \u0628\u0627\u0644\u062d\u062c\u0632",
+   "default": "1"
+  },
+  {
+   "fieldname": "details_section",
+   "fieldtype": "Section Break",
+   "label": "Details | \u0627\u0644\u062a\u0641\u0627\u0635\u064a\u0644"
+  },
+  {
+   "fieldname": "floor_number",
+   "fieldtype": "Int",
+   "label": "Floor Number | \u0631\u0642\u0645 \u0627\u0644\u0637\u0627\u0628\u0642",
+   "default": "1"
+  },
+  {
+   "fieldname": "room_number",
+   "fieldtype": "Data",
+   "label": "Room Number | \u0631\u0642\u0645 \u0627\u0644\u063a\u0631\u0641\u0629"
+  },
+  {
+   "fieldname": "area_sqm",
+   "fieldtype": "Float",
+   "label": "Area (sqm) | \u0627\u0644\u0645\u0633\u0627\u062d\u0629"
+  },
+  {
+   "fieldname": "column_break_details",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "capacity",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Capacity | \u0627\u0644\u0633\u0639\u0629",
+   "reqd": 1
+  },
+  {
+   "fieldname": "min_booking_hours",
+   "fieldtype": "Float",
+   "label": "Min Booking Hours | \u0627\u0644\u062d\u062f \u0627\u0644\u0623\u062f\u0646\u0649 \u0644\u0644\u062d\u062c\u0632 (\u0633\u0627\u0639\u0627\u062a)",
+   "default": "1"
+  },
+  {
+   "fieldname": "setup_time_minutes",
+   "fieldtype": "Int",
+   "label": "Setup Time (minutes) | \u0648\u0642\u062a \u0627\u0644\u062a\u062c\u0647\u064a\u0632",
+   "default": "0"
+  },
+  {
+   "fieldname": "pricing_section",
+   "fieldtype": "Section Break",
+   "label": "Pricing | \u0627\u0644\u062a\u0633\u0639\u064a\u0631"
+  },
+  {
+   "fieldname": "use_custom_pricing",
+   "fieldtype": "Check",
+   "label": "Use Custom Pricing | \u062a\u0633\u0639\u064a\u0631 \u0645\u062e\u0635\u0635"
+  },
+  {
+   "fieldname": "hourly_rate",
+   "fieldtype": "Currency",
+   "label": "Hourly Rate | \u0633\u0639\u0631 \u0627\u0644\u0633\u0627\u0639\u0629",
+   "default": "0"
+  },
+  {
+   "fieldname": "daily_rate",
+   "fieldtype": "Currency",
+   "label": "Daily Rate | \u0633\u0639\u0631 \u0627\u0644\u064a\u0648\u0645",
+   "default": "0"
+  },
+  {
+   "fieldname": "column_break_pricing",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "monthly_rate",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Monthly Rate | \u0633\u0639\u0631 \u0627\u0644\u0634\u0647\u0631",
+   "default": "0"
+  },
+  {
+   "fieldname": "annual_rate",
+   "fieldtype": "Currency",
+   "label": "Annual Rate | \u0633\u0639\u0631 \u0627\u0644\u0633\u0646\u0629",
+   "default": "0"
+  },
+  {
+   "fieldname": "minimum_charge",
+   "fieldtype": "Currency",
+   "label": "Minimum Charge | \u0627\u0644\u062d\u062f \u0627\u0644\u0623\u062f\u0646\u0649 \u0644\u0644\u0631\u0633\u0648\u0645",
+   "default": "0"
+  },
+  {
+   "fieldname": "amenities_section",
+   "fieldtype": "Section Break",
+   "label": "Amenities | \u0627\u0644\u062e\u062f\u0645\u0627\u062a"
+  },
+  {
+   "fieldname": "wifi",
+   "fieldtype": "Check",
+   "label": "WiFi | \u0648\u0627\u064a \u0641\u0627\u064a"
+  },
+  {
+   "fieldname": "air_conditioning",
+   "fieldtype": "Check",
+   "label": "Air Conditioning | \u062a\u0643\u064a\u064a\u0641"
+  },
+  {
+   "fieldname": "projector",
+   "fieldtype": "Check",
+   "label": "Projector | \u0628\u0631\u0648\u062c\u0643\u062a\u0648\u0631"
+  },
+  {
+   "fieldname": "column_break_amenities",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "whiteboard",
+   "fieldtype": "Check",
+   "label": "Whiteboard | \u0644\u0648\u062d \u0623\u0628\u064a\u0636"
+  },
+  {
+   "fieldname": "coffee_tea",
+   "fieldtype": "Check",
+   "label": "Coffee/Tea | \u0642\u0647\u0648\u0629/\u0634\u0627\u064a"
+  },
+  {
+   "fieldname": "parking",
+   "fieldtype": "Check",
+   "label": "Parking | \u0645\u0648\u0642\u0641 \u0633\u064a\u0627\u0631\u0627\u062a"
+  },
+  {
+   "fieldname": "column_break_amenities2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "printer_access",
+   "fieldtype": "Check",
+   "label": "Printer Access | \u0637\u0627\u0628\u0639\u0629"
+  },
+  {
+   "fieldname": "phone_line",
+   "fieldtype": "Check",
+   "label": "Phone Line | \u062e\u0637 \u0647\u0627\u062a\u0641"
+  },
+  {
+   "fieldname": "custom_amenities",
+   "fieldtype": "Small Text",
+   "label": "Custom Amenities | \u062e\u062f\u0645\u0627\u062a \u0625\u0636\u0627\u0641\u064a\u0629"
+  },
+  {
+   "fieldname": "occupancy_section",
+   "fieldtype": "Section Break",
+   "label": "Current Occupancy | \u0627\u0644\u0625\u0634\u063a\u0627\u0644 \u0627\u0644\u062d\u0627\u0644\u064a"
+  },
+  {
+   "fieldname": "current_tenant",
+   "fieldtype": "Link",
+   "label": "Current Tenant | المستأجر الحالي",
+   "options": "GRM Tenant",
+   "read_only": 1
+  },
+  {
+   "fieldname": "current_subscription",
+   "fieldtype": "Link",
+   "label": "Current Subscription | \u0627\u0644\u0627\u0634\u062a\u0631\u0627\u0643 \u0627\u0644\u062d\u0627\u0644\u064a",
+   "options": "GRM Subscription",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_occupancy",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "occupancy_start",
+   "fieldtype": "Date",
+   "label": "Occupancy Start | \u0628\u062f\u0627\u064a\u0629 \u0627\u0644\u0625\u0634\u063a\u0627\u0644",
+   "read_only": 1
+  },
+  {
+   "fieldname": "occupancy_end",
+   "fieldtype": "Date",
+   "label": "Occupancy End | \u0646\u0647\u0627\u064a\u0629 \u0627\u0644\u0625\u0634\u063a\u0627\u0644",
+   "read_only": 1
+  },
+  {
+   "fieldname": "additional_section",
+   "fieldtype": "Section Break",
+   "label": "Additional Information | \u0645\u0639\u0644\u0648\u0645\u0627\u062a \u0625\u0636\u0627\u0641\u064a\u0629"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text Editor",
+   "label": "Description | \u0627\u0644\u0648\u0635\u0641"
+  },
+  {
+   "fieldname": "column_break_additional",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "space_image",
+   "fieldtype": "Attach Image",
+   "label": "Space Image | \u0635\u0648\u0631\u0629 \u0627\u0644\u0645\u0633\u0627\u062d\u0629"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes | \u0645\u0644\u0627\u062d\u0638\u0627\u062a"
+  },
+  {
+   "fieldname": "statistics_section",
+   "fieldtype": "Section Break",
+   "label": "Statistics | \u0627\u0644\u0625\u062d\u0635\u0627\u0626\u064a\u0627\u062a"
+  },
+  {
+   "fieldname": "total_bookings",
+   "fieldtype": "Int",
+   "label": "Total Bookings | \u0625\u062c\u0645\u0627\u0644\u064a \u0627\u0644\u062d\u062c\u0648\u0632\u0627\u062a",
+   "read_only": 1,
+   "default": "0"
+  },
+  {
+   "fieldname": "total_revenue",
+   "fieldtype": "Currency",
+   "label": "Total Revenue | \u0625\u062c\u0645\u0627\u0644\u064a \u0627\u0644\u0625\u064a\u0631\u0627\u062f\u0627\u062a",
+   "read_only": 1,
+   "default": "0"
+  },
+  {
+   "fieldname": "column_break_stats",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "last_booking_date",
+   "fieldtype": "Date",
+   "label": "Last Booking Date | \u062a\u0627\u0631\u064a\u062e \u0622\u062e\u0631 \u062d\u062c\u0632",
+   "read_only": 1
+  },
+  {
+   "fieldname": "last_updated",
+   "fieldtype": "Datetime",
+   "label": "Last Updated | \u0622\u062e\u0631 \u062a\u062d\u062f\u064a\u062b",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-02-02 21:10:00.000000",
+ "modified_by": "Administrator",
+ "module": "Grm Management",
+ "name": "GRM Space",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "title_field": "space_name",
+ "track_changes": 1,
+ "image_field": "space_image"
+}

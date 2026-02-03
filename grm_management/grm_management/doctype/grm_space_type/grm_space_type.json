@@ -1,0 +1,209 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2026-02-02 21:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "space_type_name",
+  "space_type_name_ar",
+  "space_type_code",
+  "column_break_1",
+  "category",
+  "is_active",
+  "icon",
+  "section_break_2",
+  "default_capacity",
+  "min_capacity",
+  "max_capacity",
+  "column_break_3",
+  "typical_area_sqm",
+  "color_code",
+  "pricing_section",
+  "hourly_rate",
+  "daily_rate",
+  "column_break_pricing",
+  "monthly_rate",
+  "annual_rate",
+  "features_section",
+  "description",
+  "column_break_features",
+  "default_amenities",
+  "typical_usage"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "TYPE-.####",
+   "default": "TYPE-.####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "space_type_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Space Type Name | \u0627\u0633\u0645 \u0646\u0648\u0639 \u0627\u0644\u0645\u0633\u0627\u062d\u0629",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "space_type_name_ar",
+   "fieldtype": "Data",
+   "label": "Name (Arabic) | \u0627\u0644\u0627\u0633\u0645 \u0628\u0627\u0644\u0639\u0631\u0628\u064a\u0629"
+  },
+  {
+   "fieldname": "space_type_code",
+   "fieldtype": "Data",
+   "label": "Type Code | \u0627\u0644\u0643\u0648\u062f",
+   "read_only": 1,
+   "reqd": 0
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "category",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Category | \u0627\u0644\u0641\u0626\u0629",
+   "options": "Private Office\nShared Desk\nMeeting Room\nTraining Room\nEvent Space\nPhone Booth\nHot Desk",
+   "reqd": 1
+  },
+  {
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "Is Active | \u0646\u0634\u0637",
+   "default": "1"
+  },
+  {
+   "fieldname": "icon",
+   "fieldtype": "Data",
+   "label": "Icon | \u0623\u064a\u0642\u0648\u0646\u0629"
+  },
+  {
+   "fieldname": "section_break_2",
+   "fieldtype": "Section Break",
+   "label": "Specifications | \u0627\u0644\u0645\u0648\u0627\u0635\u0641\u0627\u062a"
+  },
+  {
+   "fieldname": "default_capacity",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Default Capacity | \u0627\u0644\u0633\u0639\u0629 \u0627\u0644\u0627\u0641\u062a\u0631\u0627\u0636\u064a\u0629",
+   "reqd": 1
+  },
+  {
+   "fieldname": "min_capacity",
+   "fieldtype": "Int",
+   "label": "Min Capacity | \u0627\u0644\u062d\u062f \u0627\u0644\u0623\u062f\u0646\u0649"
+  },
+  {
+   "fieldname": "max_capacity",
+   "fieldtype": "Int",
+   "label": "Max Capacity | \u0627\u0644\u062d\u062f \u0627\u0644\u0623\u0642\u0635\u0649"
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "typical_area_sqm",
+   "fieldtype": "Float",
+   "label": "Typical Area (sqm) | \u0627\u0644\u0645\u0633\u0627\u062d\u0629 \u0627\u0644\u0646\u0645\u0648\u0630\u062c\u064a\u0629"
+  },
+  {
+   "fieldname": "color_code",
+   "fieldtype": "Color",
+   "label": "Color Code | \u0627\u0644\u0644\u0648\u0646"
+  },
+  {
+   "fieldname": "pricing_section",
+   "fieldtype": "Section Break",
+   "label": "Default Pricing | \u0627\u0644\u062a\u0633\u0639\u064a\u0631 \u0627\u0644\u0627\u0641\u062a\u0631\u0627\u0636\u064a"
+  },
+  {
+   "fieldname": "hourly_rate",
+   "fieldtype": "Currency",
+   "label": "Hourly Rate | \u0633\u0639\u0631 \u0627\u0644\u0633\u0627\u0639\u0629",
+   "default": "0"
+  },
+  {
+   "fieldname": "daily_rate",
+   "fieldtype": "Currency",
+   "label": "Daily Rate | \u0633\u0639\u0631 \u0627\u0644\u064a\u0648\u0645",
+   "default": "0"
+  },
+  {
+   "fieldname": "column_break_pricing",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "monthly_rate",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Monthly Rate | \u0633\u0639\u0631 \u0627\u0644\u0634\u0647\u0631",
+   "default": "0"
+  },
+  {
+   "fieldname": "annual_rate",
+   "fieldtype": "Currency",
+   "label": "Annual Rate | \u0633\u0639\u0631 \u0627\u0644\u0633\u0646\u0629",
+   "default": "0"
+  },
+  {
+   "fieldname": "features_section",
+   "fieldtype": "Section Break",
+   "label": "Features | \u0627\u0644\u0645\u0645\u064a\u0632\u0627\u062a"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text Editor",
+   "label": "Description | \u0627\u0644\u0648\u0635\u0641"
+  },
+  {
+   "fieldname": "column_break_features",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "default_amenities",
+   "fieldtype": "Small Text",
+   "label": "Default Amenities | \u0627\u0644\u062e\u062f\u0645\u0627\u062a \u0627\u0644\u0627\u0641\u062a\u0631\u0627\u0636\u064a\u0629"
+  },
+  {
+   "fieldname": "typical_usage",
+   "fieldtype": "Small Text",
+   "label": "Typical Usage | \u0627\u0644\u0627\u0633\u062a\u062e\u062f\u0627\u0645 \u0627\u0644\u0646\u0645\u0648\u0630\u062c\u064a"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-02-02 21:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Grm Management",
+ "name": "GRM Space Type",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "title_field": "space_type_name",
+ "track_changes": 1
+}

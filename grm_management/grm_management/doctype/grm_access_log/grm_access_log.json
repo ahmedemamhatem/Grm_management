@@ -1,0 +1,27 @@
+{
+ "actions": [], "autoname": "naming_series:", "creation": "2026-02-02 21:55:00.000000", "doctype": "DocType", "engine": "InnoDB",
+ "field_order": ["naming_series","event_time","member","column_break_1","event_type","location","access_device","user_details_section","user_type","user_name","zk_user_id","context_section","granted_by","subscription","column_break_context","booking","entry_number","duration_minutes"],
+ "fields": [
+  {"fieldname": "naming_series", "fieldtype": "Select", "label": "Series", "options": "ACC-.YYYY.-.#####", "default": "ACC-.YYYY.-.#####"},
+  {"fieldname": "event_time", "fieldtype": "Datetime", "in_list_view": 1, "label": "Event Time | وقت الحدث", "reqd": 1, "default": "Now"},
+  {"fieldname": "member", "fieldtype": "Link", "in_list_view": 1, "in_standard_filter": 1, "label": "Member | المشترك", "options": "GRM Member", "reqd": 1},
+  {"fieldname": "column_break_1", "fieldtype": "Column Break"},
+  {"fieldname": "event_type", "fieldtype": "Select", "in_list_view": 1, "in_standard_filter": 1, "label": "Event Type | نوع الحدث", "options": "Check-in\nCheck-out", "reqd": 1},
+  {"fieldname": "location", "fieldtype": "Link", "in_standard_filter": 1, "label": "Location | الموقع", "options": "GRM Location"},
+  {"fieldname": "access_device", "fieldtype": "Data", "label": "Access Device | جهاز الدخول"},
+  {"fieldname": "user_details_section", "fieldtype": "Section Break", "label": "User Details | بيانات المستخدم"},
+  {"fieldname": "user_type", "fieldtype": "Select", "label": "User Type | نوع المستخدم", "options": "Member\nCompanion\nEmployee\nGuest"},
+  {"fieldname": "user_name", "fieldtype": "Data", "in_list_view": 1, "label": "User Name | اسم المستخدم"},
+  {"fieldname": "zk_user_id", "fieldtype": "Data", "label": "ZK User ID | معرف البصمة"},
+  {"fieldname": "context_section", "fieldtype": "Section Break", "label": "Context | السياق"},
+  {"fieldname": "granted_by", "fieldtype": "Select", "label": "Granted By | مصرح من", "options": "Subscription\nBooking\nManual"},
+  {"fieldname": "subscription", "fieldtype": "Link", "label": "Subscription | الاشتراك", "options": "GRM Subscription"},
+  {"fieldname": "column_break_context", "fieldtype": "Column Break"},
+  {"fieldname": "booking", "fieldtype": "Link", "label": "Booking | الحجز", "options": "GRM Booking"},
+  {"fieldname": "entry_number", "fieldtype": "Int", "label": "Entry Number | رقم الزيارة", "description": "For entry-based subscriptions"},
+  {"fieldname": "duration_minutes", "fieldtype": "Int", "label": "Duration (Minutes) | مدة البقاء", "read_only": 1, "description": "Calculated on check-out"}
+ ],
+ "modified": "2026-02-02 21:55:00.000000", "modified_by": "Administrator", "module": "Grm Management", "name": "GRM Access Log", "owner": "Administrator",
+ "permissions": [{"create": 1, "email": 1, "export": 1, "print": 1, "read": 1, "report": 1, "role": "System Manager", "share": 1}],
+ "sort_field": "event_time", "sort_order": "DESC"
+}

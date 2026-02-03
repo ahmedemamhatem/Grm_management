@@ -1,0 +1,97 @@
+{
+ "actions": [],
+ "creation": "2026-02-02 20:40:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "space_name",
+  "space_code",
+  "space_type",
+  "column_break_1",
+  "floor_number",
+  "area_sqm",
+  "capacity",
+  "column_break_2",
+  "monthly_rate",
+  "space"
+ ],
+ "fields": [
+  {
+   "fieldname": "space_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Space Name | اسم المساحة",
+   "reqd": 1
+  },
+  {
+   "fieldname": "space_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Space Code | كود المساحة",
+   "reqd": 1
+  },
+  {
+   "fieldname": "space_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Space Type | نوع المساحة",
+   "options": "GRM Space Type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "floor_number",
+   "fieldtype": "Int",
+   "label": "Floor | الطابق",
+   "default": "1"
+  },
+  {
+   "fieldname": "area_sqm",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Area (sqm) | المساحة",
+   "reqd": 1
+  },
+  {
+   "fieldname": "capacity",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Capacity | السعة",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "monthly_rate",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Monthly Rate | السعر الشهري",
+   "reqd": 1
+  },
+  {
+   "fieldname": "space",
+   "fieldtype": "Link",
+   "label": "Space (Created) | المساحة المنشأة",
+   "options": "GRM Space",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-02-02 20:40:00.000000",
+ "modified_by": "Administrator",
+ "module": "Grm Management",
+ "name": "Property Space Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

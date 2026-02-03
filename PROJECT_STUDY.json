@@ -1,0 +1,499 @@
+{
+  "project_name": "GRM Management - Workspace Rental System",
+  "project_name_ar": "نظام إدارة المساحات المكتبية وتأجير مساحات العمل",
+  "version": "1.0.0",
+  "framework": "Frappe/ERPNext v15+",
+  "language": "Python 3.10+",
+  "build_date": "2026-02-02",
+
+  "project_overview": {
+    "description": "Complete coworking space management system for renting offices, desks, meeting rooms with flexible subscription models including entry-based (pay-per-visit)",
+    "description_ar": "نظام متكامل لإدارة مساحات العمل المشتركة - تأجير مكاتب ومساحات عمل مع اشتراكات مرنة بما فيها الاشتراك بعدد مرات الدخول",
+    "business_model": "Company rents properties from landlords → Divides into workspaces → Re-rents to individuals/companies",
+    "business_model_ar": "الشركة تستأجر عقارات من الملاك ← تقسمها إلى مساحات عمل ← تؤجرها للأفراد والشركات"
+  },
+
+  "core_doctypes": {
+    "total": 16,
+    "main_doctypes": 10,
+    "child_tables": 6,
+
+    "master_data": {
+      "GRM_Location": {
+        "purpose": "Physical branch/building locations",
+        "purpose_ar": "المواقع والفروع الفعلية",
+        "naming": "By location_code field",
+        "key_features": [
+          "Auto-calculated occupancy statistics",
+          "Operating hours configuration",
+          "Multi-language support (EN/AR)"
+        ],
+        "python_file": "grm_management/grm_management/doctype/grm_location/grm_location.py",
+        "key_methods": {
+          "validate_contact_info": "Validates email and phone formats",
+          "validate_operating_hours": "Validates operating hours logic",
+          "update_statistics": "Updates total properties, spaces, occupancy rate"
+        }
+      },
+
+      "GRM_Property": {
+        "purpose": "Master units rented from landlords",
+        "purpose_ar": "العقارات المستأجرة من الملاك",
+        "naming": "By property_code field",
+        "key_features": [
+          "Complete landlord information tracking",
+          "Lease agreement management",
+          "Setup costs tracking (renovation, furniture, equipment)",
+          "AUTO-CALCULATED: ROI%, Profit Margin, Amortized costs",
+          "Child table for spaces planning",
+          "Child table for monthly expenses"
+        ],
+        "python_file": "grm_management/grm_management/doctype/grm_property/grm_property.py",
+        "key_methods": {
+          "validate_dates": "Calculates lease duration in years",
+          "calculate_financials": "Auto-calculates ROI, profit margin, amortized setup costs",
+          "update_statistics": "Updates actual revenue from active subscriptions",
+          "create_spaces": "Creates GRM Space records from child table"
+        },
+        "child_tables": [
+          "Property Space Item - Spaces to be created from this property",
+          "Property Expense Item - Monthly recurring expenses"
+        ]
+      },
+
+      "GRM_Space_Type": {
+        "purpose": "Templates for workspace categories with default pricing",
+        "purpose_ar": "قوالب لأنواع المساحات مع تسعير افتراضي",
+        "naming": "By space_type_name field",
+        "categories": [
+          "Private Office",
+          "Shared Desk",
+          "Meeting Room",
+          "Training Room",
+          "Event Space",
+          "Phone Booth",
+          "Hot Desk"
+        ],
+        "key_features": [
+          "Default capacity (min/max)",
+          "Default pricing (hourly/daily/monthly/annual)",
+          "Color code for calendar",
+          "Default amenities"
+        ],
+        "python_file": "grm_management/grm_management/doctype/grm_space_type/grm_space_type.py"
+      },
+
+      "GRM_Space": {
+        "purpose": "Individual rentable workspace units - THE CORE PRODUCT",
+        "purpose_ar": "الوحدات القابلة للتأجير - المنتج الأساسي",
+        "naming": "By space_code field",
+        "statuses": [
+          "Available (متاحة)",
+          "Rented (مؤجرة)",
+          "Not Ready (غير جاهزة)",
+          "Under Maintenance (تحت الصيانة)",
+          "Reserved (محجوزة)"
+        ],
+        "key_features": [
+          "Linked to Location & Property",
+          "Custom or inherited pricing from Space Type",
+          "Complete amenities checklist",
+          "Current occupancy tracking",
+          "Booking statistics"
+        ],
+        "python_file": "grm_management/grm_management/doctype/grm_space/grm_space.py",
+        "key_methods": {
+          "set_pricing": "Auto-fetches pricing from Space Type if not custom",
+          "set_rented": "Marks space as rented by member/subscription",
+          "set_available": "Clears space to available status",
+          "set_maintenance": "Marks space as under maintenance",
+          "update_statistics": "Updates total bookings and revenue"
+        }
+      }
+    },
+
+    "members_and_subscriptions": {
+      "GRM_Member": {
+        "purpose": "Customers who rent workspaces - SUPPORTS INDIVIDUALS & COMPANIES",
+        "purpose_ar": "العملاء المشتركين - يدعم الأفراد والشركات",
+        "naming": "By member_code field",
+        "member_types": [
+          "Individual (فرد) - with optional companions",
+          "Company (شركة) - with employees list"
+        ],
+        "key_features": [
+          "AUTO-CREATES ERPNext Customer on insert",
+          "AUTO-GENERATES unique ZK User ID for access control",
+          "Email and mobile validation",
+          "Credit limit and payment terms",
+          "Complete statistics (subscriptions, bookings, revenue, visits)"
+        ],
+        "python_file": "grm_management/grm_management/doctype/grm_member/grm_member.py",
+        "key_methods": {
+          "validate_email": "Validates email format",
+          "validate_mobile": "Validates mobile format with regex",
+          "create_customer": "AUTO-creates ERPNext Customer with proper type",
+          "generate_zk_user_id": "AUTO-generates sequential ZK User ID starting from 1001",
+          "update_statistics": "Updates all member statistics from database"
+        },
+        "child_tables": [
+          "Member Companion - For Individual members (companions/family)",
+          "Member Employee - For Company members (employees list)"
+        ]
+      },
+
+      "GRM_Subscription_Package": {
+        "purpose": "Pre-defined subscription packages/offers",
+        "purpose_ar": "باقات الاشتراك المحددة مسبقاً",
+        "naming": "By package_name field",
+        "package_types": [
+          "Hourly (بالساعة)",
+          "Daily (يومي)",
+          "Monthly (شهري)",
+          "Annual (سنوي)",
+          "Entry-based (بعدد المرات) - UNIQUE FEATURE"
+        ],
+        "key_features": [
+          "Auto-calculated final price with discount",
+          "Entry-based: Number of entries + extra entry rate",
+          "Access hours configuration (24/7 or custom)",
+          "Included amenities list"
+        ],
+        "python_file": "grm_management/grm_management/doctype/grm_subscription_package/grm_subscription_package.py",
+        "key_methods": {
+          "calculate_final_price": "Auto-calculates price after discount"
+        }
+      },
+
+      "GRM_Subscription": {
+        "purpose": "Active rental agreements with members - ENTRY-BASED TRACKING",
+        "purpose_ar": "الاشتراكات النشطة - مع تتبع عدد المرات",
+        "naming": "Auto-numbered SUB-YYYY-#####",
+        "subscription_types": [
+          "Hourly",
+          "Daily",
+          "Monthly",
+          "Annual",
+          "Entry-based - TRACKS VISIT COUNT"
+        ],
+        "statuses": [
+          "Draft (مسودة)",
+          "Active (نشط)",
+          "Expired (منتهي)",
+          "Cancelled (ملغي)",
+          "Suspended (معلق)"
+        ],
+        "key_features": [
+          "AUTO-TRACKS entries used for entry-based subscriptions",
+          "AUTO-CALCULATES remaining entries",
+          "AUTO-CALCULATES overage charges when entries exceeded",
+          "Multiple spaces per subscription",
+          "Authorized users list with access times"
+        ],
+        "python_file": "grm_management/grm_management/doctype/grm_subscription/grm_subscription.py",
+        "key_methods": {
+          "validate_dates": "Validates dates and calculates duration in months",
+          "calculate_financials": "Calculates total amount and remaining entries",
+          "activate": "Activates subscription and marks spaces as rented",
+          "record_entry": "CRITICAL: Increments entries_used and calculates overage"
+        },
+        "child_tables": [
+          "Subscription Space - Spaces included in subscription",
+          "Authorized User - People authorized to access (Member/Companion/Employee)"
+        ]
+      }
+    },
+
+    "bookings": {
+      "GRM_Booking": {
+        "purpose": "Short-term space reservations with overtime tracking",
+        "purpose_ar": "الحجوزات القصيرة مع تتبع الساعات الإضافية",
+        "naming": "Auto-numbered BKG-YYYY-#####",
+        "booking_types": [
+          "Hourly (بالساعة)",
+          "Daily (يومي)",
+          "Multi-day (متعدد الأيام)"
+        ],
+        "statuses": [
+          "Draft",
+          "Confirmed",
+          "Checked-in",
+          "Checked-out",
+          "No-show",
+          "Cancelled"
+        ],
+        "key_features": [
+          "AUTO-CALCULATES duration in hours",
+          "AUTO-CALCULATES pricing based on rate type",
+          "AUTO-CALCULATES overtime hours on check-out",
+          "AUTO-CALCULATES overtime charges at 1.5x rate",
+          "Check-in/out time tracking"
+        ],
+        "python_file": "grm_management/grm_management/doctype/grm_booking/grm_booking.py",
+        "key_methods": {
+          "calculate_duration": "Calculates hours between start and end time",
+          "calculate_pricing": "Calculates subtotal, tax, discount, overtime",
+          "check_in": "Records actual check-in timestamp",
+          "check_out": "Records check-out and calculates overtime if any"
+        }
+      }
+    },
+
+    "access_control": {
+      "GRM_Access_Log": {
+        "purpose": "CRITICAL: Logs every entry/exit event - INTEGRATES WITH ENTRY-BASED SUBSCRIPTIONS",
+        "purpose_ar": "سجل كل دخول وخروج - يتكامل مع الاشتراكات بعدد المرات",
+        "naming": "Auto-numbered ACC-YYYY-#####",
+        "event_types": [
+          "Check-in (دخول)",
+          "Check-out (خروج)"
+        ],
+        "key_features": [
+          "Links to member, subscription, or booking",
+          "Records ZK User ID",
+          "AUTOMATICALLY DECREMENTS entry-based subscription on check-in",
+          "Records entry number for entry-based subscriptions",
+          "Calculates duration on check-out"
+        ],
+        "python_file": "grm_management/grm_management/doctype/grm_access_log/grm_access_log.py",
+        "key_methods": {
+          "after_insert": "CRITICAL: Calls subscription.record_entry() for entry-based tracking"
+        },
+        "integration_flow": "Access Log insert → Triggers subscription.record_entry() → Decrements entries_used → Calculates overage if needed"
+      }
+    }
+  },
+
+  "critical_workflows": {
+    "entry_based_subscription_workflow": {
+      "description": "THE MOST IMPORTANT WORKFLOW - Tracks visit-based subscriptions",
+      "description_ar": "أهم سير عمل - تتبع الاشتراكات بعدد المرات",
+      "steps": [
+        "1. Create GRM Subscription with type='Entry-based'",
+        "2. Set total_entries_allowed (e.g., 20 visits/month)",
+        "3. Set extra_entry_rate (e.g., 50 SAR per extra visit)",
+        "4. Activate subscription (status='Active')",
+        "5. ON CHECK-IN: Create Access Log entry",
+        "6. Access Log.after_insert() calls Subscription.record_entry()",
+        "7. Subscription.record_entry() increments entries_used",
+        "8. If entries_used > total_entries_allowed: Calculate overage charges",
+        "9. Entry number is logged in Access Log",
+        "10. Remaining entries auto-calculated and displayed"
+      ],
+      "files_involved": [
+        "grm_management/doctype/grm_subscription/grm_subscription.py (record_entry method)",
+        "grm_management/doctype/grm_access_log/grm_access_log.py (after_insert hook)"
+      ]
+    },
+
+    "member_onboarding": {
+      "individual": [
+        "1. Create GRM Member with type='Individual'",
+        "2. System AUTO-creates ERPNext Customer",
+        "3. System AUTO-generates ZK User ID",
+        "4. Add companions in child table",
+        "5. Enroll biometrics on device"
+      ],
+      "company": [
+        "1. Create GRM Member with type='Company'",
+        "2. System AUTO-creates ERPNext Customer",
+        "3. System AUTO-generates ZK User ID",
+        "4. Add employees in child table",
+        "5. Enroll biometrics for authorized employees"
+      ]
+    },
+
+    "property_to_spaces": {
+      "steps": [
+        "1. Create GRM Location",
+        "2. Create GRM Property with lease details",
+        "3. Add spaces in Property Space Item child table",
+        "4. Add expenses in Property Expense Item child table",
+        "5. Click 'Create Spaces' button",
+        "6. System creates actual GRM Space records",
+        "7. Financial calculations update automatically"
+      ]
+    },
+
+    "booking_with_overtime": {
+      "steps": [
+        "1. Create GRM Booking",
+        "2. System calculates expected hours and cost",
+        "3. On check-in: Record actual check-in time",
+        "4. On check-out: Record actual check-out time",
+        "5. System compares actual vs expected hours",
+        "6. If actual > expected: Calculate overtime at 1.5x rate",
+        "7. Update total amount with overtime charges"
+      ]
+    }
+  },
+
+  "auto_calculations": {
+    "property_level": {
+      "lease_duration_years": "AUTO: (end_date - start_date) / 365",
+      "annual_rent": "AUTO: monthly_rent × 12",
+      "total_setup_cost": "AUTO: renovation + furniture + equipment + other",
+      "monthly_amortized_setup": "AUTO: total_setup_cost / (lease_duration_years × 12)",
+      "total_monthly_cost": "AUTO: monthly_rent + expenses + amortized_setup",
+      "expected_monthly_revenue": "AUTO: SUM(space.monthly_rate)",
+      "actual_monthly_revenue": "AUTO: Query active subscriptions",
+      "profit_margin": "AUTO: actual_revenue - total_cost",
+      "roi_percentage": "AUTO: (profit_margin / total_cost) × 100"
+    },
+
+    "location_level": {
+      "total_properties": "AUTO: COUNT(properties)",
+      "total_spaces": "AUTO: COUNT(spaces)",
+      "available_spaces": "AUTO: COUNT(spaces WHERE status='Available')",
+      "occupied_spaces": "AUTO: COUNT(spaces WHERE status='Rented')",
+      "occupancy_rate": "AUTO: (occupied / total) × 100",
+      "monthly_capacity": "AUTO: SUM(space.monthly_rate)"
+    },
+
+    "subscription_level": {
+      "duration_months": "AUTO: date_diff(end_date, start_date) / 30",
+      "total_amount": "AUTO: base_price - discount + tax + overage",
+      "remaining_entries": "AUTO: total_allowed - entries_used",
+      "entry_overage_charges": "AUTO: (entries_used - total_allowed) × extra_rate"
+    },
+
+    "booking_level": {
+      "duration_hours": "AUTO: time_diff(end_time, start_time)",
+      "subtotal": "AUTO: hourly_rate × total_hours",
+      "overtime_hours": "AUTO: actual_hours - expected_hours",
+      "overtime_charges": "AUTO: overtime_hours × hourly_rate × 1.5",
+      "total_amount": "AUTO: subtotal - discount + tax + overtime"
+    },
+
+    "member_level": {
+      "total_subscriptions": "AUTO: COUNT(subscriptions)",
+      "active_subscriptions": "AUTO: COUNT(subscriptions WHERE status='Active')",
+      "total_bookings": "AUTO: COUNT(bookings)",
+      "total_revenue": "AUTO: SUM(invoices.grand_total WHERE paid)",
+      "outstanding_balance": "AUTO: SUM(invoices.outstanding_amount)",
+      "total_visits": "AUTO: COUNT(access_logs WHERE event='Check-in')"
+    }
+  },
+
+  "erpnext_integration": {
+    "customer_creation": {
+      "trigger": "GRM Member after_insert hook",
+      "logic": "Creates Customer with type based on member_type (Individual/Company)",
+      "fields_mapped": {
+        "customer_name": "full_name OR company_name",
+        "customer_type": "Individual OR Company",
+        "customer_group": "Individual OR Commercial",
+        "email_id": "primary_email",
+        "mobile_no": "primary_mobile",
+        "payment_terms": "payment_terms",
+        "credit_limits": "credit_limit"
+      }
+    },
+
+    "invoicing_ready": {
+      "note": "System is ready for invoice generation",
+      "invoice_sources": [
+        "Subscription activation → Monthly invoice",
+        "Booking check-out → Invoice with overtime",
+        "Entry-based overage → Extra charges invoice"
+      ]
+    }
+  },
+
+  "key_features": {
+    "unique_features": [
+      "Entry-based subscriptions (pay-per-visit) with automatic tracking",
+      "Automatic ROI calculation at property level",
+      "Amortized setup costs over lease duration",
+      "Overtime calculation with 1.5x rate for bookings",
+      "Multi-language support (English/Arabic) in all labels",
+      "Support for both individuals with companions AND companies with employees",
+      "Automatic ZK User ID generation for access control"
+    ],
+
+    "automation": [
+      "Auto-create ERPNext Customer on member creation",
+      "Auto-generate unique ZK User IDs",
+      "Auto-fetch pricing from Space Type",
+      "Auto-calculate all financial fields",
+      "Auto-track entry-based subscription usage",
+      "Auto-calculate overtime charges",
+      "Auto-update statistics across all levels"
+    ],
+
+    "validation": [
+      "Email format validation",
+      "Mobile format validation (with regex)",
+      "Date range validation",
+      "Capacity validation (> 0)",
+      "Operating hours logic validation",
+      "Financial calculations integrity"
+    ]
+  },
+
+  "workspace_structure": {
+    "name": "Coworking Space",
+    "sections": [
+      {
+        "name": "Properties & Locations | العقارات والمواقع",
+        "doctypes": ["GRM Location", "GRM Property", "GRM Space Type", "GRM Space"]
+      },
+      {
+        "name": "Members & Subscriptions | المشتركين والاشتراكات",
+        "doctypes": ["GRM Member", "GRM Subscription Package", "GRM Subscription"]
+      },
+      {
+        "name": "Bookings | الحجوزات",
+        "doctypes": ["GRM Booking"]
+      },
+      {
+        "name": "Access Control | التحكم في الدخول",
+        "doctypes": ["GRM Access Log", "Access Device", "BioTime Settings"]
+      }
+    ]
+  },
+
+  "future_enhancements_ideas": [
+    "Interactive calendar view with drag-and-drop booking",
+    "Advanced reports (Occupancy, Revenue, Visit Analytics)",
+    "Automated monthly invoice generation scheduler",
+    "Mobile app API endpoints",
+    "QR code access integration",
+    "Visitor management system",
+    "Email/SMS payment reminders",
+    "Multi-currency support",
+    "Online booking portal for members"
+  ],
+
+  "important_notes": {
+    "developer_mode": "ALWAYS work with developer_mode enabled for this project",
+    "migration": "Run 'bench migrate' after any DocType JSON changes",
+    "cache": "Clear cache after Workspace or permission changes",
+    "entry_based_critical": "The entry-based subscription logic in Access Log.after_insert() is CRITICAL - do not modify without testing",
+    "financial_formulas": "All financial auto-calculations in Property are interdependent - test after any changes",
+    "child_tables": "Child tables must exist before parent DocTypes in migration order"
+  },
+
+  "quick_reference": {
+    "main_python_files": [
+      "grm_management/doctype/grm_location/grm_location.py",
+      "grm_management/doctype/grm_property/grm_property.py",
+      "grm_management/doctype/grm_space/grm_space.py",
+      "grm_management/doctype/grm_member/grm_member.py",
+      "grm_management/doctype/grm_subscription/grm_subscription.py",
+      "grm_management/doctype/grm_booking/grm_booking.py",
+      "grm_management/doctype/grm_access_log/grm_access_log.py"
+    ],
+
+    "workspace_file": "grm_management/workspace/coworking_space/coworking_space.json",
+
+    "hooks_file": "grm_management/hooks.py",
+
+    "common_commands": {
+      "migrate": "bench --site site1.local migrate",
+      "clear_cache": "bench --site site1.local clear-cache",
+      "enable_dev_mode": "bench --site site1.local set-config developer_mode 1",
+      "restart": "bench --site site1.local restart"
+    }
+  }
+}

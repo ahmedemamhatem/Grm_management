@@ -1,0 +1,17 @@
+{
+ "actions": [], "creation": "2026-02-02 21:35:00.000000", "doctype": "DocType", "editable_grid": 1, "engine": "InnoDB",
+ "field_order": ["companion_name","companion_name_ar","relationship","column_break_1","id_number","mobile","access_granted","column_break_2","zk_user_id","biometric_enrolled"],
+ "fields": [
+  {"fieldname": "companion_name", "fieldtype": "Data", "in_list_view": 1, "label": "Name | الاسم", "reqd": 1},
+  {"fieldname": "companion_name_ar", "fieldtype": "Data", "label": "Name (Arabic) | الاسم بالعربية"},
+  {"fieldname": "relationship", "fieldtype": "Select", "label": "Relationship | العلاقة", "options": "Spouse\nChild\nParent\nSibling\nFriend\nColleague\nOther"},
+  {"fieldname": "column_break_1", "fieldtype": "Column Break"},
+  {"fieldname": "id_number", "fieldtype": "Data", "label": "ID Number | رقم الهوية"},
+  {"fieldname": "mobile", "fieldtype": "Data", "label": "Mobile | الجوال", "options": "Phone"},
+  {"fieldname": "access_granted", "fieldtype": "Check", "in_list_view": 1, "label": "Access Granted | السماح بالدخول", "default": "1"},
+  {"fieldname": "column_break_2", "fieldtype": "Column Break"},
+  {"fieldname": "zk_user_id", "fieldtype": "Data", "label": "ZK User ID | معرف البصمة", "read_only": 1},
+  {"fieldname": "biometric_enrolled", "fieldtype": "Check", "label": "Biometric | تسجيل البصمة"}
+ ],
+ "istable": 1, "modified": "2026-02-02 21:35:00.000000", "modified_by": "Administrator", "module": "Grm Management", "name": "Member Companion", "owner": "Administrator", "permissions": [], "sort_field": "modified", "sort_order": "DESC"
+}
