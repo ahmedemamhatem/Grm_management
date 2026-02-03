@@ -20,12 +20,13 @@ class GRMProperty(Document):
 		
 	def validate_dates(self):
 		"""Validate lease dates"""
-		if self.lease_end_date < self.lease_start_date:
-			frappe.throw(_("Lease End Date must be after Start Date"))
-			
-		# Calculate lease duration in years
-		days_diff = date_diff(self.lease_end_date, self.lease_start_date)
-		self.lease_duration_years = flt(days_diff / 365.0, 2)
+		if self.lease_start_date and self.lease_end_date:
+			if self.lease_end_date < self.lease_start_date:
+				frappe.throw(_("Lease End Date must be after Start Date"))
+
+			# Calculate lease duration in years
+			days_diff = date_diff(self.lease_end_date, self.lease_start_date)
+			self.lease_duration_years = flt(days_diff / 365.0, 2)
 		
 	def calculate_financials(self):
 		"""Calculate all financial fields"""
@@ -45,7 +46,7 @@ class GRMProperty(Document):
 		
 		# Calculate total monthly cost (rent + expenses)
 		# Amortize setup costs over lease duration
-		if self.lease_duration_years > 0:
+		if flt(self.lease_duration_years) > 0:
 			monthly_amortized_setup = flt(self.total_setup_cost) / (flt(self.lease_duration_years) * 12)
 		else:
 			monthly_amortized_setup = 0

@@ -14,7 +14,9 @@ class GRMLocation(Document):
 		
 	def before_save(self):
 		"""Update statistics before saving"""
-		self.update_statistics()
+		# Only update statistics if not in insert mode to avoid recursion
+		if not self.is_new():
+			self.update_statistics_values()
 		self.last_updated = frappe.utils.now()
 		
 	def validate_contact_info(self):
@@ -31,46 +33,49 @@ class GRMLocation(Document):
 			if self.operating_start_time >= self.operating_end_time:
 				frappe.throw(_("Start time must be before end time"))
 				
-	@frappe.whitelist()
-	def update_statistics(self):
-		"""Update location statistics - properties, spaces, occupancy"""
+	def update_statistics_values(self):
+		"""Update location statistics values without saving"""
 		# Count properties
 		self.total_properties = frappe.db.count("GRM Property", {
 			"location": self.name
 		})
-		
+
 		# Count spaces
 		self.total_spaces = frappe.db.count("GRM Space", {
 			"location": self.name
 		})
-		
+
 		# Count available spaces
 		self.available_spaces = frappe.db.count("GRM Space", {
 			"location": self.name,
 			"status": "Available"
 		})
-		
+
 		# Count occupied spaces
 		self.occupied_spaces = frappe.db.count("GRM Space", {
 			"location": self.name,
 			"status": "Rented"
 		})
-		
+
 		# Calculate occupancy rate
 		if self.total_spaces > 0:
 			self.occupancy_rate = (self.occupied_spaces / self.total_spaces) * 100
 		else:
 			self.occupancy_rate = 0
-			
+
 		# Calculate monthly capacity (sum of all space monthly rates)
-		spaces = frappe.get_all("GRM Space", 
+		spaces = frappe.get_all("GRM Space",
 			filters={"location": self.name},
 			fields=["monthly_rate"]
 		)
 		self.monthly_capacity = sum([s.monthly_rate or 0 for s in spaces])
-		
+
+	@frappe.whitelist()
+	def update_statistics(self):
+		"""Update location statistics - properties, spaces, occupancy"""
+		self.update_statistics_values()
 		self.save()
-		
+
 		return {
 			"total_properties": self.total_properties,
 			"total_spaces": self.total_spaces,

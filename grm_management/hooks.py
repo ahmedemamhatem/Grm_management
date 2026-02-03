@@ -169,7 +169,8 @@ scheduler_events = {
 		"grm_management.grm_management.scheduled_tasks.hourly"
 	],
 	"daily": [
-		"grm_management.grm_management.scheduled_tasks.daily"
+		"grm_management.grm_management.scheduled_tasks.daily",
+		"grm_management.grm_management.page.space_calendar.space_calendar.mark_expired_bookings"
 	],
 	"monthly": [
 		"grm_management.grm_management.scheduled_tasks.monthly"

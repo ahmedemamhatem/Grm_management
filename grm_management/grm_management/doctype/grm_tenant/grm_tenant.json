@@ -32,9 +32,18 @@
   "commercial_info_section",
   "tax_id",
   "commercial_registration",
+  "cr_expiry_date",
   "column_break_4",
+  "iban",
+  "bank_name",
   "industry",
   "company_size",
+  "ksa_compliance_section",
+  "vat_registration_number",
+  "zatca_compliance",
+  "column_break_ksa",
+  "muqeem_qiwa_registered",
+  "unified_number_700",
   "statistics_section",
   "total_members",
   "active_subscriptions",
@@ -190,27 +199,79 @@
   {
    "fieldname": "commercial_registration",
    "fieldtype": "Data",
-   "label": "Commercial Registration Number"
+   "label": "Commercial Registration Number | رقم السجل التجاري",
+   "description": "CR Number (e.g., 1010012345)"
+  },
+  {
+   "fieldname": "cr_expiry_date",
+   "fieldtype": "Date",
+   "label": "CR Expiry Date | تاريخ انتهاء السجل التجاري"
   },
   {
    "fieldname": "column_break_4",
    "fieldtype": "Column Break"
   },
   {
+   "fieldname": "iban",
+   "fieldtype": "Data",
+   "label": "IBAN | رقم الآيبان",
+   "description": "International Bank Account Number (SA...)"
+  },
+  {
+   "fieldname": "bank_name",
+   "fieldtype": "Data",
+   "label": "Bank Name | اسم البنك"
+  },
+  {
    "fieldname": "industry",
    "fieldtype": "Data",
-   "label": "Industry"
+   "label": "Industry | المجال"
   },
   {
    "fieldname": "company_size",
    "fieldtype": "Select",
-   "label": "Company Size",
+   "label": "Company Size | حجم الشركة",
    "options": "\n1-10\n11-50\n51-200\n201-500\n500+"
+  },
+  {
+   "fieldname": "ksa_compliance_section",
+   "fieldtype": "Section Break",
+   "label": "KSA Compliance | الامتثال السعودي",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "vat_registration_number",
+   "fieldtype": "Data",
+   "label": "VAT Registration Number | الرقم الضريبي",
+   "description": "15-digit VAT number for ZATCA e-invoicing"
+  },
+  {
+   "fieldname": "zatca_compliance",
+   "fieldtype": "Check",
+   "label": "ZATCA E-Invoice Compliant | متوافق مع الفاتورة الإلكترونية",
+   "default": "0"
+  },
+  {
+   "fieldname": "column_break_ksa",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "muqeem_qiwa_registered",
+   "fieldtype": "Check",
+   "label": "Registered on Muqeem/Qiwa | مسجل في مقيم/قوى",
+   "default": "0",
+   "description": "For companies employing expatriates"
+  },
+  {
+   "fieldname": "unified_number_700",
+   "fieldtype": "Data",
+   "label": "Unified Number (700) | الرقم الموحد",
+   "description": "Unified establishment number from MHRSD"
   },
   {
    "fieldname": "statistics_section",
    "fieldtype": "Section Break",
-   "label": "Statistics",
+   "label": "Statistics | الإحصائيات",
    "collapsible": 1
   },
   {
