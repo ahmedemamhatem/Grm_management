@@ -18,7 +18,7 @@ const AboutUsSection = () => {
             if (!root) return;
 
             const ctx = gsap.context(() => {
-                // اختار كل العناصر النصية اللي هنحركها
+                //  select all text elements
                 const headerItems = gsap.utils.toArray(root.querySelectorAll("[data-anim='about-text']"));
                 const featureCards = gsap.utils.toArray(root.querySelectorAll("[data-anim='about-feature']"));
                 const checkItems = gsap.utils.toArray(root.querySelectorAll("[data-anim='about-check']"));
@@ -28,10 +28,10 @@ const AboutUsSection = () => {
                 gsap.set(featureCards, { opacity: 0, y: 18 });
                 gsap.set(checkItems, { opacity: 0, y: 14 });
 
-                // timeline واحد للسكشن كله
+                // timeline for the section
                 const tl = gsap.timeline({
                     scrollTrigger: {
-                        trigger: contentRef.current, // أول جزء نصي
+                        trigger: contentRef.current,
                         start: "top 80%",
                         once: true,
                     },

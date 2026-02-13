@@ -6,10 +6,11 @@ import Header from './Header'
 
 const RootLayout = () => {
   const location = useLocation();
+  const exeption = ["/", "/login", "/sign-up"]
   return (
     <>
       <Header />
-      {location.pathname !== "/" && <BreadCrumb />}
+      {!exeption.includes(location.pathname) && <BreadCrumb />}
       <Outlet />
       <Footer />
       <Toaster />

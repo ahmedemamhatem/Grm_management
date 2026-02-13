@@ -1,0 +1,74 @@
+{
+ "actions": [],
+ "creation": "2026-02-13 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "contact_section",
+  "title",
+  "social_media_section",
+  "social_media_links",
+  "branches_section",
+  "branches"
+ ],
+ "fields": [
+  {
+   "fieldname": "contact_section",
+   "fieldtype": "Section Break",
+   "label": "Contact Section | قسم التواصل"
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "label": "Title | العنوان"
+  },
+  {
+   "fieldname": "social_media_section",
+   "fieldtype": "Section Break",
+   "label": "Social Media Links | روابط التواصل الاجتماعي"
+  },
+  {
+   "fieldname": "social_media_links",
+   "fieldtype": "Table",
+   "label": "Social Media Links | روابط التواصل الاجتماعي",
+   "options": "GRM Social Link"
+  },
+  {
+   "fieldname": "branches_section",
+   "fieldtype": "Section Break",
+   "label": "Branches | الفروع"
+  },
+  {
+   "fieldname": "branches",
+   "fieldtype": "Table",
+   "label": "Branches | الفروع",
+   "options": "GRM Branch"
+  }
+ ],
+ "allow_guest_to_view": 1,
+ "issingle": 1,
+ "modified": "2026-02-13 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Grm Management",
+ "name": "GRM Contact Page",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Guest"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

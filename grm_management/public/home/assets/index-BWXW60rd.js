@@ -1,1 +1,0 @@
-import{r as e,j as t,d as s}from"./index-CXx-SFNh.js";import{S as r}from"./PageHelmet-CmQnVIsq.js";const i=()=>(e.useEffect(()=>{r({title:"عن قرم",description:"",keywords:""})},[]),t.jsx(t.Fragment,{children:t.jsx(s,{})}));export{i as default};

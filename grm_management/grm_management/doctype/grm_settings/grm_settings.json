@@ -1,0 +1,131 @@
+{
+ "actions": [],
+ "creation": "2026-02-07 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "subscription_settings_section",
+  "subscription_item",
+  "default_subscription_type",
+  "column_break_sub",
+  "auto_create_invoice",
+  "auto_create_payment",
+  "invoicing_section",
+  "default_tax_template",
+  "default_mode_of_payment",
+  "column_break_inv",
+  "default_income_account",
+  "booking_section",
+  "default_expiry_days",
+  "column_break_book",
+  "allow_booking_overlap"
+ ],
+ "fields": [
+  {
+   "fieldname": "subscription_settings_section",
+   "fieldtype": "Section Break",
+   "label": "Subscription Settings | إعدادات الاشتراك"
+  },
+  {
+   "fieldname": "subscription_item",
+   "fieldtype": "Link",
+   "label": "Subscription Item | صنف الاشتراك",
+   "options": "Item",
+   "reqd": 1,
+   "description": "Default item to use for all subscription invoices"
+  },
+  {
+   "fieldname": "default_subscription_type",
+   "fieldtype": "Select",
+   "label": "Default Subscription Type | نوع الاشتراك الافتراضي",
+   "options": "Hourly\nDaily\nMonthly\nAnnual",
+   "default": "Monthly"
+  },
+  {
+   "fieldname": "column_break_sub",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "auto_create_invoice",
+   "fieldtype": "Check",
+   "label": "Auto Create Invoice | إنشاء فاتورة تلقائياً",
+   "default": "1"
+  },
+  {
+   "fieldname": "auto_create_payment",
+   "fieldtype": "Check",
+   "label": "Auto Create Payment | إنشاء دفعة تلقائياً",
+   "default": "1"
+  },
+  {
+   "fieldname": "invoicing_section",
+   "fieldtype": "Section Break",
+   "label": "Invoicing Settings | إعدادات الفوترة"
+  },
+  {
+   "fieldname": "default_tax_template",
+   "fieldtype": "Link",
+   "label": "Default Tax Template | قالب الضريبة الافتراضي",
+   "options": "Sales Taxes and Charges Template"
+  },
+  {
+   "fieldname": "default_mode_of_payment",
+   "fieldtype": "Link",
+   "label": "Default Mode of Payment | طريقة الدفع الافتراضية",
+   "options": "Mode of Payment"
+  },
+  {
+   "fieldname": "column_break_inv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "default_income_account",
+   "fieldtype": "Link",
+   "label": "Default Income Account | حساب الإيرادات الافتراضي",
+   "options": "Account"
+  },
+  {
+   "fieldname": "booking_section",
+   "fieldtype": "Section Break",
+   "label": "Booking Settings | إعدادات الحجز"
+  },
+  {
+   "fieldname": "default_expiry_days",
+   "fieldtype": "Int",
+   "label": "Default Expiry Days | أيام الانتهاء الافتراضية",
+   "default": "7",
+   "description": "Number of days before booking expires if not converted"
+  },
+  {
+   "fieldname": "column_break_book",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "allow_booking_overlap",
+   "fieldtype": "Check",
+   "label": "Allow Booking Overlap | السماح بتداخل الحجوزات",
+   "default": "0"
+  }
+ ],
+ "issingle": 1,
+ "modified": "2026-02-07 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Grm Management",
+ "name": "GRM Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

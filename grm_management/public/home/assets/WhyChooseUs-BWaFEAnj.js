@@ -1,0 +1,1 @@
+import{r as o,j as t,f as s}from"./index-MKCxXVAg.js";import{G as r}from"./GetOneSeoPageHook-Cjt6gePU.js";import{S as a}from"./PageHelmet-Cw5kPi4y.js";const c=()=>{const{metaData:e}=r("why_choose_us");return o.useEffect(()=>{a({title:e.title_ar,description:e.description_ar,keywords:e.keywords_ar})},[e]),t.jsx(t.Fragment,{children:t.jsx(s,{})})};export{c as default};

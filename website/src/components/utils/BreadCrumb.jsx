@@ -11,7 +11,12 @@ const BreadCrumb = () => {
     const location = useLocation();
     const rootRef = useRef(null);
 
-    const pathnames = location.pathname.split("/").filter(Boolean);
+    const rawPathnames = location.pathname.split("/").filter(Boolean);
+
+    const pathnames =
+        rawPathnames.length === 3 && rawPathnames[0] === "packages"
+            ? rawPathnames.slice(0, -1)
+            : rawPathnames;
 
     const currentPage =
         pathnames.length > 0 ? formatBreadCrumb(pathnames[pathnames.length - 1]) : "الرئيسية";
@@ -92,7 +97,7 @@ const BreadCrumb = () => {
     return (
         <section
             ref={rootRef}
-            className="relative bg-[#0a2e38] pt-[140px] pb-[150px] text-white overflow-hidden"
+            className="relative bg-[#0a2e38] py-20 text-white overflow-hidden"
         >
             <div className="container flex flex-col items-center gap-6">
                 {/* Page Title */}

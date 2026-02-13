@@ -1,0 +1,1 @@
+import{K as c,r as n,aV as i,N as p}from"./index-MKCxXVAg.js";const f=e=>{const s=c();n.useEffect(()=>{s(i(e))},[]);const{isLoading:t,metaData:o,errors:a}=p(r=>r.seo);return{isLoading:t,metaData:o,errors:a}};export{f as G};

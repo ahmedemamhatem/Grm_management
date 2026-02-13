@@ -1,0 +1,114 @@
+{
+ "actions": [],
+ "creation": "2026-02-13 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "about_section",
+  "title",
+  "column_break_about",
+  "description",
+  "features_section",
+  "features",
+  "services_section",
+  "services_title",
+  "services_description",
+  "column_break_services",
+  "service_img",
+  "services_list_section",
+  "services"
+ ],
+ "fields": [
+  {
+   "fieldname": "about_section",
+   "fieldtype": "Section Break",
+   "label": "About Section | قسم من نحن"
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "label": "Title | العنوان"
+  },
+  {
+   "fieldname": "column_break_about",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text",
+   "label": "Description | الوصف"
+  },
+  {
+   "fieldname": "features_section",
+   "fieldtype": "Section Break",
+   "label": "Features | المميزات"
+  },
+  {
+   "fieldname": "features",
+   "fieldtype": "Small Text",
+   "label": "Features | المميزات",
+   "description": "One feature per line | ميزة واحدة في كل سطر"
+  },
+  {
+   "fieldname": "services_section",
+   "fieldtype": "Section Break",
+   "label": "Services Section | قسم الخدمات"
+  },
+  {
+   "fieldname": "services_title",
+   "fieldtype": "Data",
+   "label": "Services Title | عنوان الخدمات"
+  },
+  {
+   "fieldname": "services_description",
+   "fieldtype": "Text",
+   "label": "Services Description | وصف الخدمات"
+  },
+  {
+   "fieldname": "column_break_services",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "service_img",
+   "fieldtype": "Attach Image",
+   "label": "Service Image | صورة الخدمات"
+  },
+  {
+   "fieldname": "services_list_section",
+   "fieldtype": "Section Break",
+   "label": "List of Services | قائمة الخدمات"
+  },
+  {
+   "fieldname": "services",
+   "fieldtype": "Table",
+   "label": "Services | الخدمات",
+   "options": "GRM Website Service Item"
+  }
+ ],
+ "allow_guest_to_view": 1,
+ "issingle": 1,
+ "modified": "2026-02-13 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Grm Management",
+ "name": "GRM About Page",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Guest"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

@@ -84,47 +84,6 @@ class GRMSubscription(Document):
 		if self.subscription_type == "Entry-based":
 			self.remaining_entries = flt(self.total_entries_allowed) - flt(self.entries_used)
 
-	def after_insert(self):
-		"""Create service items for each space"""
-		self.create_space_service_items()
-
-	def create_space_service_items(self):
-		"""Create ERPNext Service Items for each space for invoicing"""
-		# Find the Services item group (may be translated, e.g. الخدمات)
-		item_group = frappe.db.get_value('Item Group', 'Services', 'name') or \
-			frappe.db.get_value('Item Group', 'الخدمات', 'name')
-		if not item_group:
-			item_group = frappe.db.get_all('Item Group', filters={'is_group': 0}, limit=1, pluck='name')[0]
-
-		for space_row in self.spaces:
-			space = frappe.get_doc("GRM Space", space_row.space)
-
-			# Create item code
-			item_code = f"SPACE-{space.space_code}"
-
-			# Check if item already exists
-			if not frappe.db.exists("Item", item_code):
-				item = frappe.new_doc("Item")
-				item.item_code = item_code
-				item.item_name = space.space_name
-				item.item_group = item_group
-				item.stock_uom = "Nos"
-				item.is_stock_item = 0
-				item.is_sales_item = 1
-				item.description = f"Coworking Space: {space.space_name} ({space.space_type})"
-
-				# Set default rate based on subscription type
-				if self.subscription_type == "Hourly":
-					item.standard_rate = flt(space.hourly_rate)
-				elif self.subscription_type == "Daily":
-					item.standard_rate = flt(space.daily_rate)
-				elif self.subscription_type == "Monthly":
-					item.standard_rate = flt(space.monthly_rate)
-				elif self.subscription_type == "Annual":
-					item.standard_rate = flt(space.annual_rate)
-
-				item.insert(ignore_permissions=True)
-				frappe.msgprint(f"Service Item {item_code} created for invoicing")
 
 	@frappe.whitelist()
 	def activate(self):
@@ -148,6 +107,13 @@ class GRMSubscription(Document):
 	@frappe.whitelist()
 	def create_invoice(self):
 		"""Create Sales Invoice for this subscription"""
+		from grm_management.grm_management.doctype.grm_settings.grm_settings import get_settings
+
+		# Get GRM Settings
+		settings = get_settings()
+		if not settings.subscription_item:
+			frappe.throw("Please configure Subscription Item in GRM Settings")
+
 		# Get customer from tenant
 		tenant = frappe.get_doc("GRM Tenant", self.tenant)
 		if not tenant.customer:
@@ -159,17 +125,33 @@ class GRMSubscription(Document):
 		invoice.posting_date = nowdate()
 		invoice.due_date = self.next_invoice_date or nowdate()
 
-		# Add items from spaces
+		# Add items from spaces using configured subscription item
 		for space_row in self.spaces:
 			space = frappe.get_doc("GRM Space", space_row.space)
-			item_code = f"SPACE-{space.space_code}"
+
+			# Determine rate based on subscription type
+			if self.subscription_type == "Hourly":
+				rate = flt(space.hourly_rate)
+			elif self.subscription_type == "Daily":
+				rate = flt(space.daily_rate)
+			elif self.subscription_type == "Monthly":
+				rate = flt(space.monthly_rate)
+			elif self.subscription_type == "Annual":
+				rate = flt(space.annual_rate)
+			else:
+				rate = flt(space_row.monthly_rate) or self.total_amount
+
+			# Use override rate if set
+			if space_row.monthly_rate:
+				rate = flt(space_row.monthly_rate)
 
 			invoice.append("items", {
-				"item_code": item_code,
+				"item_code": settings.subscription_item,
 				"item_name": space.space_name,
+				"description": f"Subscription: {self.subscription_type} - {space.space_name}",
 				"qty": 1,
-				"rate": flt(space_row.monthly_rate) or self.total_amount,
-				"amount": flt(space_row.monthly_rate) or self.total_amount
+				"rate": rate,
+				"amount": rate
 			})
 
 		# Add taxes
@@ -218,3 +200,61 @@ class GRMSubscription(Document):
 			self.entry_overage_charges = overage * flt(self.extra_entry_rate)
 
 		self.save()
+
+
+@frappe.whitelist()
+def create_payment_for_subscription(subscription_name, invoice_name, amount, mode_of_payment, reference_no=None, reference_date=None):
+	"""Create Payment Entry for a subscription invoice"""
+	from frappe.utils import nowdate
+
+	subscription = frappe.get_doc('GRM Subscription', subscription_name)
+	invoice = frappe.get_doc('Sales Invoice', invoice_name)
+
+	# Get company
+	company = invoice.company
+
+	# Get default accounts for mode of payment
+	payment_account = frappe.db.get_value('Mode of Payment Account',
+		{'parent': mode_of_payment, 'company': company}, 'default_account')
+
+	if not payment_account:
+		payment_account = frappe.db.get_value('Account',
+			{'account_type': 'Cash', 'company': company, 'is_group': 0}, 'name')
+
+	if not payment_account:
+		frappe.throw('No payment account found for this mode of payment')
+
+	# Create payment entry
+	payment = frappe.new_doc('Payment Entry')
+	payment.payment_type = 'Receive'
+	payment.party_type = 'Customer'
+	payment.party = invoice.customer
+	payment.company = company
+	payment.posting_date = nowdate()
+	payment.paid_from = frappe.db.get_value('Account',
+		{'account_type': 'Receivable', 'company': company, 'is_group': 0}, 'name')
+	payment.paid_to = payment_account
+	payment.paid_amount = flt(amount)
+	payment.received_amount = flt(amount)
+	payment.mode_of_payment = mode_of_payment
+	payment.reference_no = reference_no or invoice_name
+	payment.reference_date = reference_date or nowdate()
+
+	# Link to invoice
+	payment.append('references', {
+		'reference_doctype': 'Sales Invoice',
+		'reference_name': invoice_name,
+		'allocated_amount': flt(amount)
+	})
+
+	payment.insert(ignore_permissions=True)
+	payment.submit()
+
+	# Update subscription totals
+	subscription.total_paid = flt(subscription.total_paid) + flt(amount)
+	subscription.outstanding_amount = flt(subscription.total_invoiced) - flt(subscription.total_paid)
+	subscription.save(ignore_permissions=True)
+
+	frappe.db.commit()
+
+	return payment.name

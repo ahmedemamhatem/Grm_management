@@ -1,0 +1,109 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"pages_header\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\"><b>Website Pages</b></span>\",\"col\":12}},{\"id\":\"pages_card\",\"type\":\"card\",\"data\":{\"card_name\":\"Page Content\",\"col\":12}}]",
+ "creation": "2026-02-13 00:00:00.000000",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "website",
+ "idx": 0,
+ "indicator_color": "",
+ "is_hidden": 0,
+ "label": "GRM Website CMS",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Page Content",
+   "link_count": 0,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "description": "Manage Hero, About, Features, Workflow, Pricing, Testimonials, FAQ sections",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "GRM Home Page",
+   "link_count": 0,
+   "link_to": "GRM Home Page",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "description": "Manage About section and Services list",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "GRM About Page",
+   "link_count": 0,
+   "link_to": "GRM About Page",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "description": "Manage Why GRM section and Tabs",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "GRM Why Page",
+   "link_count": 0,
+   "link_to": "GRM Why Page",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "description": "Manage Contact info, Social links, and Branches",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "GRM Contact Page",
+   "link_count": 0,
+   "link_to": "GRM Contact Page",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  },
+  {
+   "description": "Manage Client logos and links",
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "GRM Clients Page",
+   "link_count": 0,
+   "link_to": "GRM Clients Page",
+   "link_type": "DocType",
+   "onboard": 1,
+   "type": "Link"
+  }
+ ],
+ "modified": "2026-02-13 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Grm Management",
+ "name": "GRM Website CMS",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 2.0,
+ "shortcuts": [
+  {
+   "label": "GRM Home Page",
+   "link_to": "GRM Home Page",
+   "type": "DocType"
+  },
+  {
+   "label": "GRM About Page",
+   "link_to": "GRM About Page",
+   "type": "DocType"
+  },
+  {
+   "label": "GRM Contact Page",
+   "link_to": "GRM Contact Page",
+   "type": "DocType"
+  }
+ ],
+ "title": "GRM Website CMS"
+}

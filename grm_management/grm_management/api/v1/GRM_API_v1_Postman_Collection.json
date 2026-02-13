@@ -1,0 +1,569 @@
+{
+	"info": {
+		"_postman_id": "grm-api-v1-collection",
+		"name": "GRM Management API v1",
+		"description": "API collection for GRM Management module\n\nBase URL: https://grm.victor-eg.shop\n\n## Authentication\n\nSome endpoints require authentication. Use one of these methods:\n\n1. **Cookie-based (Web)**: Login via /api/method/login\n2. **Token-based**: Use API Key & Secret in Authorization header\n3. **Bearer Token**: Use token from login response",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://grm.victor-eg.shop",
+			"type": "string"
+		},
+		{
+			"key": "api_key",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "api_secret",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.message) {",
+									"    pm.collectionVariables.set('sid', pm.cookies.get('sid'));",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"usr\": \"your-email@example.com\",\n    \"pwd\": \"your-password\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/method/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"login"
+							]
+						},
+						"description": "Login to get session cookie for authenticated requests.\n\nReplace usr and pwd with your credentials."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Logged In User",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/method/frappe.auth.get_logged_user",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"frappe.auth.get_logged_user"
+							]
+						},
+						"description": "Check which user is currently logged in."
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/method/logout",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"logout"
+							]
+						},
+						"description": "Logout and clear session."
+					},
+					"response": []
+				}
+			],
+			"description": "Authentication endpoints for logging in/out."
+		},
+		{
+			"name": "Spaces API (Public)",
+			"item": [
+				{
+					"name": "Get Spaces by Type",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/method/grm_management.grm_management.api.v1.spaces.get_spaces_by_type",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"grm_management.grm_management.api.v1.spaces.get_spaces_by_type"
+							]
+						},
+						"description": "Get all GRM Spaces grouped by GRM Space Type.\n\nReturns human-readable names instead of IDs.\nIncludes full image URLs.\n\n**No authentication required (public endpoint).**"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Spaces by Type - Filter by Status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/method/grm_management.grm_management.api.v1.spaces.get_spaces_by_type?status=Available",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"grm_management.grm_management.api.v1.spaces.get_spaces_by_type"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "Available",
+									"description": "Filter by status: Available, Rented, Not Ready, Under Maintenance, Reserved"
+								}
+							]
+						},
+						"description": "Get spaces filtered by status.\n\nAvailable status values:\n- Available\n- Rented\n- Not Ready\n- Under Maintenance\n- Reserved"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Spaces by Type - Filter by Location",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/method/grm_management.grm_management.api.v1.spaces.get_spaces_by_type?location=Main Branch",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"grm_management.grm_management.api.v1.spaces.get_spaces_by_type"
+							],
+							"query": [
+								{
+									"key": "location",
+									"value": "Main Branch",
+									"description": "Filter by location name or ID"
+								}
+							]
+						},
+						"description": "Get spaces filtered by location."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Space Types",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/method/grm_management.grm_management.api.v1.spaces.get_space_types",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"grm_management.grm_management.api.v1.spaces.get_space_types"
+							]
+						},
+						"description": "Get all active GRM Space Types.\n\n**No authentication required (public endpoint).**"
+					},
+					"response": []
+				}
+			],
+			"description": "Public API endpoints for GRM Spaces.\n\nAll endpoints in this folder are publicly accessible (no authentication required)."
+		},
+		{
+			"name": "Booking API (Public)",
+			"item": [
+				{
+					"name": "Check Space Availability",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/method/grm_management.grm_management.api.v1.booking.check_availability?space=SPACE-2026-0001&booking_date=2026-02-10&start_time=09:00&end_time=12:00",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"grm_management.grm_management.api.v1.booking.check_availability"
+							],
+							"query": [
+								{
+									"key": "space",
+									"value": "SPACE-2026-0001",
+									"description": "GRM Space ID"
+								},
+								{
+									"key": "booking_date",
+									"value": "2026-02-10",
+									"description": "Date in YYYY-MM-DD format"
+								},
+								{
+									"key": "start_time",
+									"value": "09:00",
+									"description": "Start time in HH:MM format"
+								},
+								{
+									"key": "end_time",
+									"value": "12:00",
+									"description": "End time in HH:MM format"
+								}
+							]
+						},
+						"description": "Check if a space is available for booking at the specified time.\n\nReturns availability status, any conflicts, and estimated pricing.\n\n**No authentication required (public endpoint).**"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Available Time Slots",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/method/grm_management.grm_management.api.v1.booking.get_available_slots?space=SPACE-2026-0001&date=2026-02-10&slot_duration_minutes=60",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"grm_management.grm_management.api.v1.booking.get_available_slots"
+							],
+							"query": [
+								{
+									"key": "space",
+									"value": "SPACE-2026-0001",
+									"description": "GRM Space ID"
+								},
+								{
+									"key": "date",
+									"value": "2026-02-10",
+									"description": "Date in YYYY-MM-DD format"
+								},
+								{
+									"key": "slot_duration_minutes",
+									"value": "60",
+									"description": "Duration of each slot in minutes (default: 60)"
+								}
+							]
+						},
+						"description": "Get available time slots for a space on a specific date.\n\nReturns list of time slots with availability status.\n\n**No authentication required (public endpoint).**"
+					},
+					"response": []
+				}
+			],
+			"description": "Public booking-related endpoints.\n\nThese endpoints allow checking availability without logging in."
+		},
+		{
+			"name": "Booking API (Authenticated)",
+			"item": [
+				{
+					"name": "Create Booking",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"space\": \"SPACE-2026-0001\",\n    \"booking_date\": \"2026-02-10\",\n    \"start_time\": \"09:00\",\n    \"end_time\": \"12:00\",\n    \"booking_type\": \"Hourly\",\n    \"attendees\": 4,\n    \"purpose\": \"Team Meeting\",\n    \"notes\": \"Please prepare projector\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/method/grm_management.grm_management.api.v1.booking.create_booking",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"grm_management.grm_management.api.v1.booking.create_booking"
+							]
+						},
+						"description": "Create a new booking for the current logged-in user.\n\nThe tenant is automatically determined from the logged-in user.\nIf no tenant exists, one will be created automatically.\n\n**Requires authentication.**\n\nParameters:\n- space: GRM Space ID (required)\n- booking_date: Date in YYYY-MM-DD format (required)\n- start_time: Start time in HH:MM format (required)\n- end_time: End time in HH:MM format (required)\n- booking_type: Hourly, Daily, or Multi-day (default: Hourly)\n- attendees: Number of attendees (default: 1)\n- purpose: Purpose of booking (optional)\n- notes: Additional notes (optional)"
+					},
+					"response": []
+				},
+				{
+					"name": "Confirm Booking",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"booking_id\": \"BKG-2026-00001\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/method/grm_management.grm_management.api.v1.booking.confirm_booking",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"grm_management.grm_management.api.v1.booking.confirm_booking"
+							]
+						},
+						"description": "Confirm a draft booking.\n\nChanges status from 'Draft' to 'Confirmed'.\nRe-validates availability before confirming.\n\n**Requires authentication.**"
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Booking",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"booking_id\": \"BKG-2026-00001\",\n    \"reason\": \"Schedule conflict\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/method/grm_management.grm_management.api.v1.booking.cancel_booking",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"grm_management.grm_management.api.v1.booking.cancel_booking"
+							]
+						},
+						"description": "Cancel a booking.\n\nCannot cancel bookings that are already Checked-in, Checked-out, or Cancelled.\n\n**Requires authentication.**"
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Bookings",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/method/grm_management.grm_management.api.v1.booking.get_my_bookings?limit=50",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"grm_management.grm_management.api.v1.booking.get_my_bookings"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "Confirmed",
+									"description": "Filter by status (optional)",
+									"disabled": true
+								},
+								{
+									"key": "from_date",
+									"value": "2026-02-01",
+									"description": "Filter from date (optional)",
+									"disabled": true
+								},
+								{
+									"key": "to_date",
+									"value": "2026-02-28",
+									"description": "Filter to date (optional)",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "50",
+									"description": "Maximum number of results (default: 50)"
+								}
+							]
+						},
+						"description": "Get bookings for the current logged-in user.\n\nReturns all bookings associated with the user's tenant account.\n\n**Requires authentication.**\n\nFilters:\n- status: Filter by booking status\n- from_date: Filter from date\n- to_date: Filter to date\n- limit: Maximum results"
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Bookings - By Status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/method/grm_management.grm_management.api.v1.booking.get_my_bookings?status=Confirmed",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"grm_management.grm_management.api.v1.booking.get_my_bookings"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "Confirmed",
+									"description": "Filter by status: Draft, Confirmed, Checked-in, Checked-out, No-show, Cancelled"
+								}
+							]
+						},
+						"description": "Get bookings filtered by status."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Booking Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/method/grm_management.grm_management.api.v1.booking.get_booking_details?booking_id=BKG-2026-00001",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"grm_management.grm_management.api.v1.booking.get_booking_details"
+							],
+							"query": [
+								{
+									"key": "booking_id",
+									"value": "BKG-2026-00001",
+									"description": "The booking ID"
+								}
+							]
+						},
+						"description": "Get detailed information about a specific booking.\n\nIncludes full tenant, space, pricing, and check-in information.\n\n**Requires authentication.**"
+					},
+					"response": []
+				}
+			],
+			"description": "Authenticated booking endpoints.\n\n**Login required** - Use the Login endpoint first to authenticate."
+		},
+		{
+			"name": "Tenant API",
+			"item": [
+				{
+					"name": "Ensure Tenant Exists",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/method/grm_management.grm_management.user_events.ensure_tenant_exists",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"method",
+								"grm_management.grm_management.user_events.ensure_tenant_exists"
+							]
+						},
+						"description": "Ensure the current logged-in user has a tenant record.\n\nCreates one automatically if it doesn't exist.\nUseful for website users who sign up.\n\n**Requires authentication.**"
+					},
+					"response": []
+				}
+			],
+			"description": "Tenant management endpoints.\n\nTenants are automatically created when:\n1. A new website user signs up\n2. This endpoint is called for a logged-in user without a tenant"
+		}
+	]
+}

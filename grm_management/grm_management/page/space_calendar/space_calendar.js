@@ -721,6 +721,10 @@ class SpaceBookingCalendar {
 	}
 
 	convert_to_subscription(booking) {
+		// Calculate default dates from booking
+		let start_date = booking.booking_date || frappe.datetime.get_today();
+		let default_end_date = booking.expiry_date || frappe.datetime.add_months(start_date, 1);
+
 		let d = new frappe.ui.Dialog({
 			title: __('Convert Booking to Subscription + Invoice + Payment'),
 			fields: [
@@ -731,9 +735,41 @@ class SpaceBookingCalendar {
 					}
 				},
 				{fieldtype: 'Select', fieldname: 'subscription_type', label: __('Subscription Type'),
-					options: 'Hourly\nDaily\nMonthly\nAnnual', default: 'Monthly', reqd: 1},
-				{fieldtype: 'Date', fieldname: 'start_date', label: __('Start Date'), default: frappe.datetime.get_today(), reqd: 1},
-				{fieldtype: 'Date', fieldname: 'end_date', label: __('End Date'), reqd: 1},
+					options: 'Hourly\nDaily\nMonthly\nAnnual', default: 'Monthly', reqd: 1,
+					onchange: function() {
+						let type = d.get_value('subscription_type');
+						let s_date = d.get_value('start_date');
+						if (s_date) {
+							let new_end;
+							if (type === 'Hourly' || type === 'Daily') {
+								new_end = s_date;
+							} else if (type === 'Monthly') {
+								new_end = frappe.datetime.add_months(s_date, 1);
+							} else if (type === 'Annual') {
+								new_end = frappe.datetime.add_months(s_date, 12);
+							}
+							d.set_value('end_date', new_end);
+						}
+					}
+				},
+				{fieldtype: 'Date', fieldname: 'start_date', label: __('Start Date'), default: start_date, reqd: 1,
+					onchange: function() {
+						let type = d.get_value('subscription_type');
+						let s_date = d.get_value('start_date');
+						if (s_date && type) {
+							let new_end;
+							if (type === 'Hourly' || type === 'Daily') {
+								new_end = s_date;
+							} else if (type === 'Monthly') {
+								new_end = frappe.datetime.add_months(s_date, 1);
+							} else if (type === 'Annual') {
+								new_end = frappe.datetime.add_months(s_date, 12);
+							}
+							d.set_value('end_date', new_end);
+						}
+					}
+				},
+				{fieldtype: 'Date', fieldname: 'end_date', label: __('End Date'), default: default_end_date, reqd: 1},
 				{fieldtype: 'Section Break'},
 				{fieldtype: 'HTML', options: '<p class="text-muted">This will create a subscription, generate an invoice, and record payment automatically.</p>'}
 			],

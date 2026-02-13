@@ -1,0 +1,90 @@
+{
+ "actions": [],
+ "creation": "2026-02-13 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "why_section",
+  "title",
+  "description",
+  "column_break_why",
+  "img",
+  "img_badge",
+  "img_description",
+  "tabs_section",
+  "tabs"
+ ],
+ "fields": [
+  {
+   "fieldname": "why_section",
+   "fieldtype": "Section Break",
+   "label": "Why Section | قسم لماذا"
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "label": "Title | العنوان"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text",
+   "label": "Description | الوصف"
+  },
+  {
+   "fieldname": "column_break_why",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "img",
+   "fieldtype": "Attach Image",
+   "label": "Image | الصورة"
+  },
+  {
+   "fieldname": "img_badge",
+   "fieldtype": "Data",
+   "label": "Image Badge | شارة الصورة"
+  },
+  {
+   "fieldname": "img_description",
+   "fieldtype": "Text",
+   "label": "Image Description | وصف الصورة"
+  },
+  {
+   "fieldname": "tabs_section",
+   "fieldtype": "Section Break",
+   "label": "Tabs Section | قسم التبويبات"
+  },
+  {
+   "fieldname": "tabs",
+   "fieldtype": "Table",
+   "label": "Tabs | التبويبات",
+   "options": "GRM Why Tab"
+  }
+ ],
+ "allow_guest_to_view": 1,
+ "issingle": 1,
+ "modified": "2026-02-13 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Grm Management",
+ "name": "GRM Why Page",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Guest"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

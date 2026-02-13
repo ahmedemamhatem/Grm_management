@@ -97,26 +97,22 @@ const Footer = () => {
     return (
         <footer ref={footerRef} className="bg-gray-50 pt-16">
             <div className="container">
-                <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+                <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
                     <div data-footer-col className="space-y-4">
                         <img data-footer-logo width={50} src={logo} alt="شعار قرم" />
 
                         <p className="text-sm leading-7 text-gray-600">
-                            نوفر مساحات عمل عصرية ومتكاملة تساعدك على التركيز، الإنتاج،
-                            وبناء أعمالك في بيئة مريحة ومحفزة.
+                            باعتبارنا شركة سعودية 100%، فإننا متخصصون في التعاون مع المنظمات العالمية والمرموقة، ونسعى دائمًا للتكيف مع التغييرات وتحقيق النجاح
                         </p>
 
                         <div className="flex items-center gap-3">
                             <a data-footer-social className="text-emerald-400 hover:text-[#0B1020]" href="#">
                                 <Facebook size={18} />
                             </a>
-                            <a data-footer-social className="text-emerald-400 hover:text-[#0B1020]" href="#">
+                            <a data-footer-social className="text-emerald-400 hover:text-[#0B1020]" href="https://x.com/Grmoffices?t=1hzNs1EqCdYssRLIRT5cnQ">
                                 <Twitter size={18} />
                             </a>
-                            <a data-footer-social className="text-emerald-400 hover:text-[#0B1020]" href="#">
-                                <Instagram size={18} />
-                            </a>
-                            <a data-footer-social className="text-emerald-400 hover:text-[#0B1020]" href="#">
+                            <a data-footer-social className="text-emerald-400 hover:text-[#0B1020]" href="https://www.linkedin.com/company/grmoffice">
                                 <Linkedin size={18} />
                             </a>
                         </div>
@@ -150,11 +146,11 @@ const Footer = () => {
                             </li>
                             <li className="flex items-center gap-2">
                                 <Phone size={16} />
-                                <span>+966 55 000 0000</span>
+                                <span>966538661671+</span>
                             </li>
                             <li className="flex items-center gap-2">
                                 <Mail size={16} />
-                                <span>info@company.com</span>
+                                <span>info@grm.com.sa</span>
                             </li>
                         </ul>
                     </div>

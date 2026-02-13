@@ -76,9 +76,9 @@ const PricingCards = () => {
     return (
         <div ref={pricingRef} className="mx-auto max-w-6xl">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-                {plans.map((p) => (
+                {plans.map((p, idx) => (
                     <Card
-                        key={p.id}
+                        key={idx}
                         data-price-card
                         className="relative overflow-hidden rounded-xl border border-[#E6E6E6] bg-white shadow-none"
                     >

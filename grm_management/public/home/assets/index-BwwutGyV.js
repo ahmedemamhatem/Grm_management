@@ -1,0 +1,1 @@
+import{r as t,j as a,P as s}from"./index-MKCxXVAg.js";import{G as r}from"./GetOneSeoPageHook-Cjt6gePU.js";import{S as o}from"./PageHelmet-Cw5kPi4y.js";const p=()=>{const{metaData:e}=r("spaces");return t.useEffect(()=>{o({title:e.title_ar,description:e.description_ar,keywords:e.keywords_ar})},[e]),a.jsx(s,{})};export{p as default};

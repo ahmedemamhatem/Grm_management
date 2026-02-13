@@ -6,8 +6,8 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 
 import { navigationItems } from "@/assets/data";
 import logo from "@/assets/images/logo.png";
-import UserLoggedInHook from "@/hooks/UserLoggedInHook";
 
+import { LogoutHook } from "@/logic";
 import { Menu, X } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
@@ -20,7 +20,7 @@ import {
 } from "../ui/dropdown-menu";
 
 const Header = () => {
-  const { isLoggedIn, handleAuthClick } = UserLoggedInHook();
+  const { isLoggedIn, logoutSubmit } = LogoutHook();
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const scope = useRef(null);
@@ -89,7 +89,7 @@ const Header = () => {
   );
 
   return (
-    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-gray-200">
+    <header className="sticky top-0 z-100 bg-white/80 backdrop-blur border-b border-gray-200">
       <div ref={scope} className="container py-2">
         <div className="flex items-center justify-between gap-3">
           {/* Logo */}
@@ -128,7 +128,7 @@ const Header = () => {
                   <DropdownMenuTrigger>
                     <Avatar>
                       <AvatarImage
-                        src={`${import.meta.env.VITE_BASE_URL}${Cookies.get("user_image")}`}
+                        src={`${import.meta.env.VITE_API_URL}${Cookies.get("user_image")}`}
                       />
                       <AvatarFallback>
                         {(Cookies.get("full_name")?.[0] ?? "U").toUpperCase()}
@@ -137,10 +137,14 @@ const Header = () => {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
                     <DropdownMenuItem>
-                      <a href="/app">الملف الشخصي</a>
+                      {Cookies.get("system_user") == "no" ? (
+                        <Link to="/profile">الملف الشخصي</Link>
+                      ) : (
+                        <a href="/app">لوحة التحكم</a>
+                      )}
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={handleAuthClick}>
+                    <DropdownMenuItem onClick={logoutSubmit}>
                       تسجيل خروج
                     </DropdownMenuItem>
                   </DropdownMenuContent>
@@ -187,10 +191,15 @@ const Header = () => {
             <div className="border-t border-gray-200 p-3">
               {isLoggedIn ? (
                 <div className="flex items-center justify-between">
-                  <Link to="/app" className="text-gray-800 hover:text-emerald-700 transition">
-                    الملف الشخصي
-                  </Link>
-                  <Button variant="outline" onClick={handleAuthClick}>
+
+                  {Cookies.get("system_user") == "no" ? (
+                    <Link to="/profile" className="text-gray-800 hover:text-emerald-700 transition">الملف الشخصي</Link>
+                  ) : (
+                    <a href="/app" className="text-gray-800 hover:text-emerald-700 transition">
+                      لوحة التحكم
+                    </a>
+                  )}
+                  <Button variant="outline" onClick={logoutSubmit}>
                     تسجيل خروج
                   </Button>
                 </div>

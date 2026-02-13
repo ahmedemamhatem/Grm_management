@@ -1,0 +1,1 @@
+import{r as e,j as s,as as r}from"./index-MKCxXVAg.js";import{G as a}from"./GetOneSeoPageHook-Cjt6gePU.js";import{S as o}from"./PageHelmet-Cw5kPi4y.js";const m=()=>{const{metaData:t}=a("clients");return e.useEffect(()=>{o({title:t.title_ar,description:t.description_ar,keywords:t.keywords_ar})},[t]),s.jsx(r,{})};export{m as default};

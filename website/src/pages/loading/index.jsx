@@ -58,7 +58,8 @@ export default function LoadingPage() {
   return (
     <div
       ref={rootRef}
-      className="fixed inset-0 z-99999 grid place-items-center bg-white"
+      className="fixed inset-0 z-99999 grid place-items-center bg-white text-start"
+      dir="ltr"
     >
       <div className="-translate-y-3 flex flex-col items-center gap-10">
         <svg
@@ -91,7 +92,7 @@ export default function LoadingPage() {
         </svg>
 
 
-        <div className="select-none font-semibold leading-none text-[64px] tracking-[0.65em] pl-[0.65em] text-[#BDBDBD]">
+        <div className="select-none font-semibold leading-none text-[36px] md:text-[64px] tracking-[0.65em] pl-[0.65em] text-[#BDBDBD]">
           {"LOADING".split("").map((ch, i) => (
             <span
               key={i}

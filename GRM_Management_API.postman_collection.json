@@ -1,0 +1,1133 @@
+{
+	"info": {
+		"_postman_id": "grm-management-api-v1",
+		"name": "GRM Management API v1",
+		"description": "Complete API collection for GRM Management workspace booking platform.\n\nBase URL: {{base_url}}/api/method/grm_management.grm_management.api.v1\n\nAll responses follow the format:\n```json\n{\n  \"success\": true/false,\n  \"http_status_code\": 200,\n  \"message\": { \"en\": \"English message\", \"ar\": \"Arabic message\" },\n  \"data\": { ... }\n}\n```\n\n## Authentication\nMost endpoints require authentication via Frappe session cookies.\nUse the Login endpoint first to obtain a session, then subsequent requests will use the cookies automatically.\n\n## Bilingual Messages\nAll `message` fields return an object with `en` (English) and `ar` (Arabic) translations.\n\n## Setup\n1. Import this collection into Postman\n2. Set the `base_url` variable to your Frappe site URL (e.g. http://localhost:8080)\n3. Set `test_email` and `test_password` for auth testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "api_prefix",
+			"value": "/api/method/grm_management.grm_management.api.v1",
+			"type": "string"
+		},
+		{
+			"key": "test_email",
+			"value": "test@example.com",
+			"type": "string"
+		},
+		{
+			"key": "test_password",
+			"value": "TestPass123!",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Auth",
+			"description": "Authentication & user management endpoints.\n\nModule: `auth.py`",
+			"item": [
+				{
+					"name": "Auth Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.auth.auth_status",
+							"host": ["{{base_url}}{{api_prefix}}.auth.auth_status"]
+						},
+						"description": "Check whether the current request is authenticated.\n\n**Auth Required:** No (allow_guest)\n\n**Returns:**\n- `200` - Authentication status with user info"
+					},
+					"response": [
+						{
+							"name": "Authenticated",
+							"status": "OK",
+							"code": 200,
+							"body": "{\n  \"success\": true,\n  \"http_status_code\": 200,\n  \"message\": { \"en\": \"User is authenticated\", \"ar\": \"المستخدم مسجل الدخول\" },\n  \"data\": {\n    \"authenticated\": true,\n    \"user\": \"test@example.com\",\n    \"is_website_user\": true,\n    \"user_type\": \"Website User\"\n  }\n}"
+						},
+						{
+							"name": "Not Authenticated",
+							"status": "OK",
+							"code": 200,
+							"body": "{\n  \"success\": true,\n  \"http_status_code\": 200,\n  \"message\": { \"en\": \"User is not authenticated\", \"ar\": \"المستخدم غير مسجل الدخول\" },\n  \"data\": {\n    \"authenticated\": false,\n    \"user\": null,\n    \"is_website_user\": false,\n    \"user_type\": null\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.message && jsonData.message.success) {",
+									"    pm.collectionVariables.set('logged_in_user', jsonData.message.data.user);",
+									"    console.log('Logged in as: ' + jsonData.message.data.user);",
+									"}"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"usr\": \"{{test_email}}\",\n    \"pwd\": \"{{test_password}}\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.auth.login",
+							"host": ["{{base_url}}{{api_prefix}}.auth.login"]
+						},
+						"description": "Log in a user with email and password.\n\n**Auth Required:** No (allow_guest)\n\n**Parameters:**\n| Param | Type | Required | Description |\n|-------|------|----------|-------------|\n| usr | string | Yes | User email or username |\n| pwd | string | Yes | User password |\n\n**Returns:**\n- `200` - Login successful (sets session cookie)\n- `400` - Missing credentials\n- `401` - Invalid credentials\n- `500` - Server error"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"status": "OK",
+							"code": 200,
+							"body": "{\n  \"success\": true,\n  \"http_status_code\": 200,\n  \"message\": { \"en\": \"Login successful\", \"ar\": \"تم تسجيل الدخول بنجاح\" },\n  \"data\": {\n    \"user\": \"test@example.com\",\n    \"full_name\": \"Test User\"\n  },\n  \"is_website_user\": true\n}"
+						},
+						{
+							"name": "Invalid Credentials",
+							"status": "Unauthorized",
+							"code": 401,
+							"body": "{\n  \"success\": false,\n  \"http_status_code\": 401,\n  \"message\": { \"en\": \"Invalid email or password\", \"ar\": \"البريد الإلكتروني أو كلمة المرور غير صحيحة\" }\n}"
+						},
+						{
+							"name": "Missing Credentials",
+							"status": "Bad Request",
+							"code": 400,
+							"body": "{\n  \"success\": false,\n  \"http_status_code\": 400,\n  \"message\": { \"en\": \"Email and password are required\", \"ar\": \"البريد الإلكتروني وكلمة المرور مطلوبان\" }\n}"
+						}
+					]
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.auth.logout",
+							"host": ["{{base_url}}{{api_prefix}}.auth.logout"]
+						},
+						"description": "Log out the current user.\n\n**Auth Required:** Yes\n\n**Returns:**\n- `200` - Logout successful\n- `401` - Not authenticated\n- `500` - Server error"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"status": "OK",
+							"code": 200,
+							"body": "{\n  \"success\": true,\n  \"http_status_code\": 200,\n  \"message\": { \"en\": \"Logged out successfully\", \"ar\": \"تم تسجيل الخروج بنجاح\" }\n}"
+						}
+					]
+				},
+				{
+					"name": "Signup (Individual)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"newuser@example.com\",\n    \"password\": \"SecurePass123!\",\n    \"first_name\": \"Ahmed\",\n    \"last_name\": \"Ali\",\n    \"phone\": \"+966501234567\",\n    \"tenant_type\": \"Individual\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.auth.signup",
+							"host": ["{{base_url}}{{api_prefix}}.auth.signup"]
+						},
+						"description": "Register a new individual website user. Creates User + GRM Tenant + ERPNext Customer.\n\n**Auth Required:** No (allow_guest)\n\n**Parameters:**\n| Param | Type | Required | Description |\n|-------|------|----------|-------------|\n| email | string | Yes | User email |\n| password | string | Yes | Min 4 characters |\n| first_name | string | Yes | First name |\n| last_name | string | No | Last name |\n| phone | string | No | Phone number |\n| tenant_type | string | No | \"Individual\" (default) or \"Company\" |\n\n**Returns:**\n- `201` - Signup successful\n- `400` - Validation error\n- `409` - Email already exists\n- `500` - Server error"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"status": "Created",
+							"code": 201,
+							"body": "{\n  \"success\": true,\n  \"http_status_code\": 201,\n  \"message\": { \"en\": \"Account created successfully\", \"ar\": \"تم إنشاء الحساب بنجاح\" },\n  \"data\": {\n    \"user\": \"newuser@example.com\",\n    \"full_name\": \"Ahmed Ali\",\n    \"tenant_id\": \"GRM-TENANT-0001\",\n    \"tenant_type\": \"Individual\"\n  }\n}"
+						},
+						{
+							"name": "Email Exists",
+							"status": "Conflict",
+							"code": 409,
+							"body": "{\n  \"success\": false,\n  \"http_status_code\": 409,\n  \"message\": { \"en\": \"An account with this email already exists\", \"ar\": \"يوجد حساب مسجل بهذا البريد الإلكتروني\" }\n}"
+						}
+					]
+				},
+				{
+					"name": "Signup (Company)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"company@example.com\",\n    \"password\": \"SecurePass123!\",\n    \"first_name\": \"Mohammed\",\n    \"last_name\": \"Salem\",\n    \"phone\": \"+966509876543\",\n    \"tenant_type\": \"Company\",\n    \"company_name\": \"Acme Technology Co.\",\n    \"commercial_registration\": \"1010123456\",\n    \"tax_id\": \"300012345600003\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.auth.signup",
+							"host": ["{{base_url}}{{api_prefix}}.auth.signup"]
+						},
+						"description": "Register a new company website user. Creates User + GRM Tenant (Company) + ERPNext Customer.\n\n**Auth Required:** No (allow_guest)\n\n**Additional Company Parameters:**\n| Param | Type | Required | Description |\n|-------|------|----------|-------------|\n| tenant_type | string | Yes | Must be \"Company\" |\n| company_name | string | Yes | Company name |\n| commercial_registration | string | No | CR number |\n| tax_id | string | No | Tax ID / VAT number |\n\n**Returns:**\n- `201` - Signup successful\n- `400` - Validation error (e.g. missing company_name)\n- `409` - Email already exists\n- `500` - Server error"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"status": "Created",
+							"code": 201,
+							"body": "{\n  \"success\": true,\n  \"http_status_code\": 201,\n  \"message\": { \"en\": \"Account created successfully\", \"ar\": \"تم إنشاء الحساب بنجاح\" },\n  \"data\": {\n    \"user\": \"company@example.com\",\n    \"full_name\": \"Mohammed Salem\",\n    \"tenant_id\": \"GRM-TENANT-0002\",\n    \"tenant_type\": \"Company\"\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Current User (Profile)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.auth.get_current_user",
+							"host": ["{{base_url}}{{api_prefix}}.auth.get_current_user"]
+						},
+						"description": "Get profile details of the authenticated user including tenant info.\n\n**Auth Required:** Yes\n\n**Returns:**\n- `200` - User profile + tenant data\n- `401` - Not authenticated\n- `500` - Server error"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"status": "OK",
+							"code": 200,
+							"body": "{\n  \"success\": true,\n  \"http_status_code\": 200,\n  \"message\": { \"en\": \"User profile retrieved successfully\", \"ar\": \"تم استرجاع الملف الشخصي بنجاح\" },\n  \"data\": {\n    \"user\": \"test@example.com\",\n    \"full_name\": \"Ahmed Ali\",\n    \"email\": \"test@example.com\",\n    \"first_name\": \"Ahmed\",\n    \"last_name\": \"Ali\",\n    \"user_image\": \"/files/profile.jpg\",\n    \"phone\": \"+966501234567\",\n    \"roles\": [\"Customer\"],\n    \"tenant\": {\n      \"tenant_id\": \"GRM-TENANT-0001\",\n      \"tenant_name\": \"Ahmed Ali\",\n      \"tenant_type\": \"Individual\",\n      \"status\": \"Active\",\n      \"phone\": \"+966501234567\",\n      \"company_name\": null,\n      \"commercial_registration\": null,\n      \"tax_id\": null,\n      \"city\": \"Riyadh\",\n      \"address\": \"123 Main St\"\n    },\n    \"gender\": null,\n    \"date_of_birth\": null,\n    \"username\": null\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Profile",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\": \"Ahmed\",\n    \"last_name\": \"Ali Mohammed\",\n    \"phone\": \"+966501234567\",\n    \"user_image\": \"/files/new-profile.jpg\",\n    \"city\": \"Riyadh\",\n    \"address\": \"123 King Fahd Road\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.auth.update_profile",
+							"host": ["{{base_url}}{{api_prefix}}.auth.update_profile"]
+						},
+						"description": "Update profile info for the current user.\nChanges are synced across **User**, **GRM Tenant**, and **linked Customer** docs.\n\nAll params are optional - only provided fields are updated.\n\n**Auth Required:** Yes\n\n**Parameters:**\n| Param | Type | Required | Description |\n|-------|------|----------|-------------|\n| first_name | string | No | First name |\n| last_name | string | No | Last name |\n| phone | string | No | Phone / mobile number |\n| user_image | string | No | URL / path to profile image |\n| company_name | string | No | Company name (for Company tenants) |\n| commercial_registration | string | No | CR number |\n| tax_id | string | No | Tax ID / VAT number |\n| city | string | No | City |\n| address | string | No | Address line 1 |\n\n**Sync Behavior:**\n- **User doc:** first_name, last_name, mobile_no, user_image\n- **GRM Tenant:** phone, tenant_name, company fields, city, address\n- **Customer:** customer_name, mobile_no, image, tax_id\n\n**Returns:**\n- `200` - Profile updated\n- `401` - Not authenticated\n- `500` - Server error"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"status": "OK",
+							"code": 200,
+							"body": "{\n  \"success\": true,\n  \"http_status_code\": 200,\n  \"message\": { \"en\": \"Profile updated successfully\", \"ar\": \"تم تحديث الملف الشخصي بنجاح\" }\n}"
+						}
+					]
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"current_password\": \"OldPass123!\",\n    \"new_password\": \"NewSecurePass456!\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.auth.change_password",
+							"host": ["{{base_url}}{{api_prefix}}.auth.change_password"]
+						},
+						"description": "Change the password for the current user (requires current password).\n\n**Auth Required:** Yes\n\n**Parameters:**\n| Param | Type | Required | Description |\n|-------|------|----------|-------------|\n| current_password | string | Yes | Current password |\n| new_password | string | Yes | New password (min 4 chars) |\n\n**Returns:**\n- `200` - Password changed\n- `400` - Validation error / short password\n- `401` - Not authenticated / wrong current password\n- `500` - Server error"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"status": "OK",
+							"code": 200,
+							"body": "{\n  \"success\": true,\n  \"http_status_code\": 200,\n  \"message\": { \"en\": \"Password changed successfully\", \"ar\": \"تم تغيير كلمة المرور بنجاح\" }\n}"
+						},
+						{
+							"name": "Wrong Current Password",
+							"status": "Unauthorized",
+							"code": 401,
+							"body": "{\n  \"success\": false,\n  \"http_status_code\": 401,\n  \"message\": { \"en\": \"Current password is incorrect\", \"ar\": \"كلمة المرور الحالية غير صحيحة\" }\n}"
+						},
+						{
+							"name": "Short Password",
+							"status": "Bad Request",
+							"code": 400,
+							"body": "{\n  \"success\": false,\n  \"http_status_code\": 400,\n  \"message\": { \"en\": \"New password must be at least 4 characters\", \"ar\": \"كلمة المرور الجديدة يجب أن تكون 4 أحرف على الأقل\" }\n}"
+						}
+					]
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"{{test_email}}\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.auth.forgot_password",
+							"host": ["{{base_url}}{{api_prefix}}.auth.forgot_password"]
+						},
+						"description": "Send a 6-digit verification code to the user's email for password reset.\n\nAlways returns a generic success message to prevent user enumeration.\n\n**Auth Required:** No (allow_guest)\n\n**Rate Limit:** 5 requests per email per hour\n\n**Parameters:**\n| Param | Type | Required | Description |\n|-------|------|----------|-------------|\n| email | string | Yes | User email address |\n\n**Flow:**\n1. Call this endpoint with user's email\n2. User receives a 6-digit code via email (valid for 15 minutes)\n3. Call `verify_reset_code` with the code + new password\n\n**Returns:**\n- `200` - Generic success (code sent if account exists)\n- `400` - Missing/invalid email\n- `500` - Server error"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"status": "OK",
+							"code": 200,
+							"body": "{\n  \"success\": true,\n  \"http_status_code\": 200,\n  \"message\": { \"en\": \"If an account with this email exists, a reset code has been sent\", \"ar\": \"إذا كان هناك حساب مرتبط بهذا البريد الإلكتروني، فقد تم إرسال رمز إعادة التعيين\" }\n}"
+						},
+						{
+							"name": "Missing Email",
+							"status": "Bad Request",
+							"code": 400,
+							"body": "{\n  \"success\": false,\n  \"http_status_code\": 400,\n  \"message\": { \"en\": \"Email is required\", \"ar\": \"البريد الإلكتروني مطلوب\" }\n}"
+						},
+						{
+							"name": "Invalid Email",
+							"status": "Bad Request",
+							"code": 400,
+							"body": "{\n  \"success\": false,\n  \"http_status_code\": 400,\n  \"message\": { \"en\": \"Invalid email address\", \"ar\": \"عنوان البريد الإلكتروني غير صالح\" }\n}"
+						}
+					]
+				},
+				{
+					"name": "Verify Reset Code",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"{{test_email}}\",\n    \"code\": \"123456\",\n    \"new_password\": \"NewPass123!\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.auth.verify_reset_code",
+							"host": ["{{base_url}}{{api_prefix}}.auth.verify_reset_code"]
+						},
+						"description": "Verify the 6-digit reset code and set a new password.\n\n**Auth Required:** No (allow_guest)\n\n**Rate Limit:** 10 requests per email per hour\n\n**Parameters:**\n| Param | Type | Required | Description |\n|-------|------|----------|-------------|\n| email | string | Yes | User email address |\n| code | string | Yes | 6-digit verification code from email |\n| new_password | string | Yes | New password (min 4 chars) |\n\n**Security:**\n- Code expires after 15 minutes\n- Max 5 wrong attempts per code (then code is invalidated)\n- Rate limited per email\n\n**Returns:**\n- `200` - Password reset successful\n- `400` - Invalid/expired code or validation error\n- `404` - User not found\n- `429` - Too many invalid attempts\n- `500` - Server error"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"status": "OK",
+							"code": 200,
+							"body": "{\n  \"success\": true,\n  \"http_status_code\": 200,\n  \"message\": { \"en\": \"Password has been reset successfully\", \"ar\": \"تم إعادة تعيين كلمة المرور بنجاح\" }\n}"
+						},
+						{
+							"name": "Invalid Code",
+							"status": "Bad Request",
+							"code": 400,
+							"body": "{\n  \"success\": false,\n  \"http_status_code\": 400,\n  \"message\": { \"en\": \"Invalid reset code\", \"ar\": \"رمز إعادة التعيين غير صحيح\" }\n}"
+						},
+						{
+							"name": "Expired Code",
+							"status": "Bad Request",
+							"code": 400,
+							"body": "{\n  \"success\": false,\n  \"http_status_code\": 400,\n  \"message\": { \"en\": \"Invalid or expired reset code. Please request a new one.\", \"ar\": \"رمز إعادة التعيين غير صالح أو منتهي الصلاحية. يرجى طلب رمز جديد.\" }\n}"
+						},
+						{
+							"name": "Too Many Attempts",
+							"status": "Too Many Requests",
+							"code": 429,
+							"body": "{\n  \"success\": false,\n  \"http_status_code\": 429,\n  \"message\": { \"en\": \"Too many invalid attempts. Please request a new reset code.\", \"ar\": \"عدد كبير من المحاولات الخاطئة. يرجى طلب رمز إعادة تعيين جديد.\" }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Spaces",
+			"description": "Workspace browsing endpoints.\n\nModule: `spaces.py`\n\nAll endpoints are publicly accessible (allow_guest).",
+			"item": [
+				{
+					"name": "Get Spaces By Type",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.spaces.get_spaces_by_type",
+							"host": ["{{base_url}}{{api_prefix}}.spaces.get_spaces_by_type"],
+							"query": [
+								{
+									"key": "location",
+									"value": "",
+									"description": "Filter by location name (optional)",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "Available",
+									"description": "Filter by status: Available, Rented, Not Ready, Under Maintenance, Reserved",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Get GRM Spaces grouped by GRM Space Type.\n\n**Auth Required:** No (allow_guest)\n\n**Query Parameters:**\n| Param | Type | Required | Description |\n|-------|------|----------|-------------|\n| location | string | No | Filter by location name |\n| status | string | No | Filter by status (Available, Rented, Not Ready, Under Maintenance, Reserved) |\n\n**Returns:**\n- `200` - Spaces grouped by type with full details including Arabic names, amenities, images\n- `400` - Invalid status value\n- `404` - Location not found\n- `500` - Server error"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"status": "OK",
+							"code": 200,
+							"body": "{\n  \"success\": true,\n  \"http_status_code\": 200,\n  \"message\": { \"en\": \"Spaces retrieved successfully\", \"ar\": \"تم جلب المساحات بنجاح\" },\n  \"data\": {\n    \"Private Office\": {\n      \"type_info\": {\n        \"name\": \"Private Office\",\n        \"name_ar\": \"مكتب خاص\",\n        \"category\": \"Private Office\",\n        \"icon\": \"office\",\n        \"color\": \"#4CAF50\",\n        \"description\": \"Fully furnished private offices\",\n        \"typical_usage\": \"Teams, startups\"\n      },\n      \"spaces\": [\n        {\n          \"id\": \"SPACE-2026-0001\",\n          \"space_name\": \"Executive Office A\",\n          \"space_name_ar\": \"المكتب التنفيذي أ\",\n          \"space_code\": \"EXO-A\",\n          \"location\": \"Main Branch\",\n          \"location_ar\": \"الفرع الرئيسي\",\n          \"property\": \"Building A\",\n          \"status\": \"Available\",\n          \"is_featured\": 1,\n          \"allow_booking\": 1,\n          \"floor_number\": 3,\n          \"room_number\": \"301\",\n          \"area_sqm\": 25.0,\n          \"capacity\": 4,\n          \"min_booking_hours\": 1,\n          \"hourly_rate\": 100,\n          \"daily_rate\": 500,\n          \"monthly_rate\": 5000,\n          \"annual_rate\": 50000,\n          \"minimum_charge\": 100,\n          \"amenities\": [\"WiFi\", \"Air Conditioning\", \"Projector\"],\n          \"custom_amenities\": null,\n          \"description\": \"Premium executive office\",\n          \"space_image\": \"https://example.com/files/office-a.jpg\"\n        }\n      ],\n      \"count\": 1\n    }\n  },\n  \"total_spaces\": 1,\n  \"total_types\": 1\n}"
+						},
+						{
+							"name": "Location Not Found",
+							"status": "Not Found",
+							"code": 404,
+							"body": "{\n  \"success\": false,\n  \"http_status_code\": 404,\n  \"message\": { \"en\": \"Location not found\", \"ar\": \"الموقع غير موجود\" }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Spaces By Type (with Location filter)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.spaces.get_spaces_by_type?location=Main Branch",
+							"host": ["{{base_url}}{{api_prefix}}.spaces.get_spaces_by_type"],
+							"query": [
+								{
+									"key": "location",
+									"value": "Main Branch"
+								}
+							]
+						},
+						"description": "Get spaces filtered by a specific location name."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Spaces By Type (Available only)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.spaces.get_spaces_by_type?status=Available",
+							"host": ["{{base_url}}{{api_prefix}}.spaces.get_spaces_by_type"],
+							"query": [
+								{
+									"key": "status",
+									"value": "Available"
+								}
+							]
+						},
+						"description": "Get only available spaces grouped by type."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Space By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.spaces.get_space_by_id?id=SPACE-2026-0001",
+							"host": ["{{base_url}}{{api_prefix}}.spaces.get_space_by_id"],
+							"query": [
+								{
+									"key": "id",
+									"value": "SPACE-2026-0001",
+									"description": "GRM Space DocName (e.g. SPACE-2026-0004)"
+								}
+							]
+						},
+						"description": "Get a single GRM Space by its ID (DocName).\n\n**Auth Required:** No (allow_guest)\n\n**Query Parameters:**\n| Param | Type | Required | Description |\n|-------|------|----------|-------------|\n| id | string | Yes | GRM Space ID (e.g. SPACE-2026-0001) |\n\n**Returns:**\n- `200` - Full space details with type info, amenities, location (EN + AR)\n- `400` - Missing id parameter\n- `404` - Space not found\n- `500` - Server error"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"status": "OK",
+							"code": 200,
+							"body": "{\n  \"success\": true,\n  \"http_status_code\": 200,\n  \"message\": { \"en\": \"Space retrieved successfully\", \"ar\": \"تم جلب بيانات المساحة بنجاح\" },\n  \"data\": {\n    \"id\": \"SPACE-2026-0001\",\n    \"space_name\": \"Executive Office A\",\n    \"space_name_ar\": \"المكتب التنفيذي أ\",\n    \"space_code\": \"EXO-A\",\n    \"location\": \"Main Branch\",\n    \"location_ar\": \"الفرع الرئيسي\",\n    \"property\": \"Building A\",\n    \"status\": \"Available\",\n    \"is_featured\": 1,\n    \"allow_booking\": 1,\n    \"floor_number\": 3,\n    \"room_number\": \"301\",\n    \"area_sqm\": 25.0,\n    \"capacity\": 4,\n    \"min_booking_hours\": 1,\n    \"hourly_rate\": 100,\n    \"daily_rate\": 500,\n    \"monthly_rate\": 5000,\n    \"annual_rate\": 50000,\n    \"minimum_charge\": 100,\n    \"amenities\": [\"WiFi\", \"Air Conditioning\", \"Projector\"],\n    \"custom_amenities\": null,\n    \"description\": \"Premium executive office\",\n    \"space_image\": \"https://example.com/files/office-a.jpg\",\n    \"space_type\": {\n      \"id\": \"GRM-SPACE-TYPE-0001\",\n      \"name\": \"Private Office\",\n      \"name_ar\": \"مكتب خاص\",\n      \"category\": \"Private Office\",\n      \"icon\": \"office\",\n      \"color\": \"#4CAF50\",\n      \"description\": \"Fully furnished private offices\",\n      \"typical_usage\": \"Teams, startups\"\n    }\n  }\n}"
+						},
+						{
+							"name": "Space Not Found",
+							"status": "Not Found",
+							"code": 404,
+							"body": "{\n  \"success\": false,\n  \"http_status_code\": 404,\n  \"message\": { \"en\": \"Space not found\", \"ar\": \"المساحة غير موجودة\" }\n}"
+						},
+						{
+							"name": "Missing ID",
+							"status": "Bad Request",
+							"code": 400,
+							"body": "{\n  \"success\": false,\n  \"http_status_code\": 400,\n  \"message\": { \"en\": \"Missing id\", \"ar\": \"حقل id مطلوب\" }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Space Types",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.spaces.get_space_types",
+							"host": ["{{base_url}}{{api_prefix}}.spaces.get_space_types"]
+						},
+						"description": "Get all active GRM Space Types.\n\n**Auth Required:** No (allow_guest)\n\n**Returns:**\n- `200` - List of all active space types with details (EN + AR names, pricing, capacities)\n- `500` - Server error"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"status": "OK",
+							"code": 200,
+							"body": "{\n  \"success\": true,\n  \"http_status_code\": 200,\n  \"message\": { \"en\": \"Space types retrieved successfully\", \"ar\": \"تم جلب أنواع المساحات بنجاح\" },\n  \"data\": [\n    {\n      \"id\": \"GRM-SPACE-TYPE-0001\",\n      \"name\": \"Private Office\",\n      \"name_ar\": \"مكتب خاص\",\n      \"code\": \"PO\",\n      \"category\": \"Private Office\",\n      \"icon\": \"office\",\n      \"color\": \"#4CAF50\",\n      \"default_capacity\": 4,\n      \"min_capacity\": 1,\n      \"max_capacity\": 10,\n      \"typical_area_sqm\": 25.0,\n      \"hourly_rate\": 100,\n      \"daily_rate\": 500,\n      \"monthly_rate\": 5000,\n      \"annual_rate\": 50000,\n      \"description\": \"Fully furnished private offices\",\n      \"default_amenities\": \"WiFi, AC, Desk, Chair\",\n      \"typical_usage\": \"Teams, startups, remote work\"\n    }\n  ],\n  \"total\": 1\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Bookings",
+			"description": "Booking management endpoints.\n\nModule: `booking.py`",
+			"item": [
+				{
+					"name": "Check Availability",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.booking.check_availability?space=SPACE-2026-0001&booking_date=2026-03-01&start_time=09:00&end_time=11:00",
+							"host": ["{{base_url}}{{api_prefix}}.booking.check_availability"],
+							"query": [
+								{
+									"key": "space",
+									"value": "SPACE-2026-0001",
+									"description": "GRM Space ID"
+								},
+								{
+									"key": "booking_date",
+									"value": "2026-03-01",
+									"description": "Date in YYYY-MM-DD format"
+								},
+								{
+									"key": "start_time",
+									"value": "09:00",
+									"description": "Start time in HH:MM format"
+								},
+								{
+									"key": "end_time",
+									"value": "11:00",
+									"description": "End time in HH:MM format"
+								}
+							]
+						},
+						"description": "Check if a space is available for booking at the specified time.\n\n**Auth Required:** No (allow_guest)\n\n**Query Parameters:**\n| Param | Type | Required | Description |\n|-------|------|----------|-------------|\n| space | string | Yes | GRM Space ID |\n| booking_date | string | Yes | Date (YYYY-MM-DD) |\n| start_time | string | Yes | Start time (HH:MM) |\n| end_time | string | Yes | End time (HH:MM) |\n\n**Returns:**\n- `200` - Space is available + pricing estimate\n- `400` - Validation error (past date, below min hours)\n- `404` - Space not found\n- `409` - Space not available (not bookable, wrong status, or time conflict)\n- `500` - Server error"
+					},
+					"response": [
+						{
+							"name": "Available",
+							"status": "OK",
+							"code": 200,
+							"body": "{\n  \"success\": true,\n  \"http_status_code\": 200,\n  \"available\": true,\n  \"message\": { \"en\": \"Space is available\", \"ar\": \"المساحة متاحة\" },\n  \"space_info\": {\n    \"id\": \"SPACE-2026-0001\",\n    \"name\": \"Executive Office A\",\n    \"capacity\": 4,\n    \"hourly_rate\": 100,\n    \"daily_rate\": 500\n  },\n  \"booking_info\": {\n    \"duration_hours\": 2.0,\n    \"rate_type\": \"Hourly\",\n    \"estimated_price\": 200.0\n  }\n}"
+						},
+						{
+							"name": "Not Available (Time Conflict)",
+							"status": "Conflict",
+							"code": 409,
+							"body": "{\n  \"success\": false,\n  \"http_status_code\": 409,\n  \"available\": false,\n  \"message\": { \"en\": \"Space is already booked during this time\", \"ar\": \"المساحة محجوزة بالفعل خلال هذا الوقت\" },\n  \"conflicts\": [\n    {\n      \"booking_id\": \"GRM-BOOK-0001\",\n      \"start_time\": \"08:00:00\",\n      \"end_time\": \"10:00:00\",\n      \"status\": \"Confirmed\"\n    }\n  ]\n}"
+						},
+						{
+							"name": "Space Not Bookable",
+							"status": "Conflict",
+							"code": 409,
+							"body": "{\n  \"success\": false,\n  \"http_status_code\": 409,\n  \"available\": false,\n  \"message\": { \"en\": \"This space does not allow bookings\", \"ar\": \"هذه المساحة لا تسمح بالحجز\" }\n}"
+						},
+						{
+							"name": "Space Not Available",
+							"status": "Conflict",
+							"code": 409,
+							"body": "{\n  \"success\": false,\n  \"http_status_code\": 409,\n  \"available\": false,\n  \"message\": { \"en\": \"Space is currently not available (status: Under Maintenance)\", \"ar\": \"المساحة غير متاحة حالياً (الحالة: تحت الصيانة)\" }\n}"
+						}
+					]
+				},
+				{
+					"name": "Create Booking",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"space\": \"SPACE-2026-0001\",\n    \"booking_date\": \"2026-03-01\",\n    \"start_time\": \"09:00\",\n    \"end_time\": \"11:00\",\n    \"booking_type\": \"Hourly\",\n    \"attendees\": 2,\n    \"purpose\": \"Team meeting\",\n    \"notes\": \"Need projector setup\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.booking.create_booking",
+							"host": ["{{base_url}}{{api_prefix}}.booking.create_booking"]
+						},
+						"description": "Create a new booking for the current logged-in user.\n\n**Auth Required:** Yes\n\n**Parameters:**\n| Param | Type | Required | Description |\n|-------|------|----------|-------------|\n| space | string | Yes | GRM Space ID |\n| booking_date | string | Yes | Date (YYYY-MM-DD) |\n| start_time | string | Yes | Start time (HH:MM) |\n| end_time | string | Yes | End time (HH:MM) |\n| booking_type | string | No | Hourly (default), Daily, Multi-day |\n| attendees | int | No | Number of attendees (default: 1) |\n| purpose | string | No | Purpose of booking (max 500 chars) |\n| notes | string | No | Additional notes (max 1000 chars) |\n\n**Returns:**\n- `201` - Booking created\n- `400` - Validation error\n- `401` - Not authenticated\n- `404` - Space not found / no tenant\n- `409` - Space unavailable (conflict)\n- `500` - Server error"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"status": "Created",
+							"code": 201,
+							"body": "{\n  \"success\": true,\n  \"http_status_code\": 201,\n  \"message\": { \"en\": \"Booking created successfully\", \"ar\": \"تم إنشاء الحجز بنجاح\" },\n  \"data\": {\n    \"id\": \"GRM-BOOK-0001\",\n    \"status\": \"Draft\",\n    \"space\": {\n      \"id\": \"SPACE-2026-0001\",\n      \"name\": \"Executive Office A\",\n      \"location\": \"Main Branch\"\n    },\n    \"booking_date\": \"2026-03-01\",\n    \"start_time\": \"09:00:00\",\n    \"end_time\": \"11:00:00\",\n    \"duration_hours\": 2.0,\n    \"attendees\": 2,\n    \"rate_type\": \"Hourly\",\n    \"subtotal\": 200.0,\n    \"total_amount\": 200.0,\n    \"payment_status\": \"Unpaid\"\n  }\n}"
+						},
+						{
+							"name": "Conflict",
+							"status": "Conflict",
+							"code": 409,
+							"body": "{\n  \"success\": false,\n  \"http_status_code\": 409,\n  \"message\": { \"en\": \"Space is already booked during this time\", \"ar\": \"المساحة محجوزة بالفعل خلال هذا الوقت\" },\n  \"conflicts\": []\n}"
+						}
+					]
+				},
+				{
+					"name": "Confirm Booking",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"booking_id\": \"GRM-BOOK-0001\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.booking.confirm_booking",
+							"host": ["{{base_url}}{{api_prefix}}.booking.confirm_booking"]
+						},
+						"description": "Confirm a draft booking.\n\n**Auth Required:** Yes\n\n**Parameters:**\n| Param | Type | Required | Description |\n|-------|------|----------|-------------|\n| booking_id | string | Yes | The booking ID to confirm |\n\n**Returns:**\n- `200` - Booking confirmed\n- `400` - Invalid status (not Draft)\n- `401` - Not authenticated\n- `403` - Not the booking owner\n- `404` - Booking not found\n- `409` - Space no longer available\n- `500` - Server error"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"status": "OK",
+							"code": 200,
+							"body": "{\n  \"success\": true,\n  \"http_status_code\": 200,\n  \"message\": { \"en\": \"Booking confirmed successfully\", \"ar\": \"تم تأكيد الحجز بنجاح\" },\n  \"data\": {\n    \"booking_id\": \"GRM-BOOK-0001\",\n    \"status\": \"Confirmed\"\n  }\n}"
+						},
+						{
+							"name": "Not Draft",
+							"status": "Bad Request",
+							"code": 400,
+							"body": "{\n  \"success\": false,\n  \"http_status_code\": 400,\n  \"message\": { \"en\": \"Only draft bookings can be confirmed\", \"ar\": \"يمكن تأكيد الحجوزات المسودة فقط\" }\n}"
+						}
+					]
+				},
+				{
+					"name": "Cancel Booking",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"booking_id\": \"GRM-BOOK-0001\",\n    \"reason\": \"Schedule conflict\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.booking.cancel_booking",
+							"host": ["{{base_url}}{{api_prefix}}.booking.cancel_booking"]
+						},
+						"description": "Cancel a booking.\n\n**Auth Required:** Yes\n\n**Parameters:**\n| Param | Type | Required | Description |\n|-------|------|----------|-------------|\n| booking_id | string | Yes | The booking ID to cancel |\n| reason | string | No | Cancellation reason (max 500 chars) |\n\n**Returns:**\n- `200` - Booking cancelled\n- `400` - Invalid status (already Checked-in/out/Cancelled)\n- `401` - Not authenticated\n- `403` - Not the booking owner\n- `404` - Booking not found\n- `500` - Server error"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"status": "OK",
+							"code": 200,
+							"body": "{\n  \"success\": true,\n  \"http_status_code\": 200,\n  \"message\": { \"en\": \"Booking cancelled successfully\", \"ar\": \"تم إلغاء الحجز بنجاح\" },\n  \"data\": {\n    \"booking_id\": \"GRM-BOOK-0001\",\n    \"status\": \"Cancelled\"\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get My Bookings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.booking.get_my_bookings",
+							"host": ["{{base_url}}{{api_prefix}}.booking.get_my_bookings"],
+							"query": [
+								{
+									"key": "status",
+									"value": "Confirmed",
+									"description": "Filter: Draft, Confirmed, Checked-in, Checked-out, Cancelled",
+									"disabled": true
+								},
+								{
+									"key": "from_date",
+									"value": "2026-01-01",
+									"description": "Filter from date (YYYY-MM-DD)",
+									"disabled": true
+								},
+								{
+									"key": "to_date",
+									"value": "2026-12-31",
+									"description": "Filter to date (YYYY-MM-DD)",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "50",
+									"description": "Max results (default: 50, max: 100)",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Get bookings for the current logged-in user.\n\n**Auth Required:** Yes\n\n**Query Parameters:**\n| Param | Type | Required | Description |\n|-------|------|----------|-------------|\n| status | string | No | Filter: Draft, Confirmed, Checked-in, Checked-out, Cancelled |\n| from_date | string | No | Filter from date (YYYY-MM-DD) |\n| to_date | string | No | Filter to date (YYYY-MM-DD) |\n| limit | int | No | Max results (default: 50, max: 100) |\n\n**Returns:**\n- `200` - List of bookings with space info (EN + AR)\n- `401` - Not authenticated\n- `500` - Server error"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"status": "OK",
+							"code": 200,
+							"body": "{\n  \"success\": true,\n  \"http_status_code\": 200,\n  \"message\": { \"en\": \"Bookings retrieved successfully\", \"ar\": \"تم جلب الحجوزات بنجاح\" },\n  \"data\": {\n    \"bookings\": [\n      {\n        \"id\": \"GRM-BOOK-0001\",\n        \"status\": \"Confirmed\",\n        \"booking_type\": \"Hourly\",\n        \"space\": {\n          \"id\": \"SPACE-2026-0001\",\n          \"name\": \"Executive Office A\",\n          \"name_ar\": \"المكتب التنفيذي أ\",\n          \"location\": \"Main Branch\",\n          \"image\": \"https://example.com/files/office-a.jpg\"\n        },\n        \"booking_date\": \"2026-03-01\",\n        \"start_time\": \"09:00:00\",\n        \"end_time\": \"11:00:00\",\n        \"duration_hours\": 2.0,\n        \"attendees\": 2,\n        \"purpose\": \"Team meeting\",\n        \"rate_type\": \"Hourly\",\n        \"subtotal\": 200.0,\n        \"total_amount\": 200.0,\n        \"payment_status\": \"Unpaid\",\n        \"actual_check_in\": null,\n        \"actual_check_out\": null\n      }\n    ],\n    \"total\": 1\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get My Bookings (with filters)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.booking.get_my_bookings?status=Confirmed&from_date=2026-02-01&to_date=2026-03-31&limit=20",
+							"host": ["{{base_url}}{{api_prefix}}.booking.get_my_bookings"],
+							"query": [
+								{
+									"key": "status",
+									"value": "Confirmed"
+								},
+								{
+									"key": "from_date",
+									"value": "2026-02-01"
+								},
+								{
+									"key": "to_date",
+									"value": "2026-03-31"
+								},
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						},
+						"description": "Get confirmed bookings within a date range, limited to 20 results."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Booking Details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.booking.get_booking_details?booking_id=GRM-BOOK-0001",
+							"host": ["{{base_url}}{{api_prefix}}.booking.get_booking_details"],
+							"query": [
+								{
+									"key": "booking_id",
+									"value": "GRM-BOOK-0001",
+									"description": "The booking ID"
+								}
+							]
+						},
+						"description": "Get detailed information about a specific booking.\n\n**Auth Required:** Yes\n\n**Query Parameters:**\n| Param | Type | Required | Description |\n|-------|------|----------|-------------|\n| booking_id | string | Yes | The booking ID |\n\n**Returns:**\n- `200` - Full booking details (tenant, space, pricing, check-in/out)\n- `401` - Not authenticated\n- `403` - Not the booking owner\n- `404` - Booking not found\n- `500` - Server error"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"status": "OK",
+							"code": 200,
+							"body": "{\n  \"success\": true,\n  \"http_status_code\": 200,\n  \"message\": { \"en\": \"Booking details retrieved successfully\", \"ar\": \"تم جلب تفاصيل الحجز بنجاح\" },\n  \"data\": {\n    \"id\": \"GRM-BOOK-0001\",\n    \"status\": \"Confirmed\",\n    \"booking_type\": \"Hourly\",\n    \"tenant\": {\n      \"id\": \"GRM-TENANT-0001\",\n      \"name\": \"Ahmed Ali\",\n      \"email\": \"test@example.com\",\n      \"phone\": \"+966501234567\"\n    },\n    \"space\": {\n      \"id\": \"SPACE-2026-0001\",\n      \"name\": \"Executive Office A\",\n      \"location\": \"Main Branch\",\n      \"capacity\": 4,\n      \"image\": \"https://example.com/files/office-a.jpg\"\n    },\n    \"booking_date\": \"2026-03-01\",\n    \"start_time\": \"09:00:00\",\n    \"end_time\": \"11:00:00\",\n    \"duration_hours\": 2.0,\n    \"attendees\": 2,\n    \"purpose\": \"Team meeting\",\n    \"pricing\": {\n      \"rate_type\": \"Hourly\",\n      \"hourly_rate\": 100.0,\n      \"subtotal\": 200.0,\n      \"discount\": 0,\n      \"tax\": 0,\n      \"total_amount\": 200.0\n    },\n    \"payment_status\": \"Unpaid\",\n    \"invoice\": null,\n    \"check_in\": {\n      \"actual_check_in\": null,\n      \"actual_check_out\": null,\n      \"overtime_hours\": 0,\n      \"overtime_charges\": 0\n    },\n    \"notes\": \"Need projector setup\",\n    \"created_on\": \"2026-03-01 08:30:00\",\n    \"modified_on\": \"2026-03-01 08:30:00\"\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Available Slots",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.booking.get_available_slots?space=SPACE-2026-0001&date=2026-03-01&slot_duration_minutes=60",
+							"host": ["{{base_url}}{{api_prefix}}.booking.get_available_slots"],
+							"query": [
+								{
+									"key": "space",
+									"value": "SPACE-2026-0001",
+									"description": "GRM Space ID"
+								},
+								{
+									"key": "date",
+									"value": "2026-03-01",
+									"description": "Date (YYYY-MM-DD)"
+								},
+								{
+									"key": "slot_duration_minutes",
+									"value": "60",
+									"description": "Duration per slot in minutes (default: 60, min: 15, max: 480)"
+								}
+							]
+						},
+						"description": "Get available time slots for a space on a specific date.\n\n**Auth Required:** No (allow_guest)\n\n**Query Parameters:**\n| Param | Type | Required | Description |\n|-------|------|----------|-------------|\n| space | string | Yes | GRM Space ID |\n| date | string | Yes | Date (YYYY-MM-DD) |\n| slot_duration_minutes | int | No | Slot duration in minutes (default: 60, min: 15, max: 480) |\n\n**Returns:**\n- `200` - Time slots with availability status\n- `400` - Validation error\n- `404` - Space not found\n- `409` - Space not bookable or not available\n- `500` - Server error"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"status": "OK",
+							"code": 200,
+							"body": "{\n  \"success\": true,\n  \"http_status_code\": 200,\n  \"message\": { \"en\": \"Time slots retrieved successfully\", \"ar\": \"تم جلب الفترات الزمنية بنجاح\" },\n  \"data\": {\n    \"space\": {\n      \"id\": \"SPACE-2026-0001\",\n      \"name\": \"Executive Office A\"\n    },\n    \"date\": \"2026-03-01\",\n    \"slots\": [\n      {\n        \"start_time\": \"08:00\",\n        \"end_time\": \"09:00\",\n        \"available\": true,\n        \"duration_minutes\": 60\n      },\n      {\n        \"start_time\": \"09:00\",\n        \"end_time\": \"10:00\",\n        \"available\": false,\n        \"duration_minutes\": 60\n      }\n    ],\n    \"available_count\": 12,\n    \"total_slots\": 14\n  }\n}"
+						},
+						{
+							"name": "Space Not Bookable",
+							"status": "Conflict",
+							"code": 409,
+							"body": "{\n  \"success\": false,\n  \"http_status_code\": 409,\n  \"message\": { \"en\": \"This space does not allow bookings\", \"ar\": \"هذه المساحة لا تسمح بالحجز\" },\n  \"data\": {\n    \"slots\": []\n  }\n}"
+						},
+						{
+							"name": "Space Not Available",
+							"status": "Conflict",
+							"code": 409,
+							"body": "{\n  \"success\": false,\n  \"http_status_code\": 409,\n  \"message\": { \"en\": \"Space is currently not available\", \"ar\": \"المساحة غير متاحة حالياً\" },\n  \"data\": {\n    \"slots\": []\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Dashboard",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.booking.get_dashboard",
+							"host": ["{{base_url}}{{api_prefix}}.booking.get_dashboard"]
+						},
+						"description": "Get dashboard summary data for the current logged-in user.\nReturns tenant info, customer financials, subscriptions, booking stats, upcoming bookings, and recent activity.\n\n**Auth Required:** Yes\n\n**Returns:**\n- `200` - Complete dashboard data\n- `401` - Not authenticated\n- `500` - Server error"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"status": "OK",
+							"code": 200,
+							"body": "{\n  \"success\": true,\n  \"http_status_code\": 200,\n  \"message\": { \"en\": \"Dashboard data retrieved successfully\", \"ar\": \"تم جلب بيانات لوحة التحكم بنجاح\" },\n  \"data\": {\n    \"tenant\": {\n      \"tenant_id\": \"GRM-TENANT-0001\",\n      \"tenant_name\": \"Ahmed Ali\",\n      \"tenant_type\": \"Individual\",\n      \"status\": \"Active\"\n    },\n    \"booking_stats\": {\n      \"total_bookings\": 15,\n      \"active_bookings\": 2,\n      \"upcoming_bookings\": 3,\n      \"completed_bookings\": 10,\n      \"cancelled_bookings\": 2,\n      \"total_spent\": 4500.0,\n      \"outstanding_amount\": 500.0\n    },\n    \"upcoming\": [],\n    \"recent\": []\n  }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "SEO",
+			"description": "SEO metadata endpoints for frontend pages.\n\nModule: `seo.py`\n\nAll endpoints are publicly accessible (allow_guest).",
+			"item": [
+				{
+					"name": "Get SEO (Single Page)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.seo.get_seo?page=home",
+							"host": ["{{base_url}}{{api_prefix}}.seo.get_seo"],
+							"query": [
+								{
+									"key": "page",
+									"value": "home",
+									"description": "Page slug: home, spaces, booking, login, signup, profile, contact, about"
+								}
+							]
+						},
+						"description": "Get SEO metadata for a specific page.\n\n**Auth Required:** No (allow_guest)\n\n**Query Parameters:**\n| Param | Type | Required | Description |\n|-------|------|----------|-------------|\n| page | string | Yes | Page slug (home, spaces, booking, login, signup, profile, contact, about) |\n\n**Returns:**\n- `200` - SEO data (title, description, keywords in EN + AR)\n- `400` - Missing page parameter\n- `404` - Page not found\n- `500` - Server error"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"status": "OK",
+							"code": 200,
+							"body": "{\n  \"success\": true,\n  \"http_status_code\": 200,\n  \"message\": { \"en\": \"SEO data retrieved successfully\", \"ar\": \"تم جلب بيانات SEO بنجاح\" },\n  \"data\": {\n    \"page\": \"home\",\n    \"title\": \"GRM - Workspace Solutions\",\n    \"title_ar\": \"GRM - حلول مساحات العمل\",\n    \"description\": \"Find and book premium workspaces, private offices, meeting rooms, and co-working spaces.\",\n    \"description_ar\": \"ابحث واحجز مساحات العمل المميزة، المكاتب الخاصة، قاعات الاجتماعات، ومساحات العمل المشتركة.\",\n    \"keywords\": \"workspace, coworking, office, meeting room, booking\",\n    \"keywords_ar\": \"مساحة عمل, عمل مشترك, مكتب, قاعة اجتماعات, حجز\"\n  }\n}"
+						},
+						{
+							"name": "Page Not Found",
+							"status": "Not Found",
+							"code": 404,
+							"body": "{\n  \"success\": false,\n  \"http_status_code\": 404,\n  \"message\": { \"en\": \"No SEO data found for the specified page\", \"ar\": \"لم يتم العثور على بيانات SEO للصفحة المحددة\" }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get SEO (Spaces page)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.seo.get_seo?page=spaces",
+							"host": ["{{base_url}}{{api_prefix}}.seo.get_seo"],
+							"query": [
+								{
+									"key": "page",
+									"value": "spaces"
+								}
+							]
+						},
+						"description": "Get SEO metadata for the spaces page."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All SEO",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.seo.get_all_seo",
+							"host": ["{{base_url}}{{api_prefix}}.seo.get_all_seo"]
+						},
+						"description": "Get SEO metadata for all pages at once.\nUseful for SSR / preloading all meta in one call.\n\n**Auth Required:** No (allow_guest)\n\n**Returns:**\n- `200` - Dict of all pages with their SEO data (EN + AR)\n- `500` - Server error\n\n**Available pages:** home, spaces, booking, login, signup, profile, contact, about"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"status": "OK",
+							"code": 200,
+							"body": "{\n  \"success\": true,\n  \"http_status_code\": 200,\n  \"message\": { \"en\": \"All SEO data retrieved successfully\", \"ar\": \"تم جلب جميع بيانات SEO بنجاح\" },\n  \"data\": {\n    \"home\": {\n      \"title\": \"GRM - Workspace Solutions\",\n      \"title_ar\": \"GRM - حلول مساحات العمل\",\n      \"description\": \"Find and book premium workspaces...\",\n      \"description_ar\": \"ابحث واحجز مساحات العمل المميزة...\",\n      \"keywords\": \"workspace, coworking, office, meeting room, booking\",\n      \"keywords_ar\": \"مساحة عمل, عمل مشترك, مكتب, قاعة اجتماعات, حجز\"\n    },\n    \"spaces\": { \"...\" },\n    \"booking\": { \"...\" },\n    \"login\": { \"...\" },\n    \"signup\": { \"...\" },\n    \"profile\": { \"...\" },\n    \"contact\": { \"...\" },\n    \"about\": { \"...\" }\n  }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Customers",
+			"description": "Customer showcase endpoints for website display.\n\nModule: `customers.py`\n\nAll endpoints are publicly accessible (allow_guest).",
+			"item": [
+				{
+					"name": "Get Our Customers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.customers.get_our_customers",
+							"host": ["{{base_url}}{{api_prefix}}.customers.get_our_customers"]
+						},
+						"description": "Get customers marked to show on the website (\"Our Customers\" section).\n\n**Auth Required:** No (allow_guest)\n\n**Returns:**\n- `200` - List of featured customers with logos and descriptions (EN + AR)\n- `500` - Server error"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"status": "OK",
+							"code": 200,
+							"body": "{\n  \"success\": true,\n  \"http_status_code\": 200,\n  \"message\": { \"en\": \"Customers retrieved successfully\", \"ar\": \"تم جلب العملاء بنجاح\" },\n  \"data\": [\n    {\n      \"name\": \"CUST-0001\",\n      \"customer_name\": \"Saudi Aramco\",\n      \"logo\": \"https://example.com/files/aramco-logo.png\",\n      \"description\": \"Global integrated energy and chemicals company\",\n      \"description_ar\": \"شركة عالمية متكاملة للطاقة والكيميائيات\",\n      \"display_order\": 1\n    }\n  ],\n  \"total\": 1\n}"
+						},
+						{
+							"name": "No Customers",
+							"status": "OK",
+							"code": 200,
+							"body": "{\n  \"success\": true,\n  \"http_status_code\": 200,\n  \"message\": { \"en\": \"Customers retrieved successfully\", \"ar\": \"تم جلب العملاء بنجاح\" },\n  \"data\": [],\n  \"total\": 0\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Website CMS",
+			"description": "Website content management endpoints.\n\nModule: `website.py`\n\nAll endpoints are publicly accessible (allow_guest).\nAll images/files are served from the public directory.\n\nManage content via Frappe desk:\n- `/app/grm-home-page`\n- `/app/grm-about-page`\n- `/app/grm-clients-page`\n- `/app/grm-why-page`\n- `/app/grm-contact-page`",
+			"item": [
+				{
+					"name": "Get Home Page",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.website.get_home_page",
+							"host": ["{{base_url}}{{api_prefix}}.website.get_home_page"]
+						},
+						"description": "Get all Home Page content for the website.\n\n**Auth Required:** No (allow_guest)\n\n**Sections returned:**\n- `hero` - Customer rate, headings (1-3), paragraph, hero image\n- `about` - Years of experience, title, description, image\n- `features` - List of feature icons + titles\n- `workflow` - Title, description, image, workflow items with points\n- `pricing` - Title, plans with price/description/features\n- `testimonials` - Title, image, list of testimonials with name/image/rate/description\n- `faqs` - List of question/answer pairs\n\n**Returns:**\n- `200` - Full home page data\n- `500` - Server error"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"status": "OK",
+							"code": 200,
+							"body": "{\n  \"success\": true,\n  \"http_status_code\": 200,\n  \"message\": { \"en\": \"Home page data retrieved successfully\", \"ar\": \"تم جلب بيانات الصفحة الرئيسية بنجاح\" },\n  \"data\": {\n    \"hero\": {\n      \"customer_rate\": 4.8,\n      \"heading_1\": \"Welcome to GRM\",\n      \"heading_2\": \"Premium Workspaces\",\n      \"heading_3\": \"For Your Success\",\n      \"paragraph\": \"Find and book premium workspaces tailored to your needs.\",\n      \"hero_img\": \"/files/hero-banner.jpg\"\n    },\n    \"about\": {\n      \"experience\": 10,\n      \"title\": \"About GRM\",\n      \"description\": \"Leading workspace solutions provider in the region.\",\n      \"about_img\": \"/files/about-img.jpg\"\n    },\n    \"features\": [\n      {\n        \"feature_icon\": \"/files/wifi-icon.svg\",\n        \"title\": \"High Speed WiFi\"\n      },\n      {\n        \"feature_icon\": \"/files/security-icon.svg\",\n        \"title\": \"24/7 Security\"\n      }\n    ],\n    \"workflow\": {\n      \"title\": \"How It Works\",\n      \"description\": \"Simple steps to get your workspace.\",\n      \"workflow_img\": \"/files/workflow.png\",\n      \"items\": [\n        {\n          \"title\": \"Choose Your Space\",\n          \"points\": [\"Browse available spaces\", \"Compare pricing\", \"Check amenities\"]\n        },\n        {\n          \"title\": \"Book Online\",\n          \"points\": [\"Select date and time\", \"Confirm booking\", \"Receive confirmation\"]\n        }\n      ]\n    },\n    \"pricing\": {\n      \"title\": \"Our Plans\",\n      \"plans\": [\n        {\n          \"title\": \"Basic\",\n          \"price\": 500.0,\n          \"description\": \"Perfect for freelancers\",\n          \"features\": [\"Hot desk access\", \"WiFi included\", \"Coffee & Tea\"]\n        },\n        {\n          \"title\": \"Premium\",\n          \"price\": 1500.0,\n          \"description\": \"For growing teams\",\n          \"features\": [\"Private office\", \"Meeting room access\", \"24/7 access\", \"Parking\"]\n        }\n      ]\n    },\n    \"testimonials\": {\n      \"title\": \"What Our Clients Say\",\n      \"img\": \"/files/testimonials-bg.jpg\",\n      \"items\": [\n        {\n          \"name\": \"Ahmed Ali\",\n          \"img\": \"/files/ahmed.jpg\",\n          \"rate\": 5.0,\n          \"description\": \"Excellent workspace with great amenities.\"\n        }\n      ]\n    },\n    \"faqs\": [\n      {\n        \"question\": \"What are your operating hours?\",\n        \"answer\": \"We are open 24/7 for premium members.\"\n      },\n      {\n        \"question\": \"Can I book hourly?\",\n        \"answer\": \"Yes, we offer hourly, daily, and monthly plans.\"\n      }\n    ]\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get About Page",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.website.get_about_page",
+							"host": ["{{base_url}}{{api_prefix}}.website.get_about_page"]
+						},
+						"description": "Get all About Page content for the website.\n\n**Auth Required:** No (allow_guest)\n\n**Sections returned:**\n- `about` - Title, description, features list (strings)\n- `services` - Title, description, image, list of service items (title/description/image)\n\n**Returns:**\n- `200` - About page data\n- `500` - Server error"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"status": "OK",
+							"code": 200,
+							"body": "{\n  \"success\": true,\n  \"http_status_code\": 200,\n  \"message\": { \"en\": \"About page data retrieved successfully\", \"ar\": \"تم جلب بيانات صفحة من نحن بنجاح\" },\n  \"data\": {\n    \"about\": {\n      \"title\": \"About GRM Workspaces\",\n      \"description\": \"We provide premium workspace solutions for businesses of all sizes.\",\n      \"features\": [\"24/7 Access\", \"High Speed Internet\", \"Meeting Rooms\", \"Dedicated Support\"]\n    },\n    \"services\": {\n      \"title\": \"Our Services\",\n      \"description\": \"Comprehensive workspace solutions.\",\n      \"img\": \"/files/services-banner.jpg\",\n      \"items\": [\n        {\n          \"title\": \"Private Offices\",\n          \"description\": \"Fully furnished private offices for teams.\",\n          \"img\": \"/files/private-office.jpg\"\n        },\n        {\n          \"title\": \"Meeting Rooms\",\n          \"description\": \"Professional meeting rooms with AV equipment.\",\n          \"img\": \"/files/meeting-room.jpg\"\n        }\n      ]\n    }\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Clients Page",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.website.get_clients_page",
+							"host": ["{{base_url}}{{api_prefix}}.website.get_clients_page"]
+						},
+						"description": "Get all Clients Page content for the website.\n\n**Auth Required:** No (allow_guest)\n\n**Sections returned:**\n- `clients` - List of client items (image, title, URL)\n\n**Returns:**\n- `200` - Clients page data\n- `500` - Server error"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"status": "OK",
+							"code": 200,
+							"body": "{\n  \"success\": true,\n  \"http_status_code\": 200,\n  \"message\": { \"en\": \"Clients page data retrieved successfully\", \"ar\": \"تم جلب بيانات صفحة العملاء بنجاح\" },\n  \"data\": {\n    \"clients\": [\n      {\n        \"client_img\": \"/files/client-aramco.png\",\n        \"client_title\": \"Saudi Aramco\",\n        \"client_url\": \"https://www.aramco.com\"\n      },\n      {\n        \"client_img\": \"/files/client-stc.png\",\n        \"client_title\": \"STC\",\n        \"client_url\": \"https://www.stc.com.sa\"\n      }\n    ]\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Why GRM Page",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.website.get_why_page",
+							"host": ["{{base_url}}{{api_prefix}}.website.get_why_page"]
+						},
+						"description": "Get all Why GRM Page content for the website.\n\n**Auth Required:** No (allow_guest)\n\n**Sections returned:**\n- `why` - Title, description, image, image badge, image description\n- `tabs` - Array of tab objects with title, rate, description, and points list\n\n**Returns:**\n- `200` - Why GRM page data\n- `500` - Server error"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"status": "OK",
+							"code": 200,
+							"body": "{\n  \"success\": true,\n  \"http_status_code\": 200,\n  \"message\": { \"en\": \"Why GRM page data retrieved successfully\", \"ar\": \"تم جلب بيانات صفحة لماذا GRM بنجاح\" },\n  \"data\": {\n    \"why\": {\n      \"title\": \"Why Choose GRM?\",\n      \"description\": \"The leading workspace provider in the region.\",\n      \"img\": \"/files/why-grm.jpg\",\n      \"img_badge\": \"10+ Years\",\n      \"img_description\": \"Trusted by hundreds of businesses.\"\n    },\n    \"tabs\": [\n      {\n        \"tab_title\": \"Productivity\",\n        \"tab_rate\": 95,\n        \"tab_description\": \"Our spaces are designed to maximize your productivity.\",\n        \"points\": [\"Ergonomic furniture\", \"Natural lighting\", \"Quiet zones\", \"High-speed internet\"]\n      },\n      {\n        \"tab_title\": \"Community\",\n        \"tab_rate\": 90,\n        \"tab_description\": \"Join a vibrant community of professionals.\",\n        \"points\": [\"Networking events\", \"Community lounge\", \"Collaboration spaces\"]\n      }\n    ]\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Contact Page",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.website.get_contact_page",
+							"host": ["{{base_url}}{{api_prefix}}.website.get_contact_page"]
+						},
+						"description": "Get all Contact Page content for the website.\n\n**Auth Required:** No (allow_guest)\n\n**Sections returned:**\n- `title` - Page title\n- `social_links` - List of social media platforms (platform, url, icon)\n- `branches` - List of branch offices (title, description, email, phone, location)\n\n**Returns:**\n- `200` - Contact page data\n- `500` - Server error"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"status": "OK",
+							"code": 200,
+							"body": "{\n  \"success\": true,\n  \"http_status_code\": 200,\n  \"message\": { \"en\": \"Contact page data retrieved successfully\", \"ar\": \"تم جلب بيانات صفحة التواصل بنجاح\" },\n  \"data\": {\n    \"title\": \"Contact Us\",\n    \"social_links\": [\n      {\n        \"platform\": \"Twitter\",\n        \"url\": \"https://twitter.com/grm\",\n        \"icon\": \"twitter\"\n      },\n      {\n        \"platform\": \"LinkedIn\",\n        \"url\": \"https://linkedin.com/company/grm\",\n        \"icon\": \"linkedin\"\n      },\n      {\n        \"platform\": \"Instagram\",\n        \"url\": \"https://instagram.com/grm\",\n        \"icon\": \"instagram\"\n      }\n    ],\n    \"branches\": [\n      {\n        \"title\": \"Main Branch - Riyadh\",\n        \"description\": \"Our headquarters in the heart of Riyadh.\",\n        \"email\": \"riyadh@grm.com\",\n        \"phone\": \"+966112345678\",\n        \"location\": \"King Fahd Road, Riyadh, Saudi Arabia\"\n      },\n      {\n        \"title\": \"Jeddah Branch\",\n        \"description\": \"Serving the western region.\",\n        \"email\": \"jeddah@grm.com\",\n        \"phone\": \"+966122345678\",\n        \"location\": \"Tahlia Street, Jeddah, Saudi Arabia\"\n      }\n    ]\n  }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Spaces",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.website.get_spaces",
+							"host": ["{{base_url}}{{api_prefix}}.website.get_spaces"],
+							"query": [
+								{
+									"key": "space_type",
+									"value": "",
+									"description": "Filter by GRM Space Type name (optional)",
+									"disabled": true
+								},
+								{
+									"key": "location",
+									"value": "",
+									"description": "Filter by GRM Location name (optional)",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Get all available spaces with full pricing for the website.\n\n**Auth Required:** No (allow_guest)\n\n**Query Parameters:**\n| Param | Type | Required | Description |\n|-------|------|----------|-------------|\n| space_type | string | No | Filter by GRM Space Type name |\n| location | string | No | Filter by GRM Location name |\n\n**Pricing fields returned per space:**\n- `hourly_rate` - Price per hour\n- `daily_rate` - Price per day\n- `monthly_rate` - Price per month\n- `annual_rate` - Price per year\n- `minimum_charge` - Minimum booking charge\n\n**Each space type also includes `default_pricing`** with hourly, daily, monthly, annual rates.\n\n**Returns:**\n- `200` - Spaces grouped by type with full pricing, amenities, location info\n- `500` - Server error"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"status": "OK",
+							"code": 200,
+							"body": "{\n  \"success\": true,\n  \"http_status_code\": 200,\n  \"message\": { \"en\": \"Spaces retrieved successfully\", \"ar\": \"تم جلب المساحات بنجاح\" },\n  \"data\": {\n    \"Private Office\": {\n      \"type_info\": {\n        \"name\": \"Private Office\",\n        \"name_ar\": \"مكتب خاص\",\n        \"category\": \"Private Office\",\n        \"icon\": \"office\",\n        \"color\": \"#4CAF50\",\n        \"description\": \"Fully furnished private offices\",\n        \"typical_usage\": \"Teams, startups\",\n        \"default_pricing\": {\n          \"hourly_rate\": 100,\n          \"daily_rate\": 500,\n          \"monthly_rate\": 5000,\n          \"annual_rate\": 50000\n        }\n      },\n      \"spaces\": [\n        {\n          \"id\": \"SPACE-2026-0001\",\n          \"space_name\": \"Executive Office A\",\n          \"space_name_ar\": \"المكتب التنفيذي أ\",\n          \"space_code\": \"EXO-A\",\n          \"location\": \"Main Branch\",\n          \"location_ar\": \"الفرع الرئيسي\",\n          \"property\": \"Building A\",\n          \"status\": \"Available\",\n          \"area_sqm\": 25.0,\n          \"capacity\": 4,\n          \"min_booking_hours\": 1,\n          \"floor_number\": 3,\n          \"room_number\": \"301\",\n          \"is_featured\": 1,\n          \"allow_booking\": 1,\n          \"pricing\": {\n            \"hourly_rate\": 100,\n            \"daily_rate\": 500,\n            \"monthly_rate\": 5000,\n            \"annual_rate\": 50000,\n            \"minimum_charge\": 100\n          },\n          \"amenities\": [\"WiFi\", \"Air Conditioning\", \"Projector\"],\n          \"custom_amenities\": null,\n          \"description\": \"Premium executive office\",\n          \"space_image\": \"/files/office-a.jpg\"\n        }\n      ],\n      \"count\": 1\n    }\n  },\n  \"total_spaces\": 1,\n  \"total_types\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "Get All Pages",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}{{api_prefix}}.website.get_all_pages",
+							"host": ["{{base_url}}{{api_prefix}}.website.get_all_pages"]
+						},
+						"description": "Get content for all website pages in a single call.\nUseful for SSR or preloading all CMS content at once.\n\n**Auth Required:** No (allow_guest)\n\n**Returns:**\n- `200` - Dict with all page data keyed by page name (home, about, clients, why_grm, contact, spaces)\n- `500` - Server error\n\n**Note:** Individual page failures return `null` for that page without failing the entire request."
+					},
+					"response": [
+						{
+							"name": "Success",
+							"status": "OK",
+							"code": 200,
+							"body": "{\n  \"success\": true,\n  \"http_status_code\": 200,\n  \"message\": { \"en\": \"All page data retrieved successfully\", \"ar\": \"تم جلب بيانات جميع الصفحات بنجاح\" },\n  \"data\": {\n    \"home\": { \"hero\": {}, \"about\": {}, \"features\": [], \"workflow\": {}, \"pricing\": {}, \"testimonials\": {}, \"faqs\": [] },\n    \"about\": { \"about\": {}, \"services\": {} },\n    \"clients\": { \"clients\": [] },\n    \"why_grm\": { \"why\": {}, \"tabs\": [] },\n    \"contact\": { \"title\": \"\", \"social_links\": [], \"branches\": [] },\n    \"spaces\": {}\n  }\n}"
+						}
+					]
+				}
+			]
+		}
+	]
+}

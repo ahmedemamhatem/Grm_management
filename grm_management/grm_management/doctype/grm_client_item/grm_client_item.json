@@ -1,0 +1,51 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-02-13 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "client_img",
+  "column_break_01",
+  "client_title",
+  "client_url"
+ ],
+ "fields": [
+  {
+   "fieldname": "client_img",
+   "fieldtype": "Attach Image",
+   "in_list_view": 1,
+   "label": "Client Image | صورة العميل"
+  },
+  {
+   "fieldname": "column_break_01",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "client_title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Client Title | اسم العميل",
+   "reqd": 1
+  },
+  {
+   "fieldname": "client_url",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Client URL | رابط العميل"
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-02-13 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Grm Management",
+ "name": "GRM Client Item",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

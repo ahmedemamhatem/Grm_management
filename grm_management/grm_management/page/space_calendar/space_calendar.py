@@ -5,7 +5,7 @@
 from __future__ import unicode_literals
 import frappe
 from frappe import _
-from frappe.utils import getdate, add_days, get_datetime, nowdate
+from frappe.utils import getdate, add_days, get_datetime, nowdate, flt
 
 @frappe.whitelist()
 def get_calendar_data(start_date, end_date, location=None, space_type=None, space=None):
@@ -64,13 +64,13 @@ def get_calendar_data(start_date, end_date, location=None, space_type=None, spac
 
 @frappe.whitelist()
 def create_booking(space, tenant, booking_date, start_time, end_time, booking_type, sales_taxes_and_charges_template=None, expiry_days=7):
-	"""Create a new booking with expiry"""
+	"""Create a new booking with expiry - starts as Draft"""
 	# Check for conflicts
 	conflict = check_space_conflict(space, booking_date, start_time, end_time)
 	if conflict['conflict']:
 		frappe.throw(conflict['message'])
 
-	# Create booking
+	# Create booking as Draft
 	booking = frappe.new_doc('GRM Booking')
 	booking.space = space
 	booking.tenant = tenant
@@ -78,7 +78,7 @@ def create_booking(space, tenant, booking_date, start_time, end_time, booking_ty
 	booking.start_time = start_time
 	booking.end_time = end_time
 	booking.booking_type = booking_type
-	booking.status = 'Confirmed'
+	booking.status = 'Draft'
 
 	# Set expiry date
 	booking.expiry_date = add_days(booking_date, int(expiry_days))
@@ -102,6 +102,18 @@ def create_booking(space, tenant, booking_date, start_time, end_time, booking_ty
 def convert_booking_to_subscription(booking_id, tenant, subscription_type, start_date, end_date):
 	"""Convert a booking to a subscription, create invoice and payment"""
 	booking = frappe.get_doc('GRM Booking', booking_id)
+
+	# Get space rates BEFORE any modifications (to avoid cache issues)
+	space_rates = frappe.db.sql("""
+		SELECT name, space_name, hourly_rate, daily_rate, monthly_rate, annual_rate
+		FROM `tabGRM Space`
+		WHERE name = %s
+	""", booking.space, as_dict=True)
+
+	if not space_rates:
+		frappe.throw(_('Space {0} not found').format(booking.space))
+
+	space_rates = space_rates[0]
 
 	# Create subscription (starts as Draft, then activate)
 	subscription = frappe.new_doc('GRM Subscription')
@@ -130,8 +142,8 @@ def convert_booking_to_subscription(booking_id, tenant, subscription_type, start
 		space_doc.save(ignore_permissions=True)
 	subscription.save(ignore_permissions=True)
 
-	# Create Sales Invoice
-	invoice = create_subscription_invoice(subscription)
+	# Create Sales Invoice - pass pre-fetched rates
+	invoice = create_subscription_invoice(subscription, space_rates)
 
 	# Create Payment Entry
 	payment = create_subscription_payment(invoice, subscription.tenant)
@@ -157,9 +169,20 @@ def convert_booking_to_subscription(booking_id, tenant, subscription_type, start
 		'payment': payment.name
 	}
 
-def create_subscription_invoice(subscription):
-	"""Create Sales Invoice for subscription"""
-	from frappe.utils import get_datetime, nowdate
+def create_subscription_invoice(subscription, space_rates=None):
+	"""Create Sales Invoice for subscription
+
+	Args:
+		subscription: GRM Subscription document
+		space_rates: Pre-fetched space rates dict (to avoid cache issues)
+	"""
+	from frappe.utils import nowdate
+	from grm_management.grm_management.doctype.grm_settings.grm_settings import get_settings
+
+	# Get GRM Settings
+	settings = get_settings()
+	if not settings.subscription_item:
+		frappe.throw(_('Please configure Subscription Item in GRM Settings'))
 
 	# Get tenant's customer
 	customer = frappe.db.get_value('GRM Tenant', subscription.tenant, 'customer')
@@ -177,26 +200,51 @@ def create_subscription_invoice(subscription):
 	invoice.due_date = nowdate()
 	invoice.grm_subscription = subscription.name
 
-	# Add subscription spaces as invoice items
+	# Add subscription spaces as invoice items using configured item
+	if not subscription.spaces:
+		frappe.throw(_('No spaces found in subscription'))
+
 	for space_row in subscription.spaces:
-		space = frappe.get_doc('GRM Space', space_row.space)
+		# Use pre-fetched rates if available, otherwise fetch fresh
+		if space_rates and space_rates.get('name') == space_row.space:
+			space_data = space_rates
+		else:
+			# Fetch fresh from DB
+			space_data = frappe.db.sql("""
+				SELECT name, space_name, hourly_rate, daily_rate, monthly_rate, annual_rate
+				FROM `tabGRM Space`
+				WHERE name = %s
+			""", space_row.space, as_dict=True)
+
+			if not space_data:
+				frappe.throw(_('Space {0} not found').format(space_row.space))
+			space_data = space_data[0]
 
 		# Determine rate based on subscription type
 		rate = 0
 		description = f"Subscription: {subscription.subscription_type}"
 		if subscription.subscription_type == 'Monthly':
-			rate = space.monthly_rate or 0
-			description += f" - {space.space_name}"
+			rate = flt(space_data.get('monthly_rate')) or 0
+			description += f" - {space_data.get('space_name')}"
 		elif subscription.subscription_type == 'Daily':
-			rate = space.daily_rate or 0
-			description += f" - {space.space_name}"
+			rate = flt(space_data.get('daily_rate')) or 0
+			description += f" - {space_data.get('space_name')}"
 		elif subscription.subscription_type == 'Hourly':
-			rate = space.hourly_rate or 0
-			description += f" - {space.space_name}"
+			rate = flt(space_data.get('hourly_rate')) or 0
+			description += f" - {space_data.get('space_name')}"
+		elif subscription.subscription_type == 'Annual':
+			rate = flt(space_data.get('annual_rate')) or 0
+			description += f" - {space_data.get('space_name')}"
+
+		if rate <= 0:
+			frappe.throw(_('Rate for space {0} is zero. Subscription type: {1}, Space rates: hourly={2}, daily={3}, monthly={4}, annual={5}').format(
+				space_row.space, subscription.subscription_type,
+				space_data.get('hourly_rate'), space_data.get('daily_rate'), space_data.get('monthly_rate'), space_data.get('annual_rate')
+			))
 
 		invoice.append('items', {
-			'item_code': space.item or create_space_item(space),
-			'item_name': space.space_name,
+			'item_code': settings.subscription_item,
+			'item_name': space_data.get('space_name'),
 			'description': description,
 			'qty': 1,
 			'rate': rate,
@@ -211,14 +259,22 @@ def create_subscription_invoice(subscription):
 	invoice.insert(ignore_permissions=True)
 	invoice.submit()
 
+	# Reload to get calculated values after submit
+	invoice.reload()
+
 	return invoice
 
 def create_subscription_payment(invoice, tenant):
 	"""Create Payment Entry for invoice"""
-	from frappe.utils import nowdate
+	from frappe.utils import nowdate, flt
 
 	# Get company
 	company = invoice.company
+
+	# Get the amount - use grand_total or outstanding_amount
+	amount = flt(invoice.grand_total) or flt(invoice.outstanding_amount)
+	if amount <= 0:
+		frappe.throw(_('Invoice amount is zero. Please check space rates.'))
 
 	# Get mode of payment (default Cash or first available)
 	mode_of_payment = frappe.db.get_value('Mode of Payment', {'enabled': 1}, 'name') or 'Cash'
@@ -231,6 +287,16 @@ def create_subscription_payment(invoice, tenant):
 		payment_account = frappe.db.get_value('Account',
 			{'account_type': 'Cash', 'company': company, 'is_group': 0}, 'name')
 
+	if not payment_account:
+		frappe.throw(_('No payment account found. Please configure Mode of Payment accounts.'))
+
+	# Get receivable account
+	paid_from = frappe.db.get_value('Account',
+		{'account_type': 'Receivable', 'company': company, 'is_group': 0}, 'name')
+
+	if not paid_from:
+		frappe.throw(_('No receivable account found for company {0}').format(company))
+
 	# Create payment entry
 	payment = frappe.new_doc('Payment Entry')
 	payment.payment_type = 'Receive'
@@ -238,11 +304,10 @@ def create_subscription_payment(invoice, tenant):
 	payment.party = invoice.customer
 	payment.company = company
 	payment.posting_date = nowdate()
-	payment.paid_from = frappe.db.get_value('Account',
-		{'account_type': 'Receivable', 'company': company, 'is_group': 0}, 'name')
+	payment.paid_from = paid_from
 	payment.paid_to = payment_account
-	payment.paid_amount = invoice.grand_total
-	payment.received_amount = invoice.grand_total
+	payment.paid_amount = amount
+	payment.received_amount = amount
 	payment.mode_of_payment = mode_of_payment
 	payment.reference_no = invoice.name
 	payment.reference_date = nowdate()
@@ -251,41 +316,13 @@ def create_subscription_payment(invoice, tenant):
 	payment.append('references', {
 		'reference_doctype': 'Sales Invoice',
 		'reference_name': invoice.name,
-		'allocated_amount': invoice.grand_total
+		'allocated_amount': amount
 	})
 
 	payment.insert(ignore_permissions=True)
 	payment.submit()
 
 	return payment
-
-def create_space_item(space):
-	"""Create Item for space if not exists"""
-	item_code = f"SPACE-{space.name}"
-
-	if frappe.db.exists('Item', item_code):
-		return item_code
-
-	# Find the Services item group (may be translated, e.g. الخدمات)
-	item_group = frappe.db.get_value('Item Group', 'Services', 'name') or \
-		frappe.db.get_value('Item Group', 'الخدمات', 'name')
-	if not item_group:
-		item_group = frappe.db.get_all('Item Group', filters={'is_group': 0}, limit=1, pluck='name')[0]
-
-	item = frappe.new_doc('Item')
-	item.item_code = item_code
-	item.item_name = space.space_name
-	item.item_group = item_group
-	item.stock_uom = 'Nos'
-	item.is_stock_item = 0
-	item.is_sales_item = 1
-	item.description = f"Coworking Space: {space.space_name}"
-	item.insert(ignore_permissions=True)
-
-	# Update space with item reference
-	frappe.db.set_value('GRM Space', space.name, 'item', item_code)
-
-	return item_code
 
 @frappe.whitelist()
 def get_space_availability(date, location=None, space_type=None):

@@ -1,0 +1,242 @@
+{
+ "actions": [],
+ "creation": "2026-02-13 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "hero_section",
+  "customer_rate",
+  "heading_1",
+  "heading_2",
+  "column_break_hero",
+  "heading_3",
+  "paragraph",
+  "hero_img_section",
+  "hero_img",
+  "about_us_section",
+  "experience",
+  "about_title",
+  "column_break_about",
+  "about_description",
+  "about_img_section",
+  "about_img",
+  "features_section",
+  "features",
+  "workflow_section",
+  "workflow_title",
+  "workflow_description",
+  "column_break_workflow",
+  "workflow_img",
+  "workflow_items_section",
+  "workflows",
+  "pricing_section",
+  "pricing_title",
+  "plans",
+  "testimonials_section",
+  "testimonials_title",
+  "testimonials_img",
+  "testimonials",
+  "faq_section",
+  "faqs"
+ ],
+ "fields": [
+  {
+   "fieldname": "hero_section",
+   "fieldtype": "Section Break",
+   "label": "Hero Section | القسم الرئيسي"
+  },
+  {
+   "fieldname": "customer_rate",
+   "fieldtype": "Float",
+   "label": "Customer Rate | تقييم العملاء"
+  },
+  {
+   "fieldname": "heading_1",
+   "fieldtype": "Data",
+   "label": "Heading 1 | العنوان 1"
+  },
+  {
+   "fieldname": "heading_2",
+   "fieldtype": "Data",
+   "label": "Heading 2 | العنوان 2"
+  },
+  {
+   "fieldname": "column_break_hero",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "heading_3",
+   "fieldtype": "Data",
+   "label": "Heading 3 | العنوان 3"
+  },
+  {
+   "fieldname": "paragraph",
+   "fieldtype": "Text",
+   "label": "Paragraph | الفقرة"
+  },
+  {
+   "fieldname": "hero_img_section",
+   "fieldtype": "Section Break",
+   "label": "Hero Image | صورة القسم الرئيسي"
+  },
+  {
+   "fieldname": "hero_img",
+   "fieldtype": "Attach Image",
+   "label": "Hero Image | صورة القسم الرئيسي"
+  },
+  {
+   "fieldname": "about_us_section",
+   "fieldtype": "Section Break",
+   "label": "About Us Section | قسم من نحن"
+  },
+  {
+   "fieldname": "experience",
+   "fieldtype": "Int",
+   "label": "Years of Experience | سنوات الخبرة"
+  },
+  {
+   "fieldname": "about_title",
+   "fieldtype": "Data",
+   "label": "About Title | عنوان من نحن"
+  },
+  {
+   "fieldname": "column_break_about",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "about_description",
+   "fieldtype": "Text",
+   "label": "About Description | وصف من نحن"
+  },
+  {
+   "fieldname": "about_img_section",
+   "fieldtype": "Section Break",
+   "label": "About Image | صورة من نحن"
+  },
+  {
+   "fieldname": "about_img",
+   "fieldtype": "Attach Image",
+   "label": "About Image | صورة من نحن"
+  },
+  {
+   "fieldname": "features_section",
+   "fieldtype": "Section Break",
+   "label": "Features Section | قسم المميزات"
+  },
+  {
+   "fieldname": "features",
+   "fieldtype": "Table",
+   "label": "Features | المميزات",
+   "options": "GRM Feature Item"
+  },
+  {
+   "fieldname": "workflow_section",
+   "fieldtype": "Section Break",
+   "label": "Workflow Section | قسم سير العمل"
+  },
+  {
+   "fieldname": "workflow_title",
+   "fieldtype": "Data",
+   "label": "Workflow Title | عنوان سير العمل"
+  },
+  {
+   "fieldname": "workflow_description",
+   "fieldtype": "Text",
+   "label": "Workflow Description | وصف سير العمل"
+  },
+  {
+   "fieldname": "column_break_workflow",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "workflow_img",
+   "fieldtype": "Attach Image",
+   "label": "Workflow Image | صورة سير العمل"
+  },
+  {
+   "fieldname": "workflow_items_section",
+   "fieldtype": "Section Break",
+   "label": "Workflow Items | عناصر سير العمل"
+  },
+  {
+   "fieldname": "workflows",
+   "fieldtype": "Table",
+   "label": "Workflows | سير العمل",
+   "options": "GRM Workflow Item"
+  },
+  {
+   "fieldname": "pricing_section",
+   "fieldtype": "Section Break",
+   "label": "Pricing Section | قسم الأسعار"
+  },
+  {
+   "fieldname": "pricing_title",
+   "fieldtype": "Data",
+   "label": "Pricing Title | عنوان الأسعار"
+  },
+  {
+   "fieldname": "plans",
+   "fieldtype": "Table",
+   "label": "Plans | الخطط",
+   "options": "GRM Plan Item"
+  },
+  {
+   "fieldname": "testimonials_section",
+   "fieldtype": "Section Break",
+   "label": "Testimonials Section | قسم الشهادات"
+  },
+  {
+   "fieldname": "testimonials_title",
+   "fieldtype": "Data",
+   "label": "Testimonials Title | عنوان الشهادات"
+  },
+  {
+   "fieldname": "testimonials_img",
+   "fieldtype": "Attach Image",
+   "label": "Testimonials Image | صورة الشهادات"
+  },
+  {
+   "fieldname": "testimonials",
+   "fieldtype": "Table",
+   "label": "Testimonials | الشهادات",
+   "options": "GRM Testimonial Item"
+  },
+  {
+   "fieldname": "faq_section",
+   "fieldtype": "Section Break",
+   "label": "FAQ Section | قسم الأسئلة الشائعة"
+  },
+  {
+   "fieldname": "faqs",
+   "fieldtype": "Table",
+   "label": "FAQs | الأسئلة الشائعة",
+   "options": "GRM FAQ Item"
+  }
+ ],
+ "allow_guest_to_view": 1,
+ "issingle": 1,
+ "modified": "2026-02-13 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Grm Management",
+ "name": "GRM Home Page",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "read": 1,
+   "role": "Guest"
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

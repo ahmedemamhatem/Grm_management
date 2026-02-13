@@ -79,6 +79,22 @@ doctype_js = {"doctype" : "public/js/location.js"}
 # 	"filters": "grm_management.utils.jinja_filters"
 # }
 
+# Fixtures
+# --------
+fixtures = [
+	{
+		"dt": "Custom Field",
+		"filters": [["name", "in", [
+			"Customer-grm_website_section",
+			"Customer-show_in_website",
+			"Customer-customer_logo",
+			"Customer-customer_description",
+			"Customer-customer_description_ar",
+			"Customer-display_order",
+		]]]
+	}
+]
+
 # Installation
 # ------------
 
@@ -158,6 +174,10 @@ doc_events = {
 	},
 	"GRM Tenant": {
 		"after_insert": "grm_management.grm_management.doc_events.populate_code_from_name"
+	},
+	"User": {
+		"after_insert": "grm_management.grm_management.user_events.on_user_update",
+		"on_update": "grm_management.grm_management.user_events.on_user_update"
 	}
 }
 
@@ -263,4 +283,4 @@ boot_session = "grm_management.boot.boot_session"
 # ignore_translatable_strings_from = []
 
 
-website_route_rules = [{'from_route': '/home/<path:app_path>', 'to_route': 'home'},]
+website_route_rules = [{'from_route': '/website/<path:app_path>', 'to_route': 'website'}, {'from_route': '/website/<path:app_path>', 'to_route': 'website'}, {'from_route': '/home/<path:app_path>', 'to_route': 'home'},]

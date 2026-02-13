@@ -1,0 +1,64 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2026-02-13 00:00:00.000000",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "tab_title",
+  "tab_rate",
+  "column_break_01",
+  "tab_description",
+  "section_break_points",
+  "points"
+ ],
+ "fields": [
+  {
+   "fieldname": "tab_title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Tab Title | عنوان التبويب",
+   "reqd": 1
+  },
+  {
+   "fieldname": "tab_rate",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Tab Rate | معدل التبويب"
+  },
+  {
+   "fieldname": "column_break_01",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "tab_description",
+   "fieldtype": "Small Text",
+   "in_list_view": 1,
+   "label": "Tab Description | وصف التبويب"
+  },
+  {
+   "fieldname": "section_break_points",
+   "fieldtype": "Section Break",
+   "label": "Points | النقاط"
+  },
+  {
+   "fieldname": "points",
+   "fieldtype": "Small Text",
+   "label": "Points | النقاط",
+   "description": "One point per line | نقطة واحدة في كل سطر"
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-02-13 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Grm Management",
+ "name": "GRM Why Tab",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
