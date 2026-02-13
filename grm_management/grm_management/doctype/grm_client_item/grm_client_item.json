@@ -9,7 +9,8 @@
   "client_img",
   "column_break_01",
   "client_title",
-  "client_url"
+  "client_url",
+  "display_order"
  ],
  "fields": [
   {
@@ -34,6 +35,13 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Client URL | رابط العميل"
+  },
+  {
+   "default": "0",
+   "fieldname": "display_order",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Order | الترتيب"
   }
  ],
  "index_web_pages_for_search": 0,

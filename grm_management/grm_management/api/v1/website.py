@@ -186,9 +186,9 @@ def get_clients_page():
         data = {
             "clients": [
                 {
-                    "client_img": c.client_img,
-                    "client_title": c.client_title,
-                    "client_url": c.client_url,
+                    "img": c.client_img,
+                    "title": c.client_title,
+                    "url": c.client_url,
                 }
                 for c in (doc.clients or [])
             ],
